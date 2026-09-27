@@ -27,7 +27,7 @@ from appfit.api.routers import (
 )
 from appfit.api.text_guard import reject_unstorable_text
 from appfit.bootstrap import bootstrap_admin
-from appfit.config import EMBEDDING_DIM, Settings, get_settings
+from appfit.config import EMBEDDING_DIM, Settings, check_serving_settings, get_settings
 from appfit.db.engine import make_engine, make_session_factory
 from appfit.ml.embedder import Embedder, build_embedder
 from appfit.services.errors import ServiceError
@@ -83,6 +83,7 @@ def create_app(
     start_background: bool = True,
 ) -> FastAPI:
     settings = settings or get_settings()
+    check_serving_settings(settings)
     logging.basicConfig(level=settings.log_level)
     for noisy in NOISY_LOGGERS:
         logging.getLogger(noisy).setLevel(logging.WARNING)

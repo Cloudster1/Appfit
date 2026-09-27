@@ -5,7 +5,7 @@ from typing import Any
 
 import yaml
 
-from appfit.config import Settings
+from appfit.config import JWT_SECRET_MIN_LEN, Settings
 from appfit.main import create_app
 
 DEFAULT_TARGET = Path(__file__).resolve().parents[3] / "docs" / "openapi.yaml"
@@ -13,7 +13,9 @@ YAML_WIDTH = 120
 
 
 def spec() -> dict[str, Any]:
-    app = create_app(Settings(_env_file=None, embedding_backend="fake"), start_background=False)
+    # Only renders the document; the app never serves requests, so any valid secret will do.
+    settings = Settings(_env_file=None, embedding_backend="fake", jwt_secret="x" * JWT_SECRET_MIN_LEN)
+    app = create_app(settings, start_background=False)
     # A JSON round trip turns enum keys (HTTP status codes) into plain strings.
     doc: dict[str, Any] = json.loads(json.dumps(app.openapi()))
     return doc

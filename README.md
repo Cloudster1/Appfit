@@ -1,5 +1,10 @@
 # Appfit
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Python 3.12](https://img.shields.io/badge/python-3.12-3776ab.svg)
+![React 19](https://img.shields.io/badge/react-19-149eca.svg)
+![PostgreSQL + pgvector](https://img.shields.io/badge/postgres-17%20%2B%20pgvector-336791.svg)
+
 Appfit is a catalog of the applications in your organization: what each app can do, who maintains it, its tech stack, license and lifecycle, and how the apps are connected through interfaces. Users describe a use case as a list of requirements, in German or English, and Appfit returns the apps that match best. For every result it **explains** which requirement is covered by which capability and where the gaps are. It says so clearly when nothing in the catalog fits.
 
 - **Backend:** Python 3.12, FastAPI, SQLAlchemy 2, PostgreSQL 17 + pgvector (hybrid vector + full-text search)
@@ -7,12 +12,25 @@ Appfit is a catalog of the applications in your organization: what each app can 
 - **Frontend:** React 19, TypeScript, Mantine 9, TanStack Query, React Router, typed client generated from OpenAPI
 - **Auth:** local users with roles `viewer` < `editor` < `admin`. Sessions are JWTs in an httpOnly cookie. An `AuthProvider` seam leaves room for OIDC.
 
+![Search results: apps ranked against four requirements, with coverage per requirement](docs/screenshots/search-results.png)
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/coverage-matrix.png" alt="Requirement x app coverage matrix"></td>
+    <td><img src="docs/screenshots/landscape.png" alt="Integration landscape graph of apps and external systems"></td>
+  </tr>
+  <tr>
+    <td align="center">Coverage matrix with the evidence per cell, exportable as CSV</td>
+    <td align="center">Integration landscape: apps, external systems and their interfaces</td>
+  </tr>
+</table>
+
 ## Quick start
 
 Requirements: Docker with Compose. For local development also [uv](https://docs.astral.sh/uv/). Node is not required; frontend tooling runs in a container.
 
 ```bash
-cp .env.example .env            # set JWT_SECRET and BOOTSTRAP_ADMIN_PASSWORD
+cp .env.example .env            # set JWT_SECRET (32+ random characters) and BOOTSTRAP_ADMIN_PASSWORD
 make up                         # builds and starts db, backend, frontend on http://localhost:8080
 make db && make setup && make seed   # optional: load the 45-app demo catalog (backend/eval/seed_apps.json)
 ```
@@ -174,7 +192,7 @@ helm install appfit deploy/helm/appfit -n appfit --create-namespace \
 - **Offline model:** after the first start, set `HF_HUB_OFFLINE=1` so the backend never contacts the model hub. Pin `EMBEDDING_MODEL_REVISION` for reproducible embeddings.
 - **Security:**
   - Serve behind TLS and set `COOKIE_SECURE=true`.
-  - Use a long random `JWT_SECRET`.
+  - Use a random `JWT_SECRET` of at least 32 characters. The API refuses to start with a shorter one or the example value.
   - The API expects same-origin requests (nginx proxies `/api`). Cookie-authenticated writes must send `X-Requested-With`.
   - Scripts can use `Authorization: Bearer <token>` from `/api/auth/login`.
 - **Performance:** a search takes about 0.3-0.5 s on CPU. Embedding the demo catalog takes about 1 minute on CPU. A GPU profile needs a CUDA 12.8+ torch build and `EMBEDDING_DEVICE=cuda`.
@@ -185,3 +203,10 @@ helm install appfit deploy/helm/appfit -n appfit --create-namespace \
 - Compound requirements ("export to SAP *and* DATEV") can look covered when only half is fulfilled. Write requirements atomically.
 - Heavily paraphrased cross-lingual requirements can score low. In the eval, 2 of 41 queries were wrongly reported as "no match". The next step is a cross-encoder reranker such as `BAAI/bge-reranker-v2-m3` for the top evidence pairs, adopted only if `make eval` shows a gain.
 - Very generic capabilities (SSO, REST API, audit log) exist in many apps. They show up as evidence but rarely decide the ranking.
+
+## Contributing, security and license
+
+- Contributions are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
+- Please report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
+- Changes per release are in [CHANGELOG.md](CHANGELOG.md).
+- Appfit is released under the [MIT License](LICENSE).

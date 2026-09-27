@@ -3,6 +3,7 @@ name = "appfit"
 version = "0.1.0"
 description = "Application catalog with explainable requirement matching"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.12,<3.14"
 dependencies = [
     "fastapi>=0.115",

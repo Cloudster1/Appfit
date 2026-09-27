@@ -109,7 +109,7 @@
       "type": "object",
       "properties": {
         "existingSecret": {"type": "string"},
-        "jwtSecret": {"type": "string"},
+        "jwtSecret": {"type": "string", "pattern": "^(|.{32,})$", "description": "empty (generated) or at least 32 characters"},
         "bootstrapAdmin": {
           "type": "object",
           "properties": {

@@ -1,9 +1,10 @@
 import uuid
 
 import numpy as np
+import pytest
 
 from appfit.auth.security import create_access_token, decode_access_token, hash_password, verify_password
-from appfit.config import Settings
+from appfit.config import JWT_SECRET_MIN_LEN, Settings, check_serving_settings
 from appfit.ml.fake_embedder import FakeEmbedder
 from appfit.text import content_tokens, stem_map
 
@@ -45,3 +46,10 @@ def test_jwt_roundtrip_and_tamper_detection() -> None:
     other = Settings(_env_file=None, jwt_secret="b" * 40)  # type: ignore[call-arg]
     assert decode_access_token(token, other) is None
     assert decode_access_token(token + "x", settings) is None
+
+
+@pytest.mark.parametrize("secret", ["change-me-in-production", "change-me-to-a-long-random-string", "short"])
+def test_the_api_refuses_example_or_short_jwt_secrets(secret: str) -> None:
+    with pytest.raises(RuntimeError, match="JWT_SECRET"):
+        check_serving_settings(Settings(_env_file=None, jwt_secret=secret))  # type: ignore[call-arg]
+    check_serving_settings(Settings(_env_file=None, jwt_secret="r" * JWT_SECRET_MIN_LEN))  # type: ignore[call-arg]

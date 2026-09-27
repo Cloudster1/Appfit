@@ -98,6 +98,11 @@ STEM_CACHE_SIZE = 65536
 FAKE_EMBEDDER_TRIGRAM_WEIGHT = 0.3
 
 
+# The API refuses to start with a JWT secret that is shorter or one of the documented examples.
+JWT_SECRET_MIN_LEN = 32
+EXAMPLE_JWT_SECRETS = frozenset({"change-me-in-production", "change-me-to-a-long-random-string"})
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore", env_ignore_empty=True)
 
@@ -134,6 +139,14 @@ class Settings(BaseSettings):
     import_max_apps: int = 5000
 
     log_level: str = "INFO"
+
+
+def check_serving_settings(settings: Settings) -> None:
+    """Fail fast on settings that would make a running API insecure."""
+    if settings.jwt_secret in EXAMPLE_JWT_SECRETS or len(settings.jwt_secret) < JWT_SECRET_MIN_LEN:
+        raise RuntimeError(
+            f"JWT_SECRET must be a random string of at least {JWT_SECRET_MIN_LEN} characters, not an example value"
+        )
 
 
 @lru_cache
