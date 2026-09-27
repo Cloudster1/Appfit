@@ -1,0 +1,4883 @@
+{
+  "version": 1,
+  "apps": [
+    {
+      "slug": "belegfix",
+      "name": "Belegfix",
+      "short_description": "Eingangsrechnungen digital erfassen, per OCR auslesen, freigeben und als DATEV-Buchungsstapel exportieren.",
+      "description": "Belegfix digitalisiert den Rechnungseingang für kleine und mittlere Buchhaltungsteams. Rechnungen werden per E-Mail oder Scan erfasst, automatisch ausgelesen und über einen konfigurierbaren Freigabeprozess geleitet. Die gebuchten Belege werden als DATEV-Buchungsstapel an die Finanzbuchhaltung bzw. den Steuerberater übergeben.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Belegfix GmbH",
+      "version": "4.2",
+      "homepage_url": "https://belegfix.example.com",
+      "tags": [
+        "rechnungen",
+        "ocr",
+        "eingangsrechnungen",
+        "freigabe",
+        "datev"
+      ],
+      "tech_stack": [
+        "java",
+        "postgresql",
+        "docker"
+      ],
+      "domains": [
+        "finance",
+        "accounting"
+      ],
+      "maintainers": [
+        {
+          "name": "Sabine Krüger",
+          "email": "sabine.krueger@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Finanzen / Kreditorenbuchhaltung"
+        },
+        {
+          "name": "Team ERP-Anwendungen",
+          "email": "erp-apps@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Automatische Belegerkennung per OCR für PDF- und Bildrechnungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Auslesen von Rechnungsnummer, Rechnungsdatum, Beträgen und Steuersätzen aus Rechnungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Empfang von Eingangsrechnungen über ein zentrales E-Mail-Postfach"
+        },
+        {
+          "kind": "capability",
+          "text": "Verarbeitung elektronischer Rechnungen im Format XRechnung und ZUGFeRD"
+        },
+        {
+          "kind": "capability",
+          "text": "Mehrstufiger Freigabeworkflow für Rechnungen mit Betragsgrenzen"
+        },
+        {
+          "kind": "capability",
+          "text": "Export gebuchter Belege als DATEV-Buchungsstapel"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatischer Kontierungsvorschlag auf Basis früherer Buchungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Erkennung von Dubletten bei doppelt eingereichten Rechnungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Freigabe von Rechnungen per Smartphone-App"
+        },
+        {
+          "kind": "feature",
+          "text": "Überwachung von Skontofristen mit Erinnerung vor Ablauf"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosting in einem deutschen Rechenzentrum"
+        },
+        {
+          "kind": "requirement",
+          "text": "GoBD-konforme Protokollierung aller Änderungen an Belegen"
+        },
+        {
+          "kind": "capability",
+          "text": "Anmeldung per Single Sign-on über Microsoft Entra ID"
+        }
+      ]
+    },
+    {
+      "slug": "invoiceflow-ap",
+      "name": "InvoiceFlow AP",
+      "short_description": "Accounts payable automation for enterprises with SAP S/4HANA integration, purchase order matching and multi-entity support.",
+      "description": "InvoiceFlow AP automates the full accounts payable process for larger organisations running SAP. Supplier invoices are captured from all channels, matched against purchase orders and goods receipts, and posted directly to SAP S/4HANA. It supports multiple company codes, currencies and the Peppol e-invoicing network.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Northbridge Software Ltd.",
+      "version": "2025.3",
+      "homepage_url": "https://invoiceflow-ap.example.com",
+      "tags": [
+        "accounts payable",
+        "invoices",
+        "sap",
+        "e-invoicing",
+        "po matching"
+      ],
+      "tech_stack": [
+        "sap btp",
+        "java",
+        "kubernetes"
+      ],
+      "domains": [
+        "finance",
+        "procurement"
+      ],
+      "maintainers": [
+        {
+          "name": "Thomas Weber",
+          "email": "thomas.weber@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Finance Shared Services"
+        },
+        {
+          "name": "Team ERP-Anwendungen",
+          "email": "erp-apps@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Capture of supplier invoices from email, scan and EDI channels"
+        },
+        {
+          "kind": "capability",
+          "text": "Machine-learning based data extraction from invoice documents"
+        },
+        {
+          "kind": "capability",
+          "text": "Three-way matching of invoices against purchase orders and goods receipts"
+        },
+        {
+          "kind": "capability",
+          "text": "Direct posting of approved invoices to SAP S/4HANA"
+        },
+        {
+          "kind": "capability",
+          "text": "Receiving and sending e-invoices via the Peppol network"
+        },
+        {
+          "kind": "capability",
+          "text": "Support for XRechnung and ZUGFeRD e-invoice formats"
+        },
+        {
+          "kind": "capability",
+          "text": "Multi-company and multi-currency invoice processing"
+        },
+        {
+          "kind": "capability",
+          "text": "Configurable approval workflows based on cost center and invoice amount"
+        },
+        {
+          "kind": "capability",
+          "text": "Supplier self-service portal for invoice and payment status inquiries"
+        },
+        {
+          "kind": "capability",
+          "text": "Exception handling queue for price and quantity deviations"
+        },
+        {
+          "kind": "feature",
+          "text": "Cash flow forecast based on open payables"
+        },
+        {
+          "kind": "requirement",
+          "text": "Data stored in EU data centers"
+        },
+        {
+          "kind": "requirement",
+          "text": "SOC 2 Type II certified service"
+        },
+        {
+          "kind": "capability",
+          "text": "REST API for integration with third-party ERP systems"
+        }
+      ]
+    },
+    {
+      "slug": "rechnungsportal-alt",
+      "name": "Rechnungsportal (Alt)",
+      "short_description": "Altes internes Portal zur manuellen Erfassung und Freigabe von Eingangsrechnungen. Abgelöst durch Belegfix.",
+      "description": "Das Rechnungsportal wurde 2014 intern entwickelt, um Eingangsrechnungen manuell zu erfassen und von Kostenstellenverantwortlichen freigeben zu lassen. Es wurde 2024 durch Belegfix abgelöst und ist nur noch lesend für Altdaten verfügbar.",
+      "lifecycle_status": "retired",
+      "license": "Internal",
+      "license_type": "internal",
+      "vendor": "Interne IT",
+      "version": "3.8.1",
+      "tags": [
+        "rechnungen",
+        "freigabe",
+        "legacy"
+      ],
+      "tech_stack": [
+        "asp.net",
+        "microsoft sql server",
+        "iis"
+      ],
+      "domains": [
+        "finance"
+      ],
+      "maintainers": [
+        {
+          "name": "Team ERP-Anwendungen",
+          "email": "erp-apps@example.com",
+          "role": "owner",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Manuelle Erfassung von Eingangsrechnungen über ein Webformular"
+        },
+        {
+          "kind": "capability",
+          "text": "Freigabe von Rechnungen durch den Kostenstellenverantwortlichen"
+        },
+        {
+          "kind": "capability",
+          "text": "Export der Rechnungsdaten als CSV-Datei"
+        },
+        {
+          "kind": "capability",
+          "text": "Ablage eingescannter Rechnungen als PDF"
+        },
+        {
+          "kind": "capability",
+          "text": "Einfache Suche nach Lieferant und Rechnungsnummer"
+        },
+        {
+          "kind": "capability",
+          "text": "E-Mail-Benachrichtigung bei offenen Freigaben"
+        },
+        {
+          "kind": "capability",
+          "text": "Anmeldung mit dem Windows-Domänenkonto"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb on-premises auf Windows Server"
+        }
+      ]
+    },
+    {
+      "slug": "finanzbuch",
+      "name": "FinanzBuch Pro",
+      "short_description": "Finanzbuchhaltung mit Hauptbuch, Debitoren, Kreditoren, Anlagenbuchhaltung, Zahlungsverkehr und Umsatzsteuer-Voranmeldung.",
+      "description": "FinanzBuch Pro ist das führende System der Finanzbuchhaltung für alle deutschen Gesellschaften. Es deckt Hauptbuch, Nebenbücher, Zahlungsverkehr und Jahresabschluss nach HGB ab. Belege aus Vorsystemen werden über Schnittstellen übernommen, der Steuerberater erhält die Daten im DATEV-Format.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Kontora Software AG",
+      "version": "11.4",
+      "homepage_url": "https://finanzbuch.example.com",
+      "tags": [
+        "buchhaltung",
+        "fibu",
+        "hauptbuch",
+        "umsatzsteuer",
+        "jahresabschluss"
+      ],
+      "tech_stack": [
+        ".net",
+        "microsoft sql server"
+      ],
+      "domains": [
+        "accounting",
+        "finance"
+      ],
+      "maintainers": [
+        {
+          "name": "Martina Vogel",
+          "email": "martina.vogel@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Finanzen / Rechnungswesen"
+        },
+        {
+          "name": "Team ERP-Anwendungen",
+          "email": "erp-apps@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Hauptbuchhaltung nach HGB mit frei definierbarem Kontenrahmen (SKR03, SKR04)"
+        },
+        {
+          "kind": "capability",
+          "text": "Debitorenbuchhaltung mit offenen Posten und mehrstufigem Mahnwesen"
+        },
+        {
+          "kind": "capability",
+          "text": "Kreditorenbuchhaltung mit automatischen Zahlungsvorschlägen"
+        },
+        {
+          "kind": "capability",
+          "text": "Erzeugung von SEPA-Überweisungs- und Lastschriftdateien"
+        },
+        {
+          "kind": "capability",
+          "text": "Import elektronischer Kontoauszüge (CAMT.053, MT940) mit automatischem Ausgleich offener Posten"
+        },
+        {
+          "kind": "capability",
+          "text": "Anlagenbuchhaltung mit planmäßigen Abschreibungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Übermittlung der Umsatzsteuer-Voranmeldung per ELSTER an das Finanzamt"
+        },
+        {
+          "kind": "capability",
+          "text": "Erstellung von Bilanz sowie Gewinn- und Verlustrechnung"
+        },
+        {
+          "kind": "capability",
+          "text": "Kostenstellen- und Kostenträgerrechnung"
+        },
+        {
+          "kind": "capability",
+          "text": "Export der Buchungsdaten an den Steuerberater im DATEV-Format"
+        },
+        {
+          "kind": "capability",
+          "text": "Revisionssicheres Änderungsprotokoll aller Buchungen"
+        },
+        {
+          "kind": "feature",
+          "text": "Konsolidierung mehrerer Mandanten"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb on-premises oder in der Private Cloud möglich"
+        },
+        {
+          "kind": "requirement",
+          "text": "GoBD-Testat eines Wirtschaftsprüfers"
+        }
+      ]
+    },
+    {
+      "slug": "talentscout",
+      "name": "TalentScout ATS",
+      "short_description": "Applicant tracking system for publishing job ads, managing candidates and coordinating interviews with hiring managers.",
+      "description": "TalentScout is the applicant tracking system used by HR recruiting. Job ads are published to the career site and external job boards, applications are parsed into candidate profiles and moved through a configurable hiring pipeline. Hiring managers give structured feedback via scorecards.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "HireLoop Inc.",
+      "version": "7.1",
+      "homepage_url": "https://talentscout.example.com",
+      "tags": [
+        "recruiting",
+        "ats",
+        "bewerbermanagement",
+        "job ads"
+      ],
+      "tech_stack": [
+        "saas",
+        "node.js"
+      ],
+      "domains": [
+        "hr"
+      ],
+      "maintainers": [
+        {
+          "name": "Julia Hoffmann",
+          "email": "julia.hoffmann@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "HR Recruiting"
+        },
+        {
+          "name": "HR Systems Team",
+          "email": "hr-systems@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "HR IT"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Publishing job ads to the career site and job boards such as StepStone and Indeed with one click"
+        },
+        {
+          "kind": "capability",
+          "text": "Online application form with CV and certificate upload"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatic parsing of CVs into structured candidate profiles"
+        },
+        {
+          "kind": "capability",
+          "text": "Candidate pipeline with configurable hiring stages"
+        },
+        {
+          "kind": "capability",
+          "text": "Interview scheduling based on Outlook and Google Calendar availability"
+        },
+        {
+          "kind": "capability",
+          "text": "Structured interview scorecards for hiring managers"
+        },
+        {
+          "kind": "capability",
+          "text": "Email templates for candidate communication including rejection letters"
+        },
+        {
+          "kind": "capability",
+          "text": "GDPR-compliant automatic deletion of candidate data after the retention period"
+        },
+        {
+          "kind": "capability",
+          "text": "Talent pool for re-engaging previous applicants"
+        },
+        {
+          "kind": "capability",
+          "text": "Recruiting analytics on time-to-hire and source effectiveness"
+        },
+        {
+          "kind": "feature",
+          "text": "Employee referral program with referral tracking"
+        },
+        {
+          "kind": "requirement",
+          "text": "Data hosted in Frankfurt (EU)"
+        },
+        {
+          "kind": "capability",
+          "text": "Single sign-on via SAML 2.0"
+        }
+      ]
+    },
+    {
+      "slug": "onboardly",
+      "name": "Onboardly",
+      "short_description": "Onboarding-Plattform für neue Mitarbeitende: checklists, pre-boarding portal, equipment requests and offboarding.",
+      "description": "Onboardly steuert den Eintritt neuer Mitarbeitender von der Vertragsunterschrift bis zum Ende der Probezeit. HR, IT and hiring managers get automated task lists, and new hires use a pre-boarding portal before their first day. Auch Austritte werden über Offboarding-Workflows abgebildet.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Onboardly GmbH",
+      "version": "3.0",
+      "homepage_url": "https://onboardly.example.com",
+      "tags": [
+        "onboarding",
+        "offboarding",
+        "preboarding",
+        "hr"
+      ],
+      "tech_stack": [
+        "saas",
+        "ruby on rails",
+        "postgresql"
+      ],
+      "domains": [
+        "hr"
+      ],
+      "maintainers": [
+        {
+          "name": "Lena Fischer",
+          "email": "lena.fischer@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "HR Operations"
+        },
+        {
+          "name": "HR Systems Team",
+          "email": "hr-systems@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "HR IT"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Onboarding-Checklisten mit Aufgaben für HR, IT und Führungskraft"
+        },
+        {
+          "kind": "capability",
+          "text": "Pre-boarding portal where new hires upload documents before their first day"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatic creation of IT tickets for laptop and account setup in ServiceHub ITSM"
+        },
+        {
+          "kind": "capability",
+          "text": "Willkommens-E-Mail mit Informationen zum ersten Arbeitstag"
+        },
+        {
+          "kind": "capability",
+          "text": "Übernahme der Bewerberdaten aus TalentScout nach Vertragsunterschrift"
+        },
+        {
+          "kind": "capability",
+          "text": "Buddy assignment (Pate) for new employees"
+        },
+        {
+          "kind": "capability",
+          "text": "Offboarding workflows with return of equipment and removal of access rights"
+        },
+        {
+          "kind": "capability",
+          "text": "Progress dashboard for HR showing open onboarding tasks per new hire"
+        },
+        {
+          "kind": "capability",
+          "text": "Feedback-Gespräche am Ende der Probezeit terminieren und dokumentieren"
+        },
+        {
+          "kind": "feature",
+          "text": "Interaktive Unternehmens-Tour mit Quiz zum Kennenlernen"
+        },
+        {
+          "kind": "requirement",
+          "text": "Mobile-optimierte Oberfläche für Smartphones"
+        }
+      ]
+    },
+    {
+      "slug": "zeitwerk",
+      "name": "ZeitWerk",
+      "short_description": "Arbeitszeiterfassung, Abwesenheitsmanagement, Urlaubsplanung und Schichtplanung für alle Mitarbeitenden.",
+      "description": "ZeitWerk ist das zentrale System für Arbeitszeiten und Abwesenheiten. Mitarbeitende erfassen ihre Zeiten am Terminal, im Browser oder per App, Führungskräfte genehmigen Urlaube und sehen Überstundensalden. Die Zeitdaten werden monatlich an die Entgeltabrechnung übergeben.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Chronos Systems GmbH",
+      "version": "9.2",
+      "homepage_url": "https://zeitwerk.example.com",
+      "tags": [
+        "zeiterfassung",
+        "urlaub",
+        "abwesenheit",
+        "schichtplanung"
+      ],
+      "tech_stack": [
+        "java",
+        "oracle database"
+      ],
+      "domains": [
+        "hr"
+      ],
+      "maintainers": [
+        {
+          "name": "Markus Braun",
+          "email": "markus.braun@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "HR Services"
+        },
+        {
+          "name": "HR Systems Team",
+          "email": "hr-systems@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "HR IT"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Arbeitszeiterfassung per Browser, Smartphone-App und Zeiterfassungsterminal (Stempeluhr)"
+        },
+        {
+          "kind": "capability",
+          "text": "Erfassung von Kommen und Gehen per RFID-Chip am Terminal"
+        },
+        {
+          "kind": "capability",
+          "text": "Urlaubsanträge mit Genehmigung durch die Führungskraft"
+        },
+        {
+          "kind": "capability",
+          "text": "Übersicht über Resturlaub und Urlaubskonto"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatische Berechnung von Überstunden und Gleitzeitsalden"
+        },
+        {
+          "kind": "capability",
+          "text": "Prüfung von Ruhezeiten und Höchstarbeitszeiten nach Arbeitszeitgesetz"
+        },
+        {
+          "kind": "capability",
+          "text": "Erfassung von Krankmeldungen und Abruf der eAU bei der Krankenkasse"
+        },
+        {
+          "kind": "capability",
+          "text": "Schichtplanung mit Schichtmodellen und Schichttausch zwischen Mitarbeitenden"
+        },
+        {
+          "kind": "capability",
+          "text": "Projektzeiterfassung auf Kostenstellen und Projekte"
+        },
+        {
+          "kind": "capability",
+          "text": "Export der Zeitdaten und Zuschläge an die Lohnabrechnung"
+        },
+        {
+          "kind": "feature",
+          "text": "Teamkalender mit Abwesenheitsübersicht"
+        },
+        {
+          "kind": "requirement",
+          "text": "Mitbestimmungskonforme Konfiguration ohne Leistungs- und Verhaltenskontrolle"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosting in Deutschland"
+        },
+        {
+          "kind": "capability",
+          "text": "Single Sign-on über Microsoft Entra ID"
+        }
+      ]
+    },
+    {
+      "slug": "lohnpilot",
+      "name": "LohnPilot",
+      "short_description": "Entgeltabrechnung für Deutschland mit Meldewesen, ELStAM-Abruf, Lohnkonto und Mitarbeiterportal.",
+      "description": "LohnPilot rechnet monatlich die Löhne und Gehälter aller deutschen Gesellschaften ab. Das System übernimmt Zeitdaten aus ZeitWerk, erzeugt alle gesetzlichen Meldungen und stellt die Abrechnungen digital im Mitarbeiterportal bereit.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Paylogic Deutschland GmbH",
+      "version": "2026.1",
+      "homepage_url": "https://lohnpilot.example.com",
+      "tags": [
+        "lohnabrechnung",
+        "entgelt",
+        "payroll",
+        "meldewesen"
+      ],
+      "tech_stack": [
+        "saas",
+        "java"
+      ],
+      "domains": [
+        "hr",
+        "finance"
+      ],
+      "maintainers": [
+        {
+          "name": "Petra Schulz",
+          "email": "petra.schulz@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "HR Payroll"
+        },
+        {
+          "name": "HR Systems Team",
+          "email": "hr-systems@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "HR IT"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Monatliche Lohn- und Gehaltsabrechnung nach deutschem Steuer- und Sozialversicherungsrecht"
+        },
+        {
+          "kind": "capability",
+          "text": "Abruf der ELStAM-Daten beim Bundeszentralamt für Steuern"
+        },
+        {
+          "kind": "capability",
+          "text": "Elektronische Meldungen an die Sozialversicherungsträger (DEÜV)"
+        },
+        {
+          "kind": "capability",
+          "text": "Verwaltung der betrieblichen Altersvorsorge und Entgeltumwandlung"
+        },
+        {
+          "kind": "capability",
+          "text": "Abrechnung von Sachbezügen wie Dienstwagen und Jobticket"
+        },
+        {
+          "kind": "capability",
+          "text": "Digitale Bereitstellung der Gehaltsabrechnungen im Mitarbeiterportal"
+        },
+        {
+          "kind": "capability",
+          "text": "Übergabe der Lohnjournale an die Finanzbuchhaltung"
+        },
+        {
+          "kind": "capability",
+          "text": "Import von Zeitdaten und Zuschlägen aus der Zeiterfassung"
+        },
+        {
+          "kind": "capability",
+          "text": "Berechnung und Verwaltung von Lohnpfändungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Auswertungen der Personalkosten nach Kostenstellen"
+        },
+        {
+          "kind": "requirement",
+          "text": "Zertifiziertes Entgeltabrechnungsprogramm nach ITSG-Prüfung"
+        },
+        {
+          "kind": "requirement",
+          "text": "Rechenzentrumsbetrieb in Deutschland"
+        }
+      ]
+    },
+    {
+      "slug": "traveldesk",
+      "name": "TravelDesk",
+      "short_description": "Business travel booking and travel expense management with mobile receipt capture and per diem calculation.",
+      "description": "TravelDesk covers the complete business trip from travel request to reimbursement. Employees book flights, trains and hotels within the travel policy, capture receipts with their phone and submit expense reports. Approved expenses are exported to SAP and DATEV.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Voyagr Technologies",
+      "version": "5.8",
+      "homepage_url": "https://traveldesk.example.com",
+      "tags": [
+        "travel",
+        "expenses",
+        "reisekosten",
+        "booking"
+      ],
+      "tech_stack": [
+        "saas",
+        "kotlin",
+        "react"
+      ],
+      "domains": [
+        "finance",
+        "hr"
+      ],
+      "maintainers": [
+        {
+          "name": "Stefan Wagner",
+          "email": "stefan.wagner@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Finance Travel Management"
+        },
+        {
+          "name": "Team ERP-Anwendungen",
+          "email": "erp-apps@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Booking of flights, trains and hotels according to the corporate travel policy"
+        },
+        {
+          "kind": "capability",
+          "text": "Travel requests with manager pre-approval"
+        },
+        {
+          "kind": "capability",
+          "text": "Mobile app for photographing receipts during the trip"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatic calculation of German per diem allowances (Verpflegungsmehraufwand) including foreign rates"
+        },
+        {
+          "kind": "capability",
+          "text": "Mileage allowance calculation for trips with a private car"
+        },
+        {
+          "kind": "capability",
+          "text": "Expense reports with approval workflow"
+        },
+        {
+          "kind": "capability",
+          "text": "Import and reconciliation of corporate credit card transactions"
+        },
+        {
+          "kind": "capability",
+          "text": "Export of approved expenses to SAP S/4HANA and DATEV"
+        },
+        {
+          "kind": "capability",
+          "text": "Deutsche Bahn business customer integration for train tickets"
+        },
+        {
+          "kind": "capability",
+          "text": "Multi-currency expenses with automatic exchange rates"
+        },
+        {
+          "kind": "feature",
+          "text": "Duty of care traveler tracking with risk alerts"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosted in EU data centers with a GDPR data processing agreement"
+        },
+        {
+          "kind": "capability",
+          "text": "Single sign-on via Microsoft Entra ID"
+        }
+      ]
+    },
+    {
+      "slug": "spesenmeister",
+      "name": "Spesenmeister",
+      "short_description": "Veraltetes internes Tool für Reisekostenabrechnungen. Wird bis Ende 2026 durch TravelDesk abgelöst.",
+      "description": "Spesenmeister ist eine interne Webanwendung zur Abrechnung von Dienstreisen im Inland. Belege werden eingescannt hochgeladen, die Abrechnung wird ausgedruckt und unterschrieben. Neue Funktionen werden nicht mehr entwickelt, die Nutzung soll schrittweise auf TravelDesk umgestellt werden.",
+      "lifecycle_status": "deprecated",
+      "license": "Internal",
+      "license_type": "internal",
+      "vendor": "Interne IT",
+      "version": "2.4",
+      "tags": [
+        "reisekosten",
+        "spesen",
+        "legacy"
+      ],
+      "tech_stack": [
+        "php",
+        "mysql"
+      ],
+      "domains": [
+        "finance"
+      ],
+      "maintainers": [
+        {
+          "name": "Stefan Wagner",
+          "email": "stefan.wagner@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Finance Travel Management"
+        },
+        {
+          "name": "Team ERP-Anwendungen",
+          "email": "erp-apps@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Reisekostenabrechnung über ein Webformular"
+        },
+        {
+          "kind": "capability",
+          "text": "Berechnung der Verpflegungspauschalen für Inlandsreisen"
+        },
+        {
+          "kind": "capability",
+          "text": "Hochladen eingescannter Belege als PDF"
+        },
+        {
+          "kind": "capability",
+          "text": "Genehmigung der Abrechnung durch die Führungskraft"
+        },
+        {
+          "kind": "capability",
+          "text": "Kilometerpauschale für Fahrten mit dem Privat-PKW"
+        },
+        {
+          "kind": "capability",
+          "text": "Export der Abrechnungen als CSV-Datei für die Lohnbuchhaltung"
+        },
+        {
+          "kind": "capability",
+          "text": "Druck der Abrechnung als PDF zur Unterschrift"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb on-premises"
+        }
+      ]
+    },
+    {
+      "slug": "servicehub-itsm",
+      "name": "ServiceHub ITSM",
+      "short_description": "IT service management platform for incidents, service requests, changes and IT assets following ITIL 4.",
+      "description": "ServiceHub ITSM is the internal IT service desk tool. Employees raise incidents and service requests through the self-service portal, email or Microsoft Teams, and IT teams work them under defined SLAs. The CMDB and asset management provide the configuration data for change management.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Arcadia Service Software",
+      "version": "2026.2",
+      "homepage_url": "https://servicehub-itsm.example.com",
+      "tags": [
+        "itsm",
+        "ticketing",
+        "itil",
+        "service desk",
+        "cmdb"
+      ],
+      "tech_stack": [
+        "saas",
+        "java",
+        "postgresql"
+      ],
+      "domains": [
+        "it"
+      ],
+      "maintainers": [
+        {
+          "name": "Daniel Köhler",
+          "email": "daniel.koehler@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Service Management"
+        },
+        {
+          "name": "IT Service Desk",
+          "email": "servicedesk@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Operations"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Incident management following ITIL 4 practices"
+        },
+        {
+          "kind": "capability",
+          "text": "Service request catalog with approval workflows"
+        },
+        {
+          "kind": "capability",
+          "text": "Self-service portal where employees raise and track IT tickets"
+        },
+        {
+          "kind": "capability",
+          "text": "Configuration management database (CMDB) with automatic asset discovery"
+        },
+        {
+          "kind": "capability",
+          "text": "Change management with change advisory board (CAB) approvals"
+        },
+        {
+          "kind": "capability",
+          "text": "Problem management linking related incidents"
+        },
+        {
+          "kind": "capability",
+          "text": "SLA definitions with escalation rules and breach notifications"
+        },
+        {
+          "kind": "capability",
+          "text": "Ticket creation from emails sent to the service desk mailbox"
+        },
+        {
+          "kind": "capability",
+          "text": "Microsoft Teams bot for creating and tracking tickets"
+        },
+        {
+          "kind": "capability",
+          "text": "IT asset management for hardware and software licenses"
+        },
+        {
+          "kind": "capability",
+          "text": "Handover of tickets to development teams in Jira"
+        },
+        {
+          "kind": "feature",
+          "text": "Knowledge articles suggested automatically while a ticket is being entered"
+        },
+        {
+          "kind": "capability",
+          "text": "Single sign-on and user synchronisation via Microsoft Entra ID"
+        },
+        {
+          "kind": "capability",
+          "text": "REST API for creating tickets from monitoring systems"
+        },
+        {
+          "kind": "requirement",
+          "text": "Available as SaaS in an EU region"
+        }
+      ]
+    },
+    {
+      "slug": "kundendesk",
+      "name": "KundenDesk",
+      "short_description": "Kundenservice-Helpdesk für Anfragen per E-Mail, Telefon, Chat und Kundenportal inklusive Wissensdatenbank.",
+      "description": "KundenDesk ist das Ticketsystem des Kundenservice. Anfragen von Kunden aus allen Kanälen landen in einer gemeinsamen Oberfläche und werden nach Thema und Sprache verteilt. Kunden sehen den Status ihrer Anfragen im Kundenportal und finden Antworten in der öffentlichen Wissensdatenbank.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Supportiva GmbH",
+      "version": "6.3",
+      "homepage_url": "https://kundendesk.example.com",
+      "tags": [
+        "helpdesk",
+        "kundenservice",
+        "ticketsystem",
+        "support"
+      ],
+      "tech_stack": [
+        "saas",
+        "php",
+        "mysql"
+      ],
+      "domains": [
+        "customer service",
+        "sales"
+      ],
+      "maintainers": [
+        {
+          "name": "Nicole Becker",
+          "email": "nicole.becker@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Kundenservice"
+        },
+        {
+          "name": "Team CRM & Service",
+          "email": "crm-service@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Ticketsystem für Kundenanfragen aus E-Mail, Kontaktformular und Telefon"
+        },
+        {
+          "kind": "capability",
+          "text": "Live-Chat-Widget für die Unternehmenswebsite"
+        },
+        {
+          "kind": "capability",
+          "text": "Kundenportal, in dem Kunden ihre Anfragen und den Bearbeitungsstatus einsehen"
+        },
+        {
+          "kind": "capability",
+          "text": "Öffentliche Wissensdatenbank mit FAQ-Artikeln für Kunden"
+        },
+        {
+          "kind": "capability",
+          "text": "Service-Level-Vereinbarungen mit Reaktions- und Lösungszeiten pro Kundengruppe"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatische Zuweisung von Tickets an Teams nach Thema und Sprache"
+        },
+        {
+          "kind": "capability",
+          "text": "Textbausteine und Antwortvorlagen für Supportmitarbeitende"
+        },
+        {
+          "kind": "capability",
+          "text": "Zufriedenheitsumfrage (CSAT) nach Abschluss eines Tickets"
+        },
+        {
+          "kind": "capability",
+          "text": "Integration der Telefonanlage mit Anruferkennung und automatischer Ticketanlage"
+        },
+        {
+          "kind": "capability",
+          "text": "Synchronisation von Kundendaten mit dem CRM"
+        },
+        {
+          "kind": "capability",
+          "text": "Auswertungen zu Ticketvolumen, Bearbeitungszeiten und Rückstau"
+        },
+        {
+          "kind": "feature",
+          "text": "KI-gestützte Antwortvorschläge auf Basis bisheriger Tickets"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosting in der EU"
+        }
+      ]
+    },
+    {
+      "slug": "helpline-classic",
+      "name": "Helpline Classic",
+      "short_description": "Ehemaliges Ticketsystem der IT-Hotline. Ersetzt durch ServiceHub ITSM.",
+      "description": "Helpline Classic war bis 2023 das Ticketsystem der internen IT-Hotline. Störungen wurden telefonisch oder per E-Mail aufgenommen und an Supportgruppen verteilt. Das System ist abgeschaltet, die Daten wurden archiviert.",
+      "lifecycle_status": "retired",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Helpware Systemhaus GmbH",
+      "version": "8.0",
+      "tags": [
+        "ticketing",
+        "it-hotline",
+        "legacy"
+      ],
+      "tech_stack": [
+        "delphi",
+        "microsoft sql server"
+      ],
+      "domains": [
+        "it"
+      ],
+      "maintainers": [
+        {
+          "name": "IT Service Desk",
+          "email": "servicedesk@example.com",
+          "role": "owner",
+          "kind": "team",
+          "org_unit": "IT Operations"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Erfassung von IT-Störungen durch die Hotline"
+        },
+        {
+          "kind": "capability",
+          "text": "Ticketanlage per E-Mail an die IT-Hotline"
+        },
+        {
+          "kind": "capability",
+          "text": "Zuweisung von Tickets an Supportgruppen"
+        },
+        {
+          "kind": "capability",
+          "text": "Statusbenachrichtigung per E-Mail an den Melder"
+        },
+        {
+          "kind": "capability",
+          "text": "Eskalation nach festen Bearbeitungszeiten"
+        },
+        {
+          "kind": "capability",
+          "text": "Einfache Inventarliste der Arbeitsplatzrechner"
+        },
+        {
+          "kind": "capability",
+          "text": "Monatliche Statistik über die Anzahl der Tickets"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb on-premises auf eigener Hardware"
+        }
+      ]
+    },
+    {
+      "slug": "identitygate",
+      "name": "IdentityGate",
+      "short_description": "Identity and access management with single sign-on, MFA, automated provisioning and access reviews.",
+      "description": "IdentityGate is the central identity platform. It provides single sign-on and multi-factor authentication for all business applications, provisions accounts automatically based on HR data and supports managers with periodic access reviews. Privileged admin accounts are protected by session recording.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Keystone Identity Ltd.",
+      "version": "12.0",
+      "homepage_url": "https://identitygate.example.com",
+      "tags": [
+        "iam",
+        "sso",
+        "mfa",
+        "provisioning",
+        "access management"
+      ],
+      "tech_stack": [
+        "java",
+        "kubernetes",
+        "postgresql"
+      ],
+      "domains": [
+        "it",
+        "security"
+      ],
+      "maintainers": [
+        {
+          "name": "Oliver Richter",
+          "email": "oliver.richter@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Security"
+        },
+        {
+          "name": "Team Identity",
+          "email": "identity@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Plattform"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Single sign-on for web applications via SAML 2.0 and OpenID Connect"
+        },
+        {
+          "kind": "capability",
+          "text": "Multi-factor authentication with authenticator app, FIDO2 security keys and SMS"
+        },
+        {
+          "kind": "capability",
+          "text": "Automated user provisioning and deprovisioning to SaaS applications via SCIM"
+        },
+        {
+          "kind": "capability",
+          "text": "Joiner-mover-leaver processes driven by HR master data"
+        },
+        {
+          "kind": "capability",
+          "text": "Periodic access reviews and recertification campaigns for managers"
+        },
+        {
+          "kind": "capability",
+          "text": "Role-based access control with business role modelling"
+        },
+        {
+          "kind": "capability",
+          "text": "Self-service password reset"
+        },
+        {
+          "kind": "capability",
+          "text": "Privileged access management with session recording for admin accounts"
+        },
+        {
+          "kind": "capability",
+          "text": "Synchronisation with Microsoft Entra ID and on-premises Active Directory"
+        },
+        {
+          "kind": "capability",
+          "text": "Access request portal with approval workflow"
+        },
+        {
+          "kind": "capability",
+          "text": "Segregation of duties (SoD) conflict detection"
+        },
+        {
+          "kind": "feature",
+          "text": "Risk-based conditional access policies"
+        },
+        {
+          "kind": "requirement",
+          "text": "Audit trail of all authentication and authorisation events"
+        },
+        {
+          "kind": "requirement",
+          "text": "ISO 27001 certified hosting in Germany"
+        }
+      ]
+    },
+    {
+      "slug": "docuvault",
+      "name": "DocuVault Archiv",
+      "short_description": "Revisionssicheres Dokumentenarchiv für Belege, Verträge, E-Mails und Personalakten nach GoBD.",
+      "description": "DocuVault ist das zentrale elektronische Archiv. Dokumente aus SAP, E-Mail und Scan werden revisionssicher abgelegt, automatisch klassifiziert und nach Ablauf der Aufbewahrungsfristen gelöscht. Die digitale Personalakte der HR läuft ebenfalls auf DocuVault.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Archivum Software GmbH",
+      "version": "10.1",
+      "homepage_url": "https://docuvault.example.com",
+      "tags": [
+        "archiv",
+        "dms",
+        "gobd",
+        "personalakte",
+        "e-mail-archivierung"
+      ],
+      "tech_stack": [
+        "java",
+        "oracle database",
+        "elasticsearch"
+      ],
+      "domains": [
+        "documents",
+        "compliance"
+      ],
+      "maintainers": [
+        {
+          "name": "Frank Neumann",
+          "email": "frank.neumann@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Business Applications"
+        },
+        {
+          "name": "Team Dokumentenmanagement",
+          "email": "dms@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Revisionssichere Langzeitarchivierung nach GoBD"
+        },
+        {
+          "kind": "capability",
+          "text": "Verwaltung von Aufbewahrungsfristen mit automatischer Löschung nach Fristablauf"
+        },
+        {
+          "kind": "capability",
+          "text": "Volltextsuche über alle archivierten Dokumente inklusive OCR-Texterkennung"
+        },
+        {
+          "kind": "capability",
+          "text": "Anbindung an SAP über ArchiveLink"
+        },
+        {
+          "kind": "capability",
+          "text": "Digitale Personalakte mit feingranularen Zugriffsrechten"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatische Klassifizierung eingehender Dokumente nach Dokumenttyp"
+        },
+        {
+          "kind": "capability",
+          "text": "Archivierung von E-Mails aus Microsoft Exchange"
+        },
+        {
+          "kind": "capability",
+          "text": "Versionierung von Dokumenten mit Änderungshistorie"
+        },
+        {
+          "kind": "capability",
+          "text": "Scannen von Papierdokumenten mit Barcode-Trennblättern"
+        },
+        {
+          "kind": "capability",
+          "text": "Legal Hold zum Sperren von Dokumenten gegen Löschung"
+        },
+        {
+          "kind": "capability",
+          "text": "Zugriff auf Archivdokumente über eine REST-API"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb on-premises möglich"
+        },
+        {
+          "kind": "requirement",
+          "text": "Zertifiziert nach IDW PS 880"
+        }
+      ]
+    },
+    {
+      "slug": "teamspace-docs",
+      "name": "TeamSpace Docs",
+      "short_description": "Collaborative document editing and file sharing for teams, integrated with Microsoft Teams and Outlook.",
+      "description": "TeamSpace Docs is the workspace for day-to-day documents. Teams co-author texts, spreadsheets and presentations in the browser, keep version history and share files with external partners. It is not intended for legally binding archiving.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Brightwork Labs",
+      "version": "2026.09",
+      "homepage_url": "https://teamspace-docs.example.com",
+      "tags": [
+        "collaboration",
+        "documents",
+        "file sharing",
+        "co-authoring"
+      ],
+      "tech_stack": [
+        "saas",
+        "typescript"
+      ],
+      "domains": [
+        "documents",
+        "collaboration"
+      ],
+      "maintainers": [
+        {
+          "name": "Katrin Lange",
+          "email": "katrin.lange@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Digital Workplace"
+        },
+        {
+          "name": "Digital Workplace Team",
+          "email": "workplace@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Digital Workplace"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Real-time co-authoring of text documents, spreadsheets and presentations"
+        },
+        {
+          "kind": "capability",
+          "text": "Version history with restore of previous document versions"
+        },
+        {
+          "kind": "capability",
+          "text": "Sharing files with external partners via password-protected links with expiry date"
+        },
+        {
+          "kind": "capability",
+          "text": "Comments and @mentions in documents"
+        },
+        {
+          "kind": "capability",
+          "text": "Team workspaces with folder structure and permissions"
+        },
+        {
+          "kind": "capability",
+          "text": "Microsoft Teams integration for opening and editing documents within channels"
+        },
+        {
+          "kind": "capability",
+          "text": "Desktop sync client for Windows and macOS"
+        },
+        {
+          "kind": "capability",
+          "text": "Offline access to files on mobile devices"
+        },
+        {
+          "kind": "capability",
+          "text": "Document templates for recurring documents"
+        },
+        {
+          "kind": "capability",
+          "text": "Full-text search across all team documents"
+        },
+        {
+          "kind": "feature",
+          "text": "Automatic conversion of documents to PDF"
+        },
+        {
+          "kind": "requirement",
+          "text": "Data stored in EU data centers"
+        },
+        {
+          "kind": "capability",
+          "text": "Single sign-on via Microsoft Entra ID"
+        }
+      ]
+    },
+    {
+      "slug": "vertragswerk",
+      "name": "VertragsWerk",
+      "short_description": "Vertragsmanagement mit Vertragsregister, Fristenüberwachung, Vorlagen und Freigabeworkflow.",
+      "description": "VertragsWerk verwaltet alle Verträge des Unternehmens von der Erstellung bis zur Kündigung. Die Rechtsabteilung stellt Vorlagen und Klauseln bereit, Fachbereiche erstellen daraus Verträge und lassen sie freigeben. Fristen werden automatisch überwacht.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Juristo Software GmbH",
+      "version": "4.7",
+      "homepage_url": "https://vertragswerk.example.com",
+      "tags": [
+        "verträge",
+        "vertragsmanagement",
+        "fristen",
+        "legal"
+      ],
+      "tech_stack": [
+        "saas",
+        ".net"
+      ],
+      "domains": [
+        "legal"
+      ],
+      "maintainers": [
+        {
+          "name": "Dr. Claudia Zimmermann",
+          "email": "claudia.zimmermann@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Recht"
+        },
+        {
+          "name": "Team Legal Tech",
+          "email": "legaltech@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "Recht"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Zentrales Vertragsregister mit Metadaten zu Vertragspartner, Laufzeit und Vertragswert"
+        },
+        {
+          "kind": "capability",
+          "text": "Erinnerung an Kündigungsfristen und automatische Vertragsverlängerungen per E-Mail"
+        },
+        {
+          "kind": "capability",
+          "text": "Vertragserstellung aus Vorlagen mit Klauselbibliothek"
+        },
+        {
+          "kind": "capability",
+          "text": "Freigabeworkflow für Verträge mit Rechtsabteilung und Geschäftsführung"
+        },
+        {
+          "kind": "capability",
+          "text": "Versionsvergleich von Vertragsentwürfen"
+        },
+        {
+          "kind": "capability",
+          "text": "Abstimmung von Vertragsentwürfen mit externen Vertragspartnern im Portal"
+        },
+        {
+          "kind": "capability",
+          "text": "Anbindung an einen Dienst für elektronische Signaturen zur Unterzeichnung von Verträgen"
+        },
+        {
+          "kind": "capability",
+          "text": "Auswertung der Vertragskosten nach Kostenstelle"
+        },
+        {
+          "kind": "capability",
+          "text": "Berechtigungskonzept für vertrauliche Verträge"
+        },
+        {
+          "kind": "capability",
+          "text": "Synchronisation von Fristen und Aufgaben mit dem Outlook-Kalender"
+        },
+        {
+          "kind": "feature",
+          "text": "KI-gestützte Extraktion von Vertragsdaten aus bestehenden PDF-Verträgen"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosting in Deutschland"
+        }
+      ]
+    },
+    {
+      "slug": "pipelinepro-crm",
+      "name": "PipelinePro CRM",
+      "short_description": "Customer relationship management for sales teams: leads, accounts, opportunities, quotes and forecasts.",
+      "description": "PipelinePro CRM is used by inside and field sales to manage customers and the sales pipeline. Opportunities move through defined sales stages, quotes are generated from the product catalog and management gets a forecast per region and product line. Customer master data is synchronised with SAP.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Salesware Corp.",
+      "version": "24.2",
+      "homepage_url": "https://pipelinepro-crm.example.com",
+      "tags": [
+        "crm",
+        "sales",
+        "leads",
+        "forecast"
+      ],
+      "tech_stack": [
+        "saas",
+        "java"
+      ],
+      "domains": [
+        "sales"
+      ],
+      "maintainers": [
+        {
+          "name": "Christian Schmitt",
+          "email": "christian.schmitt@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Vertrieb"
+        },
+        {
+          "name": "Team CRM & Service",
+          "email": "crm-service@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Lead management with lead scoring"
+        },
+        {
+          "kind": "capability",
+          "text": "Account and contact management with company hierarchies"
+        },
+        {
+          "kind": "capability",
+          "text": "Opportunity pipeline with configurable sales stages"
+        },
+        {
+          "kind": "capability",
+          "text": "Sales forecasting by region and product line"
+        },
+        {
+          "kind": "capability",
+          "text": "Quote generation from the product catalog with discount approval"
+        },
+        {
+          "kind": "capability",
+          "text": "Outlook and Gmail integration for logging emails and meetings"
+        },
+        {
+          "kind": "capability",
+          "text": "Mobile CRM app with offline mode for field sales"
+        },
+        {
+          "kind": "capability",
+          "text": "Activity tracking for calls, visits and tasks"
+        },
+        {
+          "kind": "capability",
+          "text": "Integration with SAP S/4HANA for customer master and order data"
+        },
+        {
+          "kind": "capability",
+          "text": "Sales dashboards and pipeline reports"
+        },
+        {
+          "kind": "feature",
+          "text": "Visit route planning for field sales representatives"
+        },
+        {
+          "kind": "requirement",
+          "text": "Data residency in the EU"
+        },
+        {
+          "kind": "capability",
+          "text": "REST API and webhooks"
+        }
+      ]
+    },
+    {
+      "slug": "mailwave",
+      "name": "MailWave",
+      "short_description": "Newsletter- und E-Mail-Marketing-Plattform mit Double-Opt-in, Segmentierung, A/B-Tests und Automatisierung.",
+      "description": "MailWave wird vom Marketing für Newsletter und automatisierte E-Mail-Kampagnen genutzt. Empfänger werden aus dem CRM übernommen und segmentiert, Anmeldungen laufen DSGVO-konform über Double-Opt-in. Öffnungen und Klicks werden je Kampagne ausgewertet.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Wellenreiter Marketing GmbH",
+      "version": "8.5",
+      "homepage_url": "https://mailwave.example.com",
+      "tags": [
+        "newsletter",
+        "e-mail-marketing",
+        "kampagnen",
+        "marketing automation"
+      ],
+      "tech_stack": [
+        "saas",
+        "php"
+      ],
+      "domains": [
+        "marketing"
+      ],
+      "maintainers": [
+        {
+          "name": "Anna Schröder",
+          "email": "anna.schroeder@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Marketing"
+        },
+        {
+          "name": "Team Marketing Tech",
+          "email": "martech@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "Marketing"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Versand von Newslettern an segmentierte Empfängerlisten"
+        },
+        {
+          "kind": "capability",
+          "text": "Double-Opt-in-Verfahren für Newsletter-Anmeldungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Drag-and-Drop-Editor für responsive E-Mail-Vorlagen"
+        },
+        {
+          "kind": "capability",
+          "text": "A/B-Tests von Betreffzeilen und Inhalten"
+        },
+        {
+          "kind": "capability",
+          "text": "Auswertung von Öffnungs- und Klickraten"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatisierte E-Mail-Strecken, z. B. Willkommensserien nach der Anmeldung"
+        },
+        {
+          "kind": "capability",
+          "text": "Abmeldelink und Verwaltung von Abmeldungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Einbettbare Anmeldeformulare für die Website"
+        },
+        {
+          "kind": "capability",
+          "text": "Import von Kontakten aus dem CRM"
+        },
+        {
+          "kind": "feature",
+          "text": "Versandzeitoptimierung pro Empfänger"
+        },
+        {
+          "kind": "requirement",
+          "text": "Versand über Server in Deutschland"
+        },
+        {
+          "kind": "requirement",
+          "text": "Einwilligungsnachweise gemäß DSGVO"
+        }
+      ]
+    },
+    {
+      "slug": "shopkern",
+      "name": "ShopKern Commerce",
+      "short_description": "B2B e-commerce platform for the customer web shop with customer-specific prices, punchout and SAP order transfer.",
+      "description": "ShopKern Commerce runs the B2B web shop where business customers order spare parts and consumables. Prices and assortments are customer-specific, large customers connect via OCI punchout from their procurement systems, and orders are transferred to SAP.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Merchantis GmbH",
+      "version": "6.12",
+      "homepage_url": "https://shopkern.example.com",
+      "tags": [
+        "e-commerce",
+        "webshop",
+        "b2b",
+        "punchout"
+      ],
+      "tech_stack": [
+        "php",
+        "mysql",
+        "elasticsearch",
+        "vue.js"
+      ],
+      "domains": [
+        "sales",
+        "e-commerce"
+      ],
+      "maintainers": [
+        {
+          "name": "Jan Hartmann",
+          "email": "jan.hartmann@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "E-Commerce"
+        },
+        {
+          "name": "Team E-Commerce",
+          "email": "ecommerce@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "B2B online shop with customer-specific prices and discounts"
+        },
+        {
+          "kind": "capability",
+          "text": "Product catalog management with variants and attributes"
+        },
+        {
+          "kind": "capability",
+          "text": "Payment via PayPal, credit card, Klarna and purchase on account"
+        },
+        {
+          "kind": "capability",
+          "text": "OCI punchout catalog for customers' procurement systems"
+        },
+        {
+          "kind": "capability",
+          "text": "Order transfer to SAP S/4HANA"
+        },
+        {
+          "kind": "capability",
+          "text": "Multi-language and multi-currency storefront"
+        },
+        {
+          "kind": "capability",
+          "text": "Quick order by article number and CSV upload"
+        },
+        {
+          "kind": "capability",
+          "text": "Customer accounts with multiple buyers and order approval"
+        },
+        {
+          "kind": "capability",
+          "text": "Shipment tracking for customers"
+        },
+        {
+          "kind": "capability",
+          "text": "Headless commerce API for custom frontends"
+        },
+        {
+          "kind": "capability",
+          "text": "SEO-friendly URLs and meta data management"
+        },
+        {
+          "kind": "feature",
+          "text": "Product recommendations based on order history"
+        },
+        {
+          "kind": "requirement",
+          "text": "PCI DSS compliant payment processing"
+        }
+      ]
+    },
+    {
+      "slug": "einkaufsportal",
+      "name": "Einkaufsportal",
+      "short_description": "Internes Beschaffungsportal für Bestellanforderungen, Katalogbestellungen, Ausschreibungen und Lieferantenmanagement.",
+      "description": "Das Einkaufsportal ist die zentrale Anlaufstelle für alle Beschaffungen. Mitarbeitende erstellen Bestellanforderungen oder bestellen aus Lieferantenkatalogen, der Einkauf führt Ausschreibungen durch und pflegt Lieferanten. Freigegebene Bestellungen werden an SAP MM übergeben.",
+      "lifecycle_status": "active",
+      "license": "Internal",
+      "license_type": "internal",
+      "vendor": "Interne IT",
+      "version": "5.2",
+      "homepage_url": "https://einkaufsportal.example.com",
+      "tags": [
+        "einkauf",
+        "beschaffung",
+        "bestellanforderung",
+        "lieferanten"
+      ],
+      "tech_stack": [
+        "java",
+        "spring boot",
+        "postgresql"
+      ],
+      "domains": [
+        "procurement"
+      ],
+      "maintainers": [
+        {
+          "name": "Ralf Meier",
+          "email": "ralf.meier@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Einkauf"
+        },
+        {
+          "name": "Team ERP-Anwendungen",
+          "email": "erp-apps@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Erstellung von Bestellanforderungen durch alle Mitarbeitenden"
+        },
+        {
+          "kind": "capability",
+          "text": "Freigabe von Bestellanforderungen nach Betragsgrenzen und Kostenstelle"
+        },
+        {
+          "kind": "capability",
+          "text": "Bestellung aus elektronischen Lieferantenkatalogen per OCI-Punchout"
+        },
+        {
+          "kind": "capability",
+          "text": "Übertragung freigegebener Bestellanforderungen als Bestellung in SAP MM"
+        },
+        {
+          "kind": "capability",
+          "text": "Durchführung von Ausschreibungen mit Angebotsvergleich"
+        },
+        {
+          "kind": "capability",
+          "text": "Pflege von Lieferantenstammdaten und Lieferantenbewertung"
+        },
+        {
+          "kind": "capability",
+          "text": "Verwaltung von Rahmenverträgen mit Abrufmengen"
+        },
+        {
+          "kind": "capability",
+          "text": "Wareneingangsbestätigung durch den Besteller"
+        },
+        {
+          "kind": "capability",
+          "text": "Lieferantenportal für Selbstauskünfte und Zertifikate"
+        },
+        {
+          "kind": "feature",
+          "text": "Nachhaltigkeitsbewertung von Lieferanten nach Lieferkettengesetz (LkSG)"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb on-premises im eigenen Rechenzentrum"
+        }
+      ]
+    },
+    {
+      "slug": "lagerlogix",
+      "name": "LagerLogix WMS",
+      "short_description": "Lagerverwaltungssystem für Wareneingang, Lagerplätze, Kommissionierung, Inventur und Versand.",
+      "description": "LagerLogix steuert die beiden Distributionslager. Wareneingänge werden gegen den Lieferschein geprüft und eingelagert, Aufträge mit mobilen Scannern kommissioniert und mit Versandetiketten der Paketdienste versendet. Bestände werden mit SAP abgeglichen.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Logisoft GmbH",
+      "version": "7.3",
+      "homepage_url": "https://lagerlogix.example.com",
+      "tags": [
+        "lager",
+        "wms",
+        "kommissionierung",
+        "versand",
+        "inventur"
+      ],
+      "tech_stack": [
+        "c#",
+        "microsoft sql server",
+        "android"
+      ],
+      "domains": [
+        "logistics"
+      ],
+      "maintainers": [
+        {
+          "name": "Sven Wolf",
+          "email": "sven.wolf@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Logistik"
+        },
+        {
+          "name": "Team Logistiksysteme",
+          "email": "logistik-it@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Business Applications"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Lagerplatzverwaltung mit chaotischer Lagerhaltung"
+        },
+        {
+          "kind": "capability",
+          "text": "Kommissionierung mit mobilen Barcode-Scannern"
+        },
+        {
+          "kind": "capability",
+          "text": "Wareneingangsprüfung gegen den Lieferschein"
+        },
+        {
+          "kind": "capability",
+          "text": "Permanente Inventur und Stichtagsinventur"
+        },
+        {
+          "kind": "capability",
+          "text": "Erstellung von Versandetiketten für DHL, UPS und DPD"
+        },
+        {
+          "kind": "capability",
+          "text": "Chargen- und Seriennummernverfolgung"
+        },
+        {
+          "kind": "capability",
+          "text": "Nachschubsteuerung mit Mindestbeständen"
+        },
+        {
+          "kind": "capability",
+          "text": "Schnittstelle zu SAP EWM und SAP S/4HANA"
+        },
+        {
+          "kind": "capability",
+          "text": "Verwaltung von Packmitteln und Ladungsträgern"
+        },
+        {
+          "kind": "capability",
+          "text": "Auslagerung nach FIFO und FEFO"
+        },
+        {
+          "kind": "feature",
+          "text": "Unterstützung für Pick-by-Light"
+        },
+        {
+          "kind": "requirement",
+          "text": "Offline-fähige Scanner-App bei WLAN-Ausfall"
+        }
+      ]
+    },
+    {
+      "slug": "fleetcontrol",
+      "name": "FleetControl",
+      "short_description": "Fleet management for company cars and pool vehicles: fuel cards, driver's license checks, logbook and maintenance.",
+      "description": "FleetControl manages all company vehicles including leasing contracts, fuel cards and maintenance dates. Drivers confirm their license checks and report damage via the mobile app, pool vehicles can be booked by all employees. The electronic logbook meets German tax requirements.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Autofleet Solutions B.V.",
+      "version": "4.0",
+      "homepage_url": "https://fleetcontrol.example.com",
+      "tags": [
+        "fleet",
+        "fuhrpark",
+        "vehicles",
+        "logbook"
+      ],
+      "tech_stack": [
+        "saas",
+        "python",
+        "postgresql"
+      ],
+      "domains": [
+        "facility",
+        "hr"
+      ],
+      "maintainers": [
+        {
+          "name": "Michael Krause",
+          "email": "michael.krause@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Facility Management"
+        },
+        {
+          "name": "Facility Systems",
+          "email": "facility-it@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "Facility Management"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Central register of all company vehicles with contract and leasing data"
+        },
+        {
+          "kind": "capability",
+          "text": "Fuel card management with import of fuel transactions"
+        },
+        {
+          "kind": "capability",
+          "text": "Periodic driver's license checks via smartphone app"
+        },
+        {
+          "kind": "capability",
+          "text": "Maintenance and inspection scheduling with reminders for TÜV and service intervals"
+        },
+        {
+          "kind": "capability",
+          "text": "Electronic logbook compliant with German tax requirements"
+        },
+        {
+          "kind": "capability",
+          "text": "Damage reporting with photos via mobile app"
+        },
+        {
+          "kind": "capability",
+          "text": "Pool vehicle booking for employees"
+        },
+        {
+          "kind": "capability",
+          "text": "Total cost of ownership reports per vehicle"
+        },
+        {
+          "kind": "capability",
+          "text": "Tracking of charging sessions for electric vehicles"
+        },
+        {
+          "kind": "capability",
+          "text": "Records of annual driver safety instructions (UVV)"
+        },
+        {
+          "kind": "feature",
+          "text": "Telematics integration for automatic mileage readout"
+        },
+        {
+          "kind": "requirement",
+          "text": "GPS location tracking only with works council approval and can be disabled per vehicle"
+        }
+      ]
+    },
+    {
+      "slug": "roomie",
+      "name": "Roomie Workplace",
+      "short_description": "Workplace booking for meeting rooms, desks and parking spaces with Outlook integration and floor plans.",
+      "description": "Roomie Workplace supports hybrid work in all offices. Employees book desks on interactive floor plans and meeting rooms directly from Outlook, room displays show the current occupancy. Facility management uses occupancy analytics to plan office space.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Deskly AB",
+      "version": "3.9",
+      "homepage_url": "https://roomie.example.com",
+      "tags": [
+        "room booking",
+        "desk sharing",
+        "workplace",
+        "hybrid work"
+      ],
+      "tech_stack": [
+        "saas",
+        "node.js"
+      ],
+      "domains": [
+        "facility"
+      ],
+      "maintainers": [
+        {
+          "name": "Sandra Klein",
+          "email": "sandra.klein@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Facility Management"
+        },
+        {
+          "name": "Digital Workplace Team",
+          "email": "workplace@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Digital Workplace"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Meeting room booking with Outlook and Exchange calendar integration"
+        },
+        {
+          "kind": "capability",
+          "text": "Desk sharing reservations on interactive floor plans"
+        },
+        {
+          "kind": "capability",
+          "text": "Room displays at the door showing current and upcoming bookings"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatic release of booked rooms when nobody checks in"
+        },
+        {
+          "kind": "capability",
+          "text": "Occupancy analytics based on bookings and sensors"
+        },
+        {
+          "kind": "capability",
+          "text": "Catering and equipment orders when booking a meeting room"
+        },
+        {
+          "kind": "capability",
+          "text": "Parking space booking for employees"
+        },
+        {
+          "kind": "capability",
+          "text": "Microsoft Teams app for booking desks"
+        },
+        {
+          "kind": "capability",
+          "text": "Colleague finder showing where team members work today"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosted in the EU"
+        },
+        {
+          "kind": "capability",
+          "text": "Single sign-on via Microsoft Entra ID"
+        }
+      ]
+    },
+    {
+      "slug": "empfang-plus",
+      "name": "Empfang Plus",
+      "short_description": "Besuchermanagement mit Voranmeldung, Self-Check-in am Tablet, Besucherausweisen und Gastgeber-Benachrichtigung.",
+      "description": "Empfang Plus organisiert den Empfang von Besuchern an allen Standorten. Mitarbeitende melden ihre Gäste vorab an, Besucher checken am Tablet ein, unterschreiben Geheimhaltungsvereinbarung und Sicherheitsbelehrung und erhalten einen Ausweis. Der Gastgeber wird automatisch benachrichtigt.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Gastgeber Software GmbH",
+      "version": "2.6",
+      "homepage_url": "https://empfang-plus.example.com",
+      "tags": [
+        "besucher",
+        "empfang",
+        "visitor management",
+        "check-in"
+      ],
+      "tech_stack": [
+        "saas",
+        "ios"
+      ],
+      "domains": [
+        "facility",
+        "security"
+      ],
+      "maintainers": [
+        {
+          "name": "Birgit Schwarz",
+          "email": "birgit.schwarz@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Empfang und Werkschutz"
+        },
+        {
+          "name": "Facility Systems",
+          "email": "facility-it@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "Facility Management"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Voranmeldung von Besuchern durch Mitarbeitende"
+        },
+        {
+          "kind": "capability",
+          "text": "Selbstregistrierung von Besuchern am Empfangs-Tablet"
+        },
+        {
+          "kind": "capability",
+          "text": "Druck von Besucherausweisen mit Foto und QR-Code"
+        },
+        {
+          "kind": "capability",
+          "text": "Digitale Unterschrift von Geheimhaltungsvereinbarungen und Sicherheitsbelehrungen beim Check-in"
+        },
+        {
+          "kind": "capability",
+          "text": "Benachrichtigung des Gastgebers per E-Mail, SMS oder Microsoft Teams bei Ankunft des Besuchers"
+        },
+        {
+          "kind": "capability",
+          "text": "Aktuelle Besucherliste für Evakuierungen und Notfälle"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatische Löschung der Besucherdaten nach konfigurierbarer Frist"
+        },
+        {
+          "kind": "capability",
+          "text": "Verwaltung von Lieferanten- und Handwerkerbesuchen mit Zutrittszeiten"
+        },
+        {
+          "kind": "capability",
+          "text": "Integration mit dem Zutrittskontrollsystem für temporäre Ausweise"
+        },
+        {
+          "kind": "feature",
+          "text": "Einladungs-E-Mail mit Anfahrtsbeschreibung und Parkinformationen"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosting in Deutschland"
+        }
+      ]
+    },
+    {
+      "slug": "planboard",
+      "name": "PlanBoard",
+      "short_description": "Project and portfolio management with Gantt charts, Kanban boards, resource planning and Jira synchronisation.",
+      "description": "PlanBoard is used by the PMO and project managers for classic and agile projects. Plans are built as Gantt charts with dependencies, agile teams work on Kanban boards, and resource managers see capacity across all projects. Tasks are synchronised with Jira for development teams.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Taskline GmbH",
+      "version": "11.3",
+      "homepage_url": "https://planboard.example.com",
+      "tags": [
+        "project management",
+        "gantt",
+        "kanban",
+        "ppm"
+      ],
+      "tech_stack": [
+        "saas",
+        "java",
+        "react"
+      ],
+      "domains": [
+        "projects"
+      ],
+      "maintainers": [
+        {
+          "name": "Tobias Lehmann",
+          "email": "tobias.lehmann@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "PMO"
+        },
+        {
+          "name": "Team Collaboration Tools",
+          "email": "collab-tools@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Digital Workplace"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Project planning with Gantt charts and task dependencies"
+        },
+        {
+          "kind": "capability",
+          "text": "Kanban boards for agile teams"
+        },
+        {
+          "kind": "capability",
+          "text": "Resource planning and capacity overview across projects"
+        },
+        {
+          "kind": "capability",
+          "text": "Time tracking on project tasks"
+        },
+        {
+          "kind": "capability",
+          "text": "Milestones and project status reports"
+        },
+        {
+          "kind": "capability",
+          "text": "Project portfolio overview with budget tracking"
+        },
+        {
+          "kind": "capability",
+          "text": "Bidirectional synchronisation with Jira issues"
+        },
+        {
+          "kind": "capability",
+          "text": "Task comments and file attachments"
+        },
+        {
+          "kind": "capability",
+          "text": "Project templates for recurring project types"
+        },
+        {
+          "kind": "capability",
+          "text": "Risk and issue log per project"
+        },
+        {
+          "kind": "capability",
+          "text": "Microsoft Teams notifications for task updates"
+        },
+        {
+          "kind": "feature",
+          "text": "Critical path analysis"
+        },
+        {
+          "kind": "requirement",
+          "text": "SaaS hosted in the EU"
+        }
+      ]
+    },
+    {
+      "slug": "wissenswiki",
+      "name": "WissensWiki",
+      "short_description": "Unternehmensweites Wiki für Anleitungen, Prozessbeschreibungen, Protokolle und Teamwissen.",
+      "description": "WissensWiki ist die zentrale Wissensbasis für alle Mitarbeitenden. Teams dokumentieren Prozesse, Anleitungen und Besprechungsprotokolle in Bereichen mit eigenen Berechtigungen. Seiten mit verbindlichem Charakter durchlaufen einen Freigabeprozess mit regelmäßiger Überprüfung.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Wikiwerk GmbH",
+      "version": "8.1",
+      "homepage_url": "https://wissenswiki.example.com",
+      "tags": [
+        "wiki",
+        "wissensmanagement",
+        "dokumentation",
+        "intranet"
+      ],
+      "tech_stack": [
+        "java",
+        "postgresql"
+      ],
+      "domains": [
+        "knowledge",
+        "collaboration"
+      ],
+      "maintainers": [
+        {
+          "name": "Katrin Lange",
+          "email": "katrin.lange@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Digital Workplace"
+        },
+        {
+          "name": "Team Collaboration Tools",
+          "email": "collab-tools@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Digital Workplace"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Erstellung von Wiki-Seiten mit WYSIWYG-Editor"
+        },
+        {
+          "kind": "capability",
+          "text": "Seitenvorlagen für Anleitungen, Besprechungsprotokolle und Prozessbeschreibungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Volltextsuche über alle Seiten und Anhänge"
+        },
+        {
+          "kind": "capability",
+          "text": "Lese- und Schreibrechte pro Wiki-Bereich"
+        },
+        {
+          "kind": "capability",
+          "text": "Versionshistorie mit Vergleich von Seitenständen"
+        },
+        {
+          "kind": "capability",
+          "text": "Import von Inhalten aus Confluence"
+        },
+        {
+          "kind": "capability",
+          "text": "Kommentare und Erwähnungen auf Seiten"
+        },
+        {
+          "kind": "capability",
+          "text": "Freigabeprozess für Seiten mit Gültigkeitsdatum und Erinnerung zur Überprüfung"
+        },
+        {
+          "kind": "capability",
+          "text": "Einbindung von Diagrammen mit draw.io"
+        },
+        {
+          "kind": "feature",
+          "text": "Export von Seiten als PDF"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb on-premises möglich"
+        },
+        {
+          "kind": "capability",
+          "text": "Anmeldung über Microsoft Entra ID"
+        }
+      ]
+    },
+    {
+      "slug": "insightboard",
+      "name": "InsightBoard BI",
+      "short_description": "Business intelligence platform for interactive dashboards, scheduled reports and self-service analytics.",
+      "description": "InsightBoard BI is the company-wide reporting platform. Data from SAP BW, SQL databases and Excel files is modelled in a semantic layer with central KPI definitions, and business users build dashboards themselves. Reports can be distributed automatically by email.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Clearview Analytics Inc.",
+      "version": "2026.2",
+      "homepage_url": "https://insightboard.example.com",
+      "tags": [
+        "bi",
+        "reporting",
+        "dashboards",
+        "analytics",
+        "kpi"
+      ],
+      "tech_stack": [
+        "java",
+        "python"
+      ],
+      "domains": [
+        "data",
+        "finance"
+      ],
+      "maintainers": [
+        {
+          "name": "Andreas Schmid",
+          "email": "andreas.schmid@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Controlling"
+        },
+        {
+          "name": "Data & Analytics Team",
+          "email": "data-analytics@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Data Platform"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Interactive dashboards with drill-down"
+        },
+        {
+          "kind": "capability",
+          "text": "Connectors to SQL databases, SAP BW and Excel files"
+        },
+        {
+          "kind": "capability",
+          "text": "Scheduled report delivery by email as PDF"
+        },
+        {
+          "kind": "capability",
+          "text": "Row-level security based on user attributes"
+        },
+        {
+          "kind": "capability",
+          "text": "Self-service data exploration with drag-and-drop"
+        },
+        {
+          "kind": "capability",
+          "text": "Embedding of dashboards in other web applications"
+        },
+        {
+          "kind": "capability",
+          "text": "Export of charts and tables to Excel"
+        },
+        {
+          "kind": "capability",
+          "text": "Semantic layer with centrally defined KPIs"
+        },
+        {
+          "kind": "capability",
+          "text": "Alerts when KPI thresholds are exceeded"
+        },
+        {
+          "kind": "capability",
+          "text": "Mobile app for viewing dashboards"
+        },
+        {
+          "kind": "feature",
+          "text": "Natural language questions answered as charts"
+        },
+        {
+          "kind": "requirement",
+          "text": "On-premises deployment option"
+        }
+      ]
+    },
+    {
+      "slug": "datenkompass",
+      "name": "DatenKompass",
+      "short_description": "Datenkatalog mit Metadaten, Data Lineage, Fachglossar und Verantwortlichkeiten für Datenbestände.",
+      "description": "DatenKompass wird aktuell im Rahmen der Data-Governance-Initiative pilotiert. Der Katalog liest Metadaten aus Datenbanken und dem Data Warehouse automatisch ein, zeigt die Herkunft von Kennzahlen und dokumentiert Verantwortliche. Personenbezogene Daten werden automatisch erkannt.",
+      "lifecycle_status": "pilot",
+      "license": "Apache-2.0",
+      "license_type": "oss",
+      "vendor": "Open-Source-Community (intern betrieben)",
+      "version": "0.9",
+      "homepage_url": "https://datenkompass.example.com",
+      "tags": [
+        "datenkatalog",
+        "data governance",
+        "metadaten",
+        "lineage"
+      ],
+      "tech_stack": [
+        "python",
+        "kubernetes",
+        "postgresql",
+        "elasticsearch"
+      ],
+      "domains": [
+        "data"
+      ],
+      "maintainers": [
+        {
+          "name": "Dr. Eva Bauer",
+          "email": "eva.bauer@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Data Governance"
+        },
+        {
+          "name": "Data & Analytics Team",
+          "email": "data-analytics@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Data Platform"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Zentraler Katalog aller Datenquellen und Tabellen mit Metadaten"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatisches Einlesen von Metadaten aus Datenbanken und dem Data Warehouse"
+        },
+        {
+          "kind": "capability",
+          "text": "Darstellung der Data Lineage vom Quellsystem bis zum Bericht"
+        },
+        {
+          "kind": "capability",
+          "text": "Fachliches Glossar mit Definitionen von Kennzahlen und Begriffen"
+        },
+        {
+          "kind": "capability",
+          "text": "Zuordnung von Data Ownern und Data Stewards zu Datenbeständen"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatische Erkennung personenbezogener Daten in Tabellen"
+        },
+        {
+          "kind": "capability",
+          "text": "Bewertung der Datenqualität mit Prüfregeln und Qualitätskennzahlen"
+        },
+        {
+          "kind": "capability",
+          "text": "Suche nach Datensätzen über Stichwörter und Tags"
+        },
+        {
+          "kind": "feature",
+          "text": "Kommentare und Bewertungen von Datensätzen durch Nutzer"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb in Kubernetes on-premises"
+        }
+      ]
+    },
+    {
+      "slug": "watchtower",
+      "name": "Watchtower Observability",
+      "short_description": "Observability platform for metrics, logs, traces, alerting and on-call management.",
+      "description": "Watchtower collects metrics, logs and traces from all applications and infrastructure. Operations teams build dashboards, define alerts and SLOs and are paged according to on-call schedules. Critical alerts automatically create incidents in ServiceHub ITSM.",
+      "lifecycle_status": "active",
+      "license": "AGPL-3.0",
+      "license_type": "oss",
+      "vendor": "Watchtower Project",
+      "version": "3.4",
+      "homepage_url": "https://watchtower.example.com",
+      "tags": [
+        "monitoring",
+        "observability",
+        "alerting",
+        "logging",
+        "tracing"
+      ],
+      "tech_stack": [
+        "go",
+        "kubernetes",
+        "prometheus",
+        "opentelemetry"
+      ],
+      "domains": [
+        "it"
+      ],
+      "maintainers": [
+        {
+          "name": "Felix Hofmann",
+          "email": "felix.hofmann@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Operations"
+        },
+        {
+          "name": "Platform Engineering",
+          "email": "platform@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Plattform"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Metrics collection compatible with Prometheus"
+        },
+        {
+          "kind": "capability",
+          "text": "Centralised log aggregation and search"
+        },
+        {
+          "kind": "capability",
+          "text": "Distributed tracing with OpenTelemetry"
+        },
+        {
+          "kind": "capability",
+          "text": "Alerting with routing to email, SMS and Microsoft Teams"
+        },
+        {
+          "kind": "capability",
+          "text": "On-call schedules with escalation policies"
+        },
+        {
+          "kind": "capability",
+          "text": "Synthetic monitoring of websites and APIs"
+        },
+        {
+          "kind": "capability",
+          "text": "Dashboards for infrastructure and application metrics"
+        },
+        {
+          "kind": "capability",
+          "text": "Kubernetes cluster monitoring"
+        },
+        {
+          "kind": "capability",
+          "text": "SLO tracking with error budgets"
+        },
+        {
+          "kind": "capability",
+          "text": "Anomaly detection on metrics"
+        },
+        {
+          "kind": "feature",
+          "text": "Automatic creation of incidents in ServiceHub ITSM"
+        },
+        {
+          "kind": "requirement",
+          "text": "Log data retention configurable up to 400 days"
+        },
+        {
+          "kind": "requirement",
+          "text": "Self-hosted deployment option"
+        }
+      ]
+    },
+    {
+      "slug": "buildline",
+      "name": "BuildLine CI",
+      "short_description": "CI/CD platform for building, testing and deploying applications with pipelines as code.",
+      "description": "BuildLine CI runs all build and deployment pipelines of the development teams. Pipelines are defined as YAML in the repository, build container images, run tests and security scans and deploy to Kubernetes with approval gates for production.",
+      "lifecycle_status": "active",
+      "license": "MIT",
+      "license_type": "oss",
+      "vendor": "BuildLine Community",
+      "version": "15.2",
+      "homepage_url": "https://buildline.example.com",
+      "tags": [
+        "ci/cd",
+        "devops",
+        "pipelines",
+        "deployment"
+      ],
+      "tech_stack": [
+        "go",
+        "kubernetes",
+        "docker"
+      ],
+      "domains": [
+        "it",
+        "software development"
+      ],
+      "maintainers": [
+        {
+          "name": "Lukas Schäfer",
+          "email": "lukas.schaefer@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Software Engineering"
+        },
+        {
+          "name": "Platform Engineering",
+          "email": "platform@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Plattform"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Pipeline definitions as code in YAML"
+        },
+        {
+          "kind": "capability",
+          "text": "Build triggers on Git push and merge requests"
+        },
+        {
+          "kind": "capability",
+          "text": "Container image builds and push to a registry"
+        },
+        {
+          "kind": "capability",
+          "text": "Parallel test execution with test reports"
+        },
+        {
+          "kind": "capability",
+          "text": "Deployments to Kubernetes with manual approval gates"
+        },
+        {
+          "kind": "capability",
+          "text": "Artifact repository for Maven, npm and Python packages"
+        },
+        {
+          "kind": "capability",
+          "text": "Static code analysis and dependency vulnerability scanning"
+        },
+        {
+          "kind": "capability",
+          "text": "Self-hosted build agents on Linux and Windows"
+        },
+        {
+          "kind": "capability",
+          "text": "Injection of environment-specific secrets from an external vault"
+        },
+        {
+          "kind": "capability",
+          "text": "Integration with GitLab and GitHub repositories"
+        },
+        {
+          "kind": "feature",
+          "text": "Pipeline caching to speed up builds"
+        },
+        {
+          "kind": "requirement",
+          "text": "Audit log of all deployments to production"
+        }
+      ]
+    },
+    {
+      "slug": "tresor",
+      "name": "Tresor Secrets",
+      "short_description": "Zentrale Secrets-Verwaltung für Anwendungen: Passwörter, API-Schlüssel, Zertifikate und dynamische Zugangsdaten.",
+      "description": "Tresor ist der zentrale Speicher für technische Zugangsdaten aller Anwendungen und Pipelines. Secrets werden verschlüsselt abgelegt, automatisch rotiert und zur Laufzeit in Kubernetes-Pods eingebunden. Der Betrieb erfolgt hochverfügbar im eigenen Rechenzentrum mit HSM.",
+      "lifecycle_status": "active",
+      "license": "MPL-2.0",
+      "license_type": "oss",
+      "vendor": "Tresor Project",
+      "version": "1.18",
+      "homepage_url": "https://tresor.example.com",
+      "tags": [
+        "secrets",
+        "vault",
+        "pki",
+        "security"
+      ],
+      "tech_stack": [
+        "go",
+        "kubernetes"
+      ],
+      "domains": [
+        "it",
+        "security"
+      ],
+      "maintainers": [
+        {
+          "name": "Oliver Richter",
+          "email": "oliver.richter@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Security"
+        },
+        {
+          "name": "Platform Engineering",
+          "email": "platform@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Plattform"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Zentrale Verwaltung von Passwörtern, API-Schlüsseln und Zertifikaten für Anwendungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatische Rotation von Datenbank-Zugangsdaten"
+        },
+        {
+          "kind": "capability",
+          "text": "Dynamische, kurzlebige Zugangsdaten für Datenbanken"
+        },
+        {
+          "kind": "capability",
+          "text": "Einbindung von Secrets in Kubernetes-Pods zur Laufzeit"
+        },
+        {
+          "kind": "capability",
+          "text": "Verschlüsselung als Dienst (Encryption as a Service) für Anwendungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Feingranulare Zugriffsrichtlinien pro Anwendung und Team"
+        },
+        {
+          "kind": "capability",
+          "text": "Anbindung an ein Hardware-Sicherheitsmodul (HSM)"
+        },
+        {
+          "kind": "capability",
+          "text": "Ausstellung interner TLS-Zertifikate über eine eigene PKI"
+        },
+        {
+          "kind": "capability",
+          "text": "Authentifizierung von Anwendungen über Kubernetes-Service-Accounts und OIDC"
+        },
+        {
+          "kind": "requirement",
+          "text": "Lückenloses Audit-Log aller Zugriffe auf Secrets"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hochverfügbarer Betrieb im eigenen Rechenzentrum"
+        }
+      ]
+    },
+    {
+      "slug": "safecopy",
+      "name": "SafeCopy Backup",
+      "short_description": "Enterprise backup and recovery for virtual machines, databases and Microsoft 365 with immutable storage.",
+      "description": "SafeCopy Backup protects the virtual infrastructure, databases and Microsoft 365 data. Backups are stored immutably and replicated to the second data center, and automated restore tests prove recoverability. Single files and emails can be restored by the service desk.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Datashield Systems",
+      "version": "12.2",
+      "homepage_url": "https://safecopy.example.com",
+      "tags": [
+        "backup",
+        "restore",
+        "disaster recovery",
+        "ransomware"
+      ],
+      "tech_stack": [
+        "windows server",
+        "linux"
+      ],
+      "domains": [
+        "it"
+      ],
+      "maintainers": [
+        {
+          "name": "Felix Hofmann",
+          "email": "felix.hofmann@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Operations"
+        },
+        {
+          "name": "Team Infrastruktur",
+          "email": "infrastructure@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Operations"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Backup of VMware and Hyper-V virtual machines"
+        },
+        {
+          "kind": "capability",
+          "text": "Backup of Microsoft 365 mailboxes, OneDrive and SharePoint"
+        },
+        {
+          "kind": "capability",
+          "text": "Immutable backups protected against ransomware"
+        },
+        {
+          "kind": "capability",
+          "text": "Granular restore of single files and emails"
+        },
+        {
+          "kind": "capability",
+          "text": "Automated restore tests with reports"
+        },
+        {
+          "kind": "capability",
+          "text": "Replication of backups to a second site"
+        },
+        {
+          "kind": "capability",
+          "text": "Backup of PostgreSQL and SQL Server databases"
+        },
+        {
+          "kind": "capability",
+          "text": "Retention policies with daily, weekly and monthly generations"
+        },
+        {
+          "kind": "capability",
+          "text": "Encryption of backup data at rest and in transit"
+        },
+        {
+          "kind": "capability",
+          "text": "Dashboard with backup job status and alerts"
+        },
+        {
+          "kind": "requirement",
+          "text": "Recovery time objective under 4 hours for critical systems"
+        }
+      ]
+    },
+    {
+      "slug": "lernhafen",
+      "name": "LernHafen",
+      "short_description": "Lernplattform für E-Learning, Pflichtschulungen, Präsenzschulungen und Schulungsnachweise.",
+      "description": "LernHafen ist das Learning Management System für alle Mitarbeitenden. HR und Fachbereiche weisen Pflichtschulungen zu, stellen eigene E-Learnings bereit und verwalten Präsenzschulungen. Für Audits stehen Teilnahmenachweise und Zertifikate zur Verfügung.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "EduNova GmbH",
+      "version": "5.5",
+      "homepage_url": "https://lernhafen.example.com",
+      "tags": [
+        "lms",
+        "e-learning",
+        "schulungen",
+        "weiterbildung"
+      ],
+      "tech_stack": [
+        "saas",
+        "php"
+      ],
+      "domains": [
+        "hr"
+      ],
+      "maintainers": [
+        {
+          "name": "Melanie Koch",
+          "email": "melanie.koch@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Personalentwicklung"
+        },
+        {
+          "name": "HR Systems Team",
+          "email": "hr-systems@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "HR IT"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Bereitstellung von E-Learning-Kursen im SCORM- und xAPI-Format"
+        },
+        {
+          "kind": "capability",
+          "text": "Zuweisung von Pflichtschulungen an Zielgruppen, z. B. Datenschutz und Arbeitssicherheit"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatische Erinnerung bei fälligen und überfälligen Schulungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Wissenstests mit Fragenpool und Bestehensgrenze"
+        },
+        {
+          "kind": "capability",
+          "text": "Ausstellung von Teilnahmezertifikaten als PDF"
+        },
+        {
+          "kind": "capability",
+          "text": "Verwaltung von Präsenzschulungen mit Teilnehmerlisten"
+        },
+        {
+          "kind": "capability",
+          "text": "Nachweis der Schulungsteilnahme für Audits"
+        },
+        {
+          "kind": "capability",
+          "text": "Autorentool zur Erstellung eigener Lernmodule"
+        },
+        {
+          "kind": "capability",
+          "text": "Lernpfade mit aufeinander aufbauenden Kursen"
+        },
+        {
+          "kind": "capability",
+          "text": "Synchronisation von Mitarbeitenden und Abteilungen aus dem HR-System"
+        },
+        {
+          "kind": "feature",
+          "text": "Gamification mit Punkten und Abzeichen"
+        },
+        {
+          "kind": "requirement",
+          "text": "Mobile Nutzung per App"
+        }
+      ]
+    },
+    {
+      "slug": "pulsecheck",
+      "name": "PulseCheck",
+      "short_description": "Survey platform for employee engagement surveys, pulse checks, eNPS and customer feedback.",
+      "description": "PulseCheck is used by HR for engagement and pulse surveys and by business units for customer feedback. Anonymity thresholds protect employees, and managers receive results for their department together with an action plan.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Feedbackly Oy",
+      "version": "4.4",
+      "homepage_url": "https://pulsecheck.example.com",
+      "tags": [
+        "surveys",
+        "feedback",
+        "engagement",
+        "enps"
+      ],
+      "tech_stack": [
+        "saas",
+        "python"
+      ],
+      "domains": [
+        "hr",
+        "customer service"
+      ],
+      "maintainers": [
+        {
+          "name": "Melanie Koch",
+          "email": "melanie.koch@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Personalentwicklung"
+        },
+        {
+          "name": "HR Systems Team",
+          "email": "hr-systems@example.com",
+          "role": "contact",
+          "kind": "team",
+          "org_unit": "HR IT"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Employee engagement surveys with anonymity threshold"
+        },
+        {
+          "kind": "capability",
+          "text": "Pulse surveys with short recurring questionnaires"
+        },
+        {
+          "kind": "capability",
+          "text": "eNPS and NPS measurement"
+        },
+        {
+          "kind": "capability",
+          "text": "Survey builder with multiple question types and branching logic"
+        },
+        {
+          "kind": "capability",
+          "text": "Results dashboards per department respecting minimum group sizes"
+        },
+        {
+          "kind": "capability",
+          "text": "Free-text comment analysis with sentiment detection"
+        },
+        {
+          "kind": "capability",
+          "text": "Customer feedback surveys via email link and QR code"
+        },
+        {
+          "kind": "capability",
+          "text": "Action planning for managers based on survey results"
+        },
+        {
+          "kind": "capability",
+          "text": "Multi-language surveys"
+        },
+        {
+          "kind": "feature",
+          "text": "Microsoft Teams integration for answering surveys"
+        },
+        {
+          "kind": "requirement",
+          "text": "Data processing in the EU"
+        }
+      ]
+    },
+    {
+      "slug": "talkspace",
+      "name": "TalkSpace",
+      "short_description": "Team chat and video conferencing with channels, direct messages, guest access and integrations.",
+      "description": "TalkSpace is used in production plants and subsidiaries that do not use Microsoft Teams. It offers channels, direct messages, audio and video calls and guest access for external partners. Messages are retained according to compliance policies.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Chatterly Inc.",
+      "version": "2026.8",
+      "homepage_url": "https://talkspace.example.com",
+      "tags": [
+        "chat",
+        "video conferencing",
+        "collaboration",
+        "messaging"
+      ],
+      "tech_stack": [
+        "saas",
+        "elixir"
+      ],
+      "domains": [
+        "collaboration"
+      ],
+      "maintainers": [
+        {
+          "name": "Katrin Lange",
+          "email": "katrin.lange@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "IT Digital Workplace"
+        },
+        {
+          "name": "Digital Workplace Team",
+          "email": "workplace@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Digital Workplace"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Team channels and direct messages"
+        },
+        {
+          "kind": "capability",
+          "text": "Audio and video calls with screen sharing"
+        },
+        {
+          "kind": "capability",
+          "text": "File sharing in chats"
+        },
+        {
+          "kind": "capability",
+          "text": "Guest access for external partners"
+        },
+        {
+          "kind": "capability",
+          "text": "Message search across all channels"
+        },
+        {
+          "kind": "capability",
+          "text": "Integrations via bots and incoming webhooks"
+        },
+        {
+          "kind": "capability",
+          "text": "Mobile apps with push notifications"
+        },
+        {
+          "kind": "capability",
+          "text": "Message retention policies and eDiscovery export"
+        },
+        {
+          "kind": "feature",
+          "text": "Machine translation of chat messages"
+        },
+        {
+          "kind": "requirement",
+          "text": "End-to-end encryption for direct messages"
+        },
+        {
+          "kind": "capability",
+          "text": "Single sign-on via SAML 2.0"
+        }
+      ]
+    },
+    {
+      "slug": "signfix",
+      "name": "SignFix",
+      "short_description": "Elektronische Signaturen für Verträge und Dokumente: QES, advanced signatures, signing workflows and audit trail.",
+      "description": "SignFix ist der Dienst für elektronische Unterschriften im gesamten Unternehmen. Documents are sent for signature from Word, Outlook or other applications via API, und mehrere Unterzeichner unterschreiben nacheinander. Every step is logged in an audit trail.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "SignFix Trust Services GmbH",
+      "version": "3.2",
+      "homepage_url": "https://signfix.example.com",
+      "tags": [
+        "e-signature",
+        "elektronische signatur",
+        "qes",
+        "eidas"
+      ],
+      "tech_stack": [
+        "saas",
+        "java"
+      ],
+      "domains": [
+        "legal",
+        "documents"
+      ],
+      "maintainers": [
+        {
+          "name": "Dr. Claudia Zimmermann",
+          "email": "claudia.zimmermann@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Recht"
+        },
+        {
+          "name": "Team Legal Tech",
+          "email": "legaltech@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "Recht"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Qualifizierte elektronische Signatur (QES) nach eIDAS"
+        },
+        {
+          "kind": "capability",
+          "text": "Advanced electronic signature with identity verification via video ident"
+        },
+        {
+          "kind": "capability",
+          "text": "Signaturmappen mit mehreren Unterzeichnern in fester Reihenfolge"
+        },
+        {
+          "kind": "capability",
+          "text": "Audit trail with timestamps for every signing step"
+        },
+        {
+          "kind": "capability",
+          "text": "Integration into Microsoft Word and Outlook for sending documents for signature"
+        },
+        {
+          "kind": "capability",
+          "text": "Automatische Erinnerung an ausstehende Unterschriften"
+        },
+        {
+          "kind": "capability",
+          "text": "Batch signing of many documents in one step"
+        },
+        {
+          "kind": "capability",
+          "text": "Vorlagen für wiederkehrende Dokumente mit vordefinierten Signaturfeldern"
+        },
+        {
+          "kind": "capability",
+          "text": "REST API for embedding signing into other applications"
+        },
+        {
+          "kind": "feature",
+          "text": "Signing on mobile devices without installing an app"
+        },
+        {
+          "kind": "requirement",
+          "text": "Qualified trust service provider under eIDAS with servers in Germany"
+        }
+      ]
+    },
+    {
+      "slug": "datenschutzcockpit",
+      "name": "Datenschutz-Cockpit",
+      "short_description": "Datenschutzmanagement nach DSGVO: Verarbeitungsverzeichnis, DSFA, Betroffenenanfragen, Datenpannen und AV-Verträge.",
+      "description": "Das Datenschutz-Cockpit unterstützt den Datenschutzbeauftragten und die Datenschutzkoordinatoren der Fachbereiche. Alle Verarbeitungstätigkeiten, Auftragsverarbeitungen und technischen Maßnahmen werden zentral dokumentiert, Betroffenenanfragen und Datenpannen fristgerecht bearbeitet.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Privacor GmbH",
+      "version": "3.6",
+      "homepage_url": "https://datenschutzcockpit.example.com",
+      "tags": [
+        "datenschutz",
+        "dsgvo",
+        "gdpr",
+        "privacy"
+      ],
+      "tech_stack": [
+        "saas",
+        "python"
+      ],
+      "domains": [
+        "compliance",
+        "legal"
+      ],
+      "maintainers": [
+        {
+          "name": "Heike Günther",
+          "email": "heike.guenther@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Datenschutz"
+        },
+        {
+          "name": "Team Legal Tech",
+          "email": "legaltech@example.com",
+          "role": "contact",
+          "kind": "team",
+          "org_unit": "Recht"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Führung des Verzeichnisses von Verarbeitungstätigkeiten (VVT) nach Art. 30 DSGVO"
+        },
+        {
+          "kind": "capability",
+          "text": "Durchführung von Datenschutz-Folgenabschätzungen (DSFA)"
+        },
+        {
+          "kind": "capability",
+          "text": "Bearbeitung von Betroffenenanfragen (Auskunft, Löschung) mit Fristüberwachung"
+        },
+        {
+          "kind": "capability",
+          "text": "Meldung und Dokumentation von Datenschutzverletzungen innerhalb von 72 Stunden"
+        },
+        {
+          "kind": "capability",
+          "text": "Verwaltung von Auftragsverarbeitungsverträgen (AVV) mit Dienstleistern"
+        },
+        {
+          "kind": "capability",
+          "text": "Löschkonzept mit Löschklassen und Löschfristen"
+        },
+        {
+          "kind": "capability",
+          "text": "Dokumentation technischer und organisatorischer Maßnahmen (TOM)"
+        },
+        {
+          "kind": "capability",
+          "text": "Fragebögen für Fachabteilungen zur Erfassung neuer Verarbeitungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Berichte für die Geschäftsführung zum Datenschutzstatus"
+        },
+        {
+          "kind": "feature",
+          "text": "Cookie-Scanner für Unternehmenswebsites"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosting in Deutschland"
+        }
+      ]
+    },
+    {
+      "slug": "riskradar",
+      "name": "RiskRadar GRC",
+      "short_description": "Governance, risk and compliance suite: risk register, internal controls, ISMS, audits, policies and whistleblowing.",
+      "description": "RiskRadar GRC is used by risk management, internal audit and information security. Risks are assessed and reported to management, controls are mapped to ISO 27001, NIS2 and TISAX and tested regularly. The whistleblower channel fulfils the requirements of the German HinSchG.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Sentinel GRC Ltd.",
+      "version": "9.0",
+      "homepage_url": "https://riskradar.example.com",
+      "tags": [
+        "grc",
+        "risk management",
+        "isms",
+        "compliance",
+        "audit"
+      ],
+      "tech_stack": [
+        "saas",
+        ".net"
+      ],
+      "domains": [
+        "compliance",
+        "security"
+      ],
+      "maintainers": [
+        {
+          "name": "Dr. Robert Frank",
+          "email": "robert.frank@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Risikomanagement"
+        },
+        {
+          "name": "Team Informationssicherheit",
+          "email": "infosec@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Security"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Enterprise risk register with likelihood and impact assessment"
+        },
+        {
+          "kind": "capability",
+          "text": "Risk heat maps and risk reports for management"
+        },
+        {
+          "kind": "capability",
+          "text": "Internal control system with periodic control testing"
+        },
+        {
+          "kind": "capability",
+          "text": "ISMS support for ISO 27001 including statement of applicability"
+        },
+        {
+          "kind": "capability",
+          "text": "Audit management with findings and remediation tracking"
+        },
+        {
+          "kind": "capability",
+          "text": "Policy management with employee attestation"
+        },
+        {
+          "kind": "capability",
+          "text": "Anonymous whistleblower reporting channel compliant with the German HinSchG"
+        },
+        {
+          "kind": "capability",
+          "text": "Third-party risk assessments with supplier questionnaires"
+        },
+        {
+          "kind": "capability",
+          "text": "Mapping of controls to frameworks such as ISO 27001, NIS2 and TISAX"
+        },
+        {
+          "kind": "feature",
+          "text": "Automated evidence collection from cloud services"
+        },
+        {
+          "kind": "requirement",
+          "text": "Hosted in Germany"
+        }
+      ]
+    },
+    {
+      "slug": "qualitas",
+      "name": "Qualitas QMS",
+      "short_description": "Qualitätsmanagementsystem für Reklamationen, 8D, CAPA, Audits, Prüfmittel und QM-Dokumente nach ISO 9001.",
+      "description": "Qualitas QMS bildet die Prozesse des Qualitätsmanagements in Produktion und Einkauf ab. Kunden- und Lieferantenreklamationen werden mit 8D-Reports bearbeitet, Maßnahmen verfolgt und auf Wirksamkeit geprüft. Auch Prüfmittel, FMEA und interne Audits werden im System geführt.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Qualisys Software GmbH",
+      "version": "7.0",
+      "homepage_url": "https://qualitas.example.com",
+      "tags": [
+        "qualitätsmanagement",
+        "qms",
+        "reklamation",
+        "iso 9001",
+        "capa"
+      ],
+      "tech_stack": [
+        "java",
+        "oracle database"
+      ],
+      "domains": [
+        "quality",
+        "manufacturing"
+      ],
+      "maintainers": [
+        {
+          "name": "Jürgen Schmitz",
+          "email": "juergen.schmitz@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Qualitätsmanagement"
+        },
+        {
+          "name": "Team Produktionssysteme",
+          "email": "produktion-it@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Manufacturing"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Reklamationsmanagement für Kunden- und Lieferantenreklamationen"
+        },
+        {
+          "kind": "capability",
+          "text": "8D-Reports zur strukturierten Problemlösung"
+        },
+        {
+          "kind": "capability",
+          "text": "Korrektur- und Vorbeugemaßnahmen (CAPA) mit Wirksamkeitsprüfung"
+        },
+        {
+          "kind": "capability",
+          "text": "Lenkung von QM-Dokumenten nach ISO 9001 mit Freigabe und Verteilung"
+        },
+        {
+          "kind": "capability",
+          "text": "Prüfmittelverwaltung mit Kalibrierintervallen"
+        },
+        {
+          "kind": "capability",
+          "text": "Planung und Durchführung interner Audits"
+        },
+        {
+          "kind": "capability",
+          "text": "FMEA nach AIAG-VDA"
+        },
+        {
+          "kind": "capability",
+          "text": "Wareneingangsprüfung mit Stichprobenplänen"
+        },
+        {
+          "kind": "capability",
+          "text": "Statistische Prozesslenkung (SPC) mit Regelkarten"
+        },
+        {
+          "kind": "feature",
+          "text": "Durchführung von Lieferantenaudits per Tablet"
+        },
+        {
+          "kind": "requirement",
+          "text": "Validierbar für regulierte Umgebungen (GMP)"
+        }
+      ]
+    },
+    {
+      "slug": "shopfloor-mes",
+      "name": "ShopFloor MES",
+      "short_description": "Manufacturing execution system for production orders, machine data, OEE and traceability.",
+      "description": "ShopFloor MES connects the production lines with SAP. Production orders are released from SAP PP, operators book quantities and scrap at terminals, and machine data is collected via OPC UA for OEE analysis. Every batch is traceable from raw material to finished product.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Fabrico Systems AG",
+      "version": "8.4",
+      "homepage_url": "https://shopfloor-mes.example.com",
+      "tags": [
+        "mes",
+        "production",
+        "oee",
+        "traceability",
+        "industrie 4.0"
+      ],
+      "tech_stack": [
+        "c#",
+        "microsoft sql server",
+        "opc ua"
+      ],
+      "domains": [
+        "manufacturing"
+      ],
+      "maintainers": [
+        {
+          "name": "Matthias Keller",
+          "email": "matthias.keller@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Produktion"
+        },
+        {
+          "name": "Team Produktionssysteme",
+          "email": "produktion-it@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Manufacturing"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Management of production orders released from SAP PP"
+        },
+        {
+          "kind": "capability",
+          "text": "Machine data acquisition via OPC UA"
+        },
+        {
+          "kind": "capability",
+          "text": "OEE calculation and downtime analysis"
+        },
+        {
+          "kind": "capability",
+          "text": "Operator terminals for booking produced quantities and scrap"
+        },
+        {
+          "kind": "capability",
+          "text": "Batch and serial number traceability from raw material to finished product"
+        },
+        {
+          "kind": "capability",
+          "text": "Digital work instructions on the shop floor"
+        },
+        {
+          "kind": "capability",
+          "text": "Production scheduling on machines with drag-and-drop"
+        },
+        {
+          "kind": "capability",
+          "text": "In-process quality inspections with limit checks"
+        },
+        {
+          "kind": "capability",
+          "text": "Energy consumption monitoring per machine"
+        },
+        {
+          "kind": "capability",
+          "text": "Tool management with tool life tracking"
+        },
+        {
+          "kind": "feature",
+          "text": "Predictive maintenance alerts from sensor data"
+        },
+        {
+          "kind": "requirement",
+          "text": "On-premises operation for shop floor availability"
+        }
+      ]
+    },
+    {
+      "slug": "lingua-bridge",
+      "name": "LinguaBridge",
+      "short_description": "Übersetzungsplattform: machine translation of texts and documents, translation memory and Unternehmensglossar.",
+      "description": "LinguaBridge stellt maschinelle Übersetzung für alle Mitarbeitenden bereit. Documents keep their layout, company terminology is enforced via a glossary, and human translations can be ordered from external agencies. Texte werden ausschließlich auf EU-Servern verarbeitet.",
+      "lifecycle_status": "active",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Polyglot Systems SE",
+      "version": "2.9",
+      "homepage_url": "https://lingua-bridge.example.com",
+      "tags": [
+        "übersetzung",
+        "translation",
+        "machine translation",
+        "glossar"
+      ],
+      "tech_stack": [
+        "saas",
+        "python"
+      ],
+      "domains": [
+        "communication"
+      ],
+      "maintainers": [
+        {
+          "name": "Anna Schröder",
+          "email": "anna.schroeder@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Marketing"
+        },
+        {
+          "name": "Digital Workplace Team",
+          "email": "workplace@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Digital Workplace"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Maschinelle Übersetzung von Texten und Dokumenten in über 30 Sprachen"
+        },
+        {
+          "kind": "capability",
+          "text": "Translation of Word, PowerPoint and PDF files while preserving the layout"
+        },
+        {
+          "kind": "capability",
+          "text": "Translation memory to reuse previously translated segments"
+        },
+        {
+          "kind": "capability",
+          "text": "Unternehmensglossar für einheitliche Fachbegriffe in Übersetzungen"
+        },
+        {
+          "kind": "capability",
+          "text": "Workflow for ordering human translations from external agencies"
+        },
+        {
+          "kind": "capability",
+          "text": "Support for XLIFF files from localisation tools"
+        },
+        {
+          "kind": "capability",
+          "text": "Browser-Add-in zur Übersetzung markierter Texte"
+        },
+        {
+          "kind": "capability",
+          "text": "API for integrating translation into other systems"
+        },
+        {
+          "kind": "requirement",
+          "text": "Processing exclusively on EU servers without using texts for model training"
+        }
+      ]
+    },
+    {
+      "slug": "formbaukasten",
+      "name": "FormBaukasten",
+      "short_description": "Low-Code-Plattform für Online-Formulare mit Genehmigungsworkflows, PDF-Erzeugung und Schnittstellen.",
+      "description": "FormBaukasten wird derzeit in drei Fachbereichen pilotiert. Fachanwender erstellen Formulare ohne Programmierung, definieren Genehmigungsschritte und übergeben die Daten an Zielsysteme. Damit sollen papierbasierte Anträge abgelöst werden.",
+      "lifecycle_status": "pilot",
+      "license": "Proprietary",
+      "license_type": "commercial",
+      "vendor": "Formix GmbH",
+      "version": "1.4",
+      "homepage_url": "https://formbaukasten.example.com",
+      "tags": [
+        "low-code",
+        "formulare",
+        "workflow",
+        "digitalisierung"
+      ],
+      "tech_stack": [
+        "saas",
+        "typescript"
+      ],
+      "domains": [
+        "it",
+        "collaboration"
+      ],
+      "maintainers": [
+        {
+          "name": "Nina Wolff",
+          "email": "nina.wolff@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Digitalisierung"
+        },
+        {
+          "name": "Team Collaboration Tools",
+          "email": "collab-tools@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Digital Workplace"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Erstellung von Online-Formularen per Drag-and-Drop ohne Programmierkenntnisse"
+        },
+        {
+          "kind": "capability",
+          "text": "Feldvalidierung, Pflichtfelder und bedingte Anzeige von Feldern"
+        },
+        {
+          "kind": "capability",
+          "text": "Mehrstufige Genehmigungsworkflows für eingereichte Formulare"
+        },
+        {
+          "kind": "capability",
+          "text": "Erzeugung eines PDF-Dokuments aus den Formulardaten"
+        },
+        {
+          "kind": "capability",
+          "text": "Übergabe der Formulardaten an andere Systeme per Webhook und REST-API"
+        },
+        {
+          "kind": "capability",
+          "text": "Vorbelegung von Feldern mit Benutzerdaten aus Microsoft Entra ID"
+        },
+        {
+          "kind": "capability",
+          "text": "Öffentliche Formulare für externe Nutzer ohne Anmeldung"
+        },
+        {
+          "kind": "capability",
+          "text": "Auswertung der Einreichungen als Tabelle mit Excel-Export"
+        },
+        {
+          "kind": "feature",
+          "text": "Bibliothek mit Formularvorlagen, z. B. Schulungsantrag und Materialanfrage"
+        },
+        {
+          "kind": "requirement",
+          "text": "Barrierefreie Formulare nach BITV 2.0"
+        }
+      ]
+    },
+    {
+      "slug": "apiport",
+      "name": "APIPort Gateway",
+      "short_description": "API gateway and developer portal for publishing internal and partner APIs securely.",
+      "description": "APIPort Gateway is the single entry point for all APIs exposed to partners and internal consumers. It handles authentication, rate limiting and routing, and the developer portal documents all APIs with interactive OpenAPI specs.",
+      "lifecycle_status": "active",
+      "license": "Apache-2.0",
+      "license_type": "oss",
+      "vendor": "APIPort Foundation",
+      "version": "3.7",
+      "homepage_url": "https://apiport.example.com",
+      "tags": [
+        "api gateway",
+        "api management",
+        "developer portal",
+        "integration"
+      ],
+      "tech_stack": [
+        "go",
+        "kubernetes",
+        "redis"
+      ],
+      "domains": [
+        "it",
+        "integration"
+      ],
+      "maintainers": [
+        {
+          "name": "Lukas Schäfer",
+          "email": "lukas.schaefer@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Software Engineering"
+        },
+        {
+          "name": "Integration Team",
+          "email": "integration@example.com",
+          "role": "maintainer",
+          "kind": "team",
+          "org_unit": "IT Plattform"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Routing of API requests to backend services"
+        },
+        {
+          "kind": "capability",
+          "text": "Rate limiting and quotas per API consumer"
+        },
+        {
+          "kind": "capability",
+          "text": "OAuth 2.0 and API key authentication for APIs"
+        },
+        {
+          "kind": "capability",
+          "text": "Developer portal with interactive OpenAPI documentation"
+        },
+        {
+          "kind": "capability",
+          "text": "API versioning and lifecycle management"
+        },
+        {
+          "kind": "capability",
+          "text": "Request and response transformation"
+        },
+        {
+          "kind": "capability",
+          "text": "API usage analytics per consumer"
+        },
+        {
+          "kind": "capability",
+          "text": "Mutual TLS between gateway and backend services"
+        },
+        {
+          "kind": "feature",
+          "text": "Monetisation plans for external API products"
+        },
+        {
+          "kind": "requirement",
+          "text": "Deployment in Kubernetes on-premises and in the cloud"
+        }
+      ]
+    },
+    {
+      "slug": "ki-assistent",
+      "name": "KI-Assistent",
+      "short_description": "Idee: Interner KI-Chat-Assistent, der Fragen zu internen Dokumenten, Richtlinien und Wiki-Inhalten beantwortet.",
+      "description": "Der KI-Assistent ist eine Idee aus dem Innovationsprogramm. Ein Sprachmodell soll Fragen der Mitarbeitenden auf Basis interner Dokumente beantworten und dabei die Zugriffsrechte beachten. Eine Umsetzung wird für 2027 geprüft.",
+      "lifecycle_status": "idea",
+      "license": "Internal",
+      "license_type": "internal",
+      "vendor": "Interne IT",
+      "version": "0.1",
+      "tags": [
+        "ki",
+        "chatbot",
+        "llm",
+        "wissensmanagement"
+      ],
+      "tech_stack": [
+        "python",
+        "kubernetes"
+      ],
+      "domains": [
+        "knowledge",
+        "it"
+      ],
+      "maintainers": [
+        {
+          "name": "Nina Wolff",
+          "email": "nina.wolff@example.com",
+          "role": "owner",
+          "kind": "person",
+          "org_unit": "Digitalisierung"
+        },
+        {
+          "name": "Data & Analytics Team",
+          "email": "data-analytics@example.com",
+          "role": "contact",
+          "kind": "team",
+          "org_unit": "IT Data Platform"
+        }
+      ],
+      "capabilities": [
+        {
+          "kind": "capability",
+          "text": "Beantwortung von Fragen in natürlicher Sprache auf Basis interner Dokumente"
+        },
+        {
+          "kind": "capability",
+          "text": "Quellenangaben mit Links zu den verwendeten Dokumenten"
+        },
+        {
+          "kind": "capability",
+          "text": "Berücksichtigung der Zugriffsrechte der Nutzenden bei der Suche in Dokumenten"
+        },
+        {
+          "kind": "capability",
+          "text": "Zusammenfassung langer Dokumente"
+        },
+        {
+          "kind": "capability",
+          "text": "Anbindung an WissensWiki und TeamSpace Docs als Wissensquellen"
+        },
+        {
+          "kind": "capability",
+          "text": "Chat-Oberfläche in Microsoft Teams"
+        },
+        {
+          "kind": "feature",
+          "text": "Erstellung von E-Mail-Entwürfen"
+        },
+        {
+          "kind": "requirement",
+          "text": "Betrieb des Sprachmodells in einer EU-Cloud ohne Weitergabe von Daten"
+        }
+      ]
+    }
+  ],
+  "external_systems": [
+    {
+      "name": "SAP S/4HANA",
+      "vendor": "SAP SE",
+      "description": "Zentrales ERP für Finanzen, Einkauf, Vertrieb und Produktion."
+    },
+    {
+      "name": "DATEV",
+      "vendor": "DATEV eG",
+      "description": "Rechenzentrum und Software des Steuerberaters."
+    },
+    {
+      "name": "Hausbank (EBICS)",
+      "vendor": null,
+      "description": "Zahlungsverkehr und Kontoauszüge über EBICS."
+    },
+    {
+      "name": "Microsoft Entra ID",
+      "vendor": "Microsoft",
+      "description": "Zentraler Verzeichnisdienst und Single Sign-on."
+    },
+    {
+      "name": "Microsoft Exchange",
+      "vendor": "Microsoft",
+      "description": "E-Mail und Kalender."
+    },
+    {
+      "name": "Jira",
+      "vendor": "Atlassian",
+      "description": "Issue-Tracking der Entwicklungsteams."
+    },
+    {
+      "name": "StepStone",
+      "vendor": "StepStone GmbH",
+      "description": "Online-Jobbörse."
+    },
+    {
+      "name": "GitLab",
+      "vendor": "GitLab Inc.",
+      "description": "Quellcodeverwaltung."
+    }
+  ],
+  "interfaces": [
+    {
+      "from": {
+        "app": "zeitwerk"
+      },
+      "to": {
+        "app": "lohnpilot"
+      },
+      "name": "Zeitdaten und Zuschläge",
+      "type": "file_transfer",
+      "data_objects": [
+        "Arbeitszeiten",
+        "Zuschläge",
+        "Abwesenheiten"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": "Monatliche Übergabe der geprüften Zeitdaten an die Lohnabrechnung."
+    },
+    {
+      "from": {
+        "app": "lohnpilot"
+      },
+      "to": {
+        "app": "finanzbuch"
+      },
+      "name": "Lohnjournal",
+      "type": "file_transfer",
+      "data_objects": [
+        "Lohnjournal",
+        "Buchungssätze"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": "Lohnjournale werden nach jedem Abrechnungslauf in die Finanzbuchhaltung gebucht."
+    },
+    {
+      "from": {
+        "app": "belegfix"
+      },
+      "to": {
+        "app": "finanzbuch"
+      },
+      "name": "Buchungsstapel Eingangsrechnungen",
+      "type": "file_transfer",
+      "data_objects": [
+        "Eingangsrechnungen",
+        "Buchungsstapel"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "belegfix"
+      },
+      "to": {
+        "system": "DATEV"
+      },
+      "name": "DATEV-Buchungsstapel",
+      "type": "file_transfer",
+      "data_objects": [
+        "Buchungsstapel",
+        "Belegbilder"
+      ],
+      "frequency": "on_demand",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "finanzbuch"
+      },
+      "to": {
+        "system": "DATEV"
+      },
+      "name": "Buchungsdaten an den Steuerberater",
+      "type": "file_transfer",
+      "data_objects": [
+        "Buchungsdaten"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Hausbank (EBICS)"
+      },
+      "to": {
+        "app": "finanzbuch"
+      },
+      "name": "Kontoauszüge per EBICS",
+      "type": "file_transfer",
+      "data_objects": [
+        "Kontoauszüge",
+        "CAMT.053"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": "Tägliche Kontoauszüge der Hausbank werden per EBICS abgerufen und automatisch ausgeglichen."
+    },
+    {
+      "from": {
+        "app": "finanzbuch"
+      },
+      "to": {
+        "system": "Hausbank (EBICS)"
+      },
+      "name": "Zahlungsaufträge per EBICS",
+      "type": "file_transfer",
+      "data_objects": [
+        "Überweisungen",
+        "SEPA-Lastschriften"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "talentscout"
+      },
+      "to": {
+        "app": "onboardly"
+      },
+      "name": "Bewerberdaten nach Vertragsunterschrift",
+      "type": "rest_api",
+      "data_objects": [
+        "Bewerberdaten",
+        "Vertragsdaten"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "talentscout"
+      },
+      "to": {
+        "system": "StepStone"
+      },
+      "name": "Stellenanzeigen an Jobbörsen",
+      "type": "rest_api",
+      "data_objects": [
+        "Stellenanzeigen"
+      ],
+      "frequency": "on_demand",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "onboardly"
+      },
+      "to": {
+        "app": "servicehub-itsm"
+      },
+      "name": "IT-Tickets für neue Mitarbeitende",
+      "type": "rest_api",
+      "data_objects": [
+        "Tickets",
+        "Hardwarebedarf",
+        "Benutzerkonten"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "watchtower"
+      },
+      "to": {
+        "app": "servicehub-itsm"
+      },
+      "name": "Incidents aus Alarmen",
+      "type": "rest_api",
+      "data_objects": [
+        "Alarme",
+        "Incidents"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "servicehub-itsm"
+      },
+      "to": {
+        "system": "Jira"
+      },
+      "name": "Ticketübergabe an die Entwicklung",
+      "type": "rest_api",
+      "data_objects": [
+        "Tickets",
+        "Fehlerberichte"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "kundendesk"
+      },
+      "to": {
+        "app": "pipelinepro-crm"
+      },
+      "name": "Kundendatenabgleich",
+      "type": "rest_api",
+      "data_objects": [
+        "Kunden",
+        "Kontakte",
+        "Tickets"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "pipelinepro-crm"
+      },
+      "to": {
+        "app": "mailwave"
+      },
+      "name": "Kontakte für Kampagnen",
+      "type": "rest_api",
+      "data_objects": [
+        "Kontakte",
+        "Einwilligungen"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "pipelinepro-crm"
+      },
+      "to": {
+        "system": "SAP S/4HANA"
+      },
+      "name": "Kundenstamm und Aufträge",
+      "type": "rest_api",
+      "data_objects": [
+        "Kunden",
+        "Aufträge"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "shopkern"
+      },
+      "to": {
+        "system": "SAP S/4HANA"
+      },
+      "name": "Auftragsübergabe aus dem Shop",
+      "type": "rest_api",
+      "data_objects": [
+        "Bestellungen",
+        "Preise"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "einkaufsportal"
+      },
+      "to": {
+        "system": "SAP S/4HANA"
+      },
+      "name": "Bestellungen an SAP MM",
+      "type": "soap",
+      "data_objects": [
+        "Bestellanforderungen",
+        "Bestellungen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "lagerlogix"
+      },
+      "to": {
+        "system": "SAP S/4HANA"
+      },
+      "name": "Lagerbewegungen und Bestände",
+      "type": "messaging",
+      "data_objects": [
+        "Lieferungen",
+        "Bestände"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "invoiceflow-ap"
+      },
+      "to": {
+        "system": "SAP S/4HANA"
+      },
+      "name": "Invoice posting",
+      "type": "rest_api",
+      "data_objects": [
+        "Invoices",
+        "Vendor master data"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "traveldesk"
+      },
+      "to": {
+        "system": "SAP S/4HANA"
+      },
+      "name": "Expense posting",
+      "type": "file_transfer",
+      "data_objects": [
+        "Expense reports"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "traveldesk"
+      },
+      "to": {
+        "system": "DATEV"
+      },
+      "name": "Reisekosten an DATEV",
+      "type": "file_transfer",
+      "data_objects": [
+        "Reisekostenabrechnungen"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "docuvault"
+      },
+      "to": {
+        "system": "SAP S/4HANA"
+      },
+      "name": "SAP ArchiveLink",
+      "type": "soap",
+      "data_objects": [
+        "Belege",
+        "Archivdokumente"
+      ],
+      "frequency": "on_demand",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Microsoft Exchange"
+      },
+      "to": {
+        "app": "docuvault"
+      },
+      "name": "E-Mail-Archivierung",
+      "type": "messaging",
+      "data_objects": [
+        "E-Mails"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "SAP S/4HANA"
+      },
+      "to": {
+        "app": "shopfloor-mes"
+      },
+      "name": "Fertigungsaufträge und Rückmeldungen",
+      "type": "messaging",
+      "data_objects": [
+        "Fertigungsaufträge",
+        "Rückmeldungen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "finanzbuch"
+      },
+      "to": {
+        "app": "insightboard"
+      },
+      "name": "Finanzkennzahlen",
+      "type": "database",
+      "data_objects": [
+        "Buchungen",
+        "Kostenstellen"
+      ],
+      "frequency": "batch",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "insightboard"
+      },
+      "to": {
+        "app": "datenkompass"
+      },
+      "name": "Metadaten der Berichte",
+      "type": "database",
+      "data_objects": [
+        "Metadaten"
+      ],
+      "frequency": "batch",
+      "status": "planned",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "identitygate"
+      },
+      "to": {
+        "app": "lernhafen"
+      },
+      "name": "Benutzerprovisionierung per SCIM",
+      "type": "sso",
+      "data_objects": [
+        "Benutzerkonten",
+        "Abteilungen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "identitygate"
+      },
+      "to": {
+        "system": "Microsoft Entra ID"
+      },
+      "name": "Verzeichnisabgleich",
+      "type": "sso",
+      "data_objects": [
+        "Benutzer",
+        "Gruppen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "vertragswerk"
+      },
+      "to": {
+        "app": "signfix"
+      },
+      "name": "Verträge zur Signatur",
+      "type": "rest_api",
+      "data_objects": [
+        "Verträge",
+        "Signaturstatus"
+      ],
+      "frequency": "on_demand",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "wissenswiki"
+      },
+      "to": {
+        "app": "ki-assistent"
+      },
+      "name": "Wiki als Wissensquelle",
+      "type": "rest_api",
+      "data_objects": [
+        "Wiki-Seiten"
+      ],
+      "frequency": "on_demand",
+      "status": "planned",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "teamspace-docs"
+      },
+      "to": {
+        "app": "ki-assistent"
+      },
+      "name": "Dokumente als Wissensquelle",
+      "type": "rest_api",
+      "data_objects": [
+        "Dokumente"
+      ],
+      "frequency": "on_demand",
+      "status": "planned",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "formbaukasten"
+      },
+      "to": {
+        "app": "apiport"
+      },
+      "name": "Formulardaten per Webhook",
+      "type": "rest_api",
+      "data_objects": [
+        "Formulareinreichungen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "buildline"
+      },
+      "to": {
+        "system": "GitLab"
+      },
+      "name": "Repository-Anbindung",
+      "type": "rest_api",
+      "data_objects": [
+        "Commits",
+        "Merge Requests"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "roomie"
+      },
+      "to": {
+        "system": "Microsoft Exchange"
+      },
+      "name": "Kalenderabgleich Räume",
+      "type": "rest_api",
+      "data_objects": [
+        "Raumbuchungen",
+        "Termine"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": true,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "spesenmeister"
+      },
+      "to": {
+        "app": "lohnpilot"
+      },
+      "name": "Reisekosten als CSV",
+      "type": "file_transfer",
+      "data_objects": [
+        "Reisekostenabrechnungen"
+      ],
+      "frequency": "batch",
+      "status": "deprecated",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "app": "rechnungsportal-alt"
+      },
+      "to": {
+        "app": "finanzbuch"
+      },
+      "name": "Rechnungsdaten als CSV",
+      "type": "file_transfer",
+      "data_objects": [
+        "Rechnungen"
+      ],
+      "frequency": "batch",
+      "status": "deprecated",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Microsoft Entra ID"
+      },
+      "to": {
+        "app": "servicehub-itsm"
+      },
+      "name": "Single Sign-on",
+      "type": "sso",
+      "data_objects": [
+        "Benutzerkonten",
+        "Gruppen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Microsoft Entra ID"
+      },
+      "to": {
+        "app": "teamspace-docs"
+      },
+      "name": "Single Sign-on",
+      "type": "sso",
+      "data_objects": [
+        "Benutzerkonten",
+        "Gruppen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Microsoft Entra ID"
+      },
+      "to": {
+        "app": "roomie"
+      },
+      "name": "Single Sign-on",
+      "type": "sso",
+      "data_objects": [
+        "Benutzerkonten",
+        "Gruppen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Microsoft Entra ID"
+      },
+      "to": {
+        "app": "traveldesk"
+      },
+      "name": "Single Sign-on",
+      "type": "sso",
+      "data_objects": [
+        "Benutzerkonten",
+        "Gruppen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Microsoft Entra ID"
+      },
+      "to": {
+        "app": "zeitwerk"
+      },
+      "name": "Single Sign-on",
+      "type": "sso",
+      "data_objects": [
+        "Benutzerkonten",
+        "Gruppen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Microsoft Entra ID"
+      },
+      "to": {
+        "app": "belegfix"
+      },
+      "name": "Single Sign-on",
+      "type": "sso",
+      "data_objects": [
+        "Benutzerkonten",
+        "Gruppen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    },
+    {
+      "from": {
+        "system": "Microsoft Entra ID"
+      },
+      "to": {
+        "app": "wissenswiki"
+      },
+      "name": "Single Sign-on",
+      "type": "sso",
+      "data_objects": [
+        "Benutzerkonten",
+        "Gruppen"
+      ],
+      "frequency": "realtime",
+      "status": "active",
+      "bidirectional": false,
+      "description": ""
+    }
+  ]
+}

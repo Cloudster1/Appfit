@@ -1,0 +1,27 @@
+# Match thresholds per embedding model (keyed by model name, without revision).
+# Recalibrate with `appfit eval --sweep` after changing the model, the scoring or the eval set.
+defaults:
+  covered: 0.69
+  partial: 0.57
+  nomatch: 0.30
+  min_top_coverage: 0.34
+
+models:
+  # Calibrated 2026-09-27 on eval/ (45 apps, 50 queries, 152 labelled pairs), see eval/baseline-bge-m3.json.
+  BAAI/bge-m3:
+    covered: 0.69
+    partial: 0.57
+    nomatch: 0.30
+    min_top_coverage: 0.34
+  # Not calibrated yet: rough guess for the lighter fallback model; run the sweep before relying on it.
+  intfloat/multilingual-e5-base:
+    covered: 0.86
+    partial: 0.82
+    nomatch: 0.30
+    min_top_coverage: 0.34
+  # Deterministic test embedder (lexical overlap only).
+  fake-hash-v1:
+    covered: 0.45
+    partial: 0.25
+    nomatch: 0.40
+    min_top_coverage: 0.34

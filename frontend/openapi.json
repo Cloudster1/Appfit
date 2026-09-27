@@ -1,0 +1,5457 @@
+{
+ "components": {
+  "schemas": {
+   "AppFacets": {
+    "properties": {
+     "domain": {
+      "items": {
+       "$ref": "#/components/schemas/FacetValue"
+      },
+      "title": "Domain",
+      "type": "array"
+     },
+     "license_type": {
+      "items": {
+       "$ref": "#/components/schemas/FacetValue"
+      },
+      "title": "License Type",
+      "type": "array"
+     },
+     "lifecycle": {
+      "items": {
+       "$ref": "#/components/schemas/FacetValue"
+      },
+      "title": "Lifecycle",
+      "type": "array"
+     }
+    },
+    "required": [
+     "lifecycle",
+     "license_type",
+     "domain"
+    ],
+    "title": "AppFacets",
+    "type": "object"
+   },
+   "AppIn": {
+    "description": "Create/replace payload: omitted fields fall back to defaults (full replace semantics).",
+    "properties": {
+     "capabilities": {
+      "default": [],
+      "items": {
+       "$ref": "#/components/schemas/CapabilityIn"
+      },
+      "title": "Capabilities",
+      "type": "array"
+     },
+     "description": {
+      "default": "",
+      "title": "Description",
+      "type": "string"
+     },
+     "docs_url": {
+      "anyOf": [
+       {
+        "maxLength": 1000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Docs Url"
+     },
+     "domains": {
+      "default": [],
+      "items": {
+       "maxLength": 120,
+       "minLength": 1,
+       "type": "string"
+      },
+      "title": "Domains",
+      "type": "array"
+     },
+     "extra": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Extra",
+      "type": "object"
+     },
+     "homepage_url": {
+      "anyOf": [
+       {
+        "maxLength": 1000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Homepage Url"
+     },
+     "license": {
+      "anyOf": [
+       {
+        "maxLength": 120,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "License"
+     },
+     "license_type": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/LicenseType"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "lifecycle_status": {
+      "$ref": "#/components/schemas/LifecycleStatus",
+      "default": "active"
+     },
+     "links": {
+      "default": [],
+      "items": {
+       "$ref": "#/components/schemas/LinkItem"
+      },
+      "title": "Links",
+      "type": "array"
+     },
+     "maintainers": {
+      "default": [],
+      "items": {
+       "$ref": "#/components/schemas/MaintainerRef"
+      },
+      "title": "Maintainers",
+      "type": "array"
+     },
+     "name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+     },
+     "repo_url": {
+      "anyOf": [
+       {
+        "maxLength": 1000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Repo Url"
+     },
+     "short_description": {
+      "default": "",
+      "maxLength": 300,
+      "title": "Short Description",
+      "type": "string"
+     },
+     "slug": {
+      "anyOf": [
+       {
+        "maxLength": 120,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Slug"
+     },
+     "tags": {
+      "default": [],
+      "items": {
+       "maxLength": 120,
+       "minLength": 1,
+       "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+     },
+     "tech_stack": {
+      "default": [],
+      "items": {
+       "maxLength": 120,
+       "minLength": 1,
+       "type": "string"
+      },
+      "title": "Tech Stack",
+      "type": "array"
+     },
+     "vendor": {
+      "anyOf": [
+       {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vendor"
+     },
+     "version": {
+      "anyOf": [
+       {
+        "maxLength": 120,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Version"
+     }
+    },
+    "required": [
+     "name"
+    ],
+    "title": "AppIn",
+    "type": "object"
+   },
+   "AppListItem": {
+    "properties": {
+     "capability_count": {
+      "title": "Capability Count",
+      "type": "integer"
+     },
+     "domains": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Domains",
+      "type": "array"
+     },
+     "embedding_status": {
+      "enum": [
+       "indexed",
+       "pending"
+      ],
+      "title": "Embedding Status",
+      "type": "string"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "license_type": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/LicenseType"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "lifecycle_status": {
+      "$ref": "#/components/schemas/LifecycleStatus"
+     },
+     "maintainers": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Maintainers",
+      "type": "array"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "short_description": {
+      "title": "Short Description",
+      "type": "string"
+     },
+     "slug": {
+      "title": "Slug",
+      "type": "string"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+     },
+     "tech_stack": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Tech Stack",
+      "type": "array"
+     },
+     "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+     },
+     "vendor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vendor"
+     }
+    },
+    "required": [
+     "id",
+     "slug",
+     "name",
+     "short_description",
+     "lifecycle_status",
+     "license_type",
+     "vendor",
+     "tags",
+     "tech_stack",
+     "domains",
+     "maintainers",
+     "capability_count",
+     "embedding_status",
+     "updated_at"
+    ],
+    "title": "AppListItem",
+    "type": "object"
+   },
+   "AppMaintainerOut": {
+    "properties": {
+     "email": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Email"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/MaintainerKind"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "org_unit": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Org Unit"
+     },
+     "role": {
+      "$ref": "#/components/schemas/MaintainerRole"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     }
+    },
+    "required": [
+     "id",
+     "name",
+     "email",
+     "kind",
+     "org_unit",
+     "url",
+     "role"
+    ],
+    "title": "AppMaintainerOut",
+    "type": "object"
+   },
+   "AppOut": {
+    "properties": {
+     "capabilities": {
+      "items": {
+       "$ref": "#/components/schemas/CapabilityOut"
+      },
+      "title": "Capabilities",
+      "type": "array"
+     },
+     "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+     },
+     "description": {
+      "title": "Description",
+      "type": "string"
+     },
+     "docs_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Docs Url"
+     },
+     "domains": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Domains",
+      "type": "array"
+     },
+     "embedding_status": {
+      "enum": [
+       "indexed",
+       "pending"
+      ],
+      "title": "Embedding Status",
+      "type": "string"
+     },
+     "extra": {
+      "additionalProperties": true,
+      "title": "Extra",
+      "type": "object"
+     },
+     "homepage_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Homepage Url"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "interfaces": {
+      "default": [],
+      "items": {
+       "$ref": "#/components/schemas/InterfaceSummary"
+      },
+      "title": "Interfaces",
+      "type": "array"
+     },
+     "license": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "License"
+     },
+     "license_type": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/LicenseType"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "lifecycle_status": {
+      "$ref": "#/components/schemas/LifecycleStatus"
+     },
+     "links": {
+      "items": {
+       "$ref": "#/components/schemas/LinkItem"
+      },
+      "title": "Links",
+      "type": "array"
+     },
+     "maintainers": {
+      "items": {
+       "$ref": "#/components/schemas/AppMaintainerOut"
+      },
+      "title": "Maintainers",
+      "type": "array"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "repo_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Repo Url"
+     },
+     "short_description": {
+      "title": "Short Description",
+      "type": "string"
+     },
+     "slug": {
+      "title": "Slug",
+      "type": "string"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+     },
+     "tech_stack": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Tech Stack",
+      "type": "array"
+     },
+     "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+     },
+     "vendor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vendor"
+     },
+     "version": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Version"
+     }
+    },
+    "required": [
+     "id",
+     "slug",
+     "name",
+     "short_description",
+     "description",
+     "lifecycle_status",
+     "license",
+     "license_type",
+     "vendor",
+     "version",
+     "homepage_url",
+     "repo_url",
+     "docs_url",
+     "links",
+     "extra",
+     "tags",
+     "tech_stack",
+     "domains",
+     "maintainers",
+     "capabilities",
+     "embedding_status",
+     "created_at",
+     "updated_at"
+    ],
+    "title": "AppOut",
+    "type": "object"
+   },
+   "Body_import_file_api_import_post": {
+    "properties": {
+     "file": {
+      "contentMediaType": "application/octet-stream",
+      "title": "File",
+      "type": "string"
+     }
+    },
+    "required": [
+     "file"
+    ],
+    "title": "Body_import_file_api_import_post",
+    "type": "object"
+   },
+   "CapabilityIn": {
+    "properties": {
+     "details": {
+      "anyOf": [
+       {
+        "maxLength": 4000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Details"
+     },
+     "id": {
+      "anyOf": [
+       {
+        "format": "uuid",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Id"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/CapabilityKind",
+      "default": "capability"
+     },
+     "text": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+     }
+    },
+    "required": [
+     "text"
+    ],
+    "title": "CapabilityIn",
+    "type": "object"
+   },
+   "CapabilityKind": {
+    "enum": [
+     "capability",
+     "requirement",
+     "feature"
+    ],
+    "title": "CapabilityKind",
+    "type": "string"
+   },
+   "CapabilityOut": {
+    "properties": {
+     "details": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Details"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "indexed": {
+      "default": false,
+      "title": "Indexed",
+      "type": "boolean"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/CapabilityKind"
+     },
+     "position": {
+      "title": "Position",
+      "type": "integer"
+     },
+     "text": {
+      "title": "Text",
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "kind",
+     "text",
+     "details",
+     "position"
+    ],
+    "title": "CapabilityOut",
+    "type": "object"
+   },
+   "ChangePasswordRequest": {
+    "properties": {
+     "current_password": {
+      "title": "Current Password",
+      "type": "string"
+     },
+     "new_password": {
+      "maxLength": 256,
+      "minLength": 10,
+      "title": "New Password",
+      "type": "string"
+     }
+    },
+    "required": [
+     "current_password",
+     "new_password"
+    ],
+    "title": "ChangePasswordRequest",
+    "type": "object"
+   },
+   "Combination": {
+    "description": "Two connected result apps that together cover more requirements than either alone.",
+    "properties": {
+     "apps": {
+      "description": "Slugs of the two apps",
+      "items": {
+       "type": "string"
+      },
+      "title": "Apps",
+      "type": "array"
+     },
+     "covered": {
+      "description": "Requirement indexes covered by at least one of them",
+      "items": {
+       "type": "integer"
+      },
+      "title": "Covered",
+      "type": "array"
+     },
+     "interface_id": {
+      "format": "uuid",
+      "title": "Interface Id",
+      "type": "string"
+     },
+     "interface_name": {
+      "title": "Interface Name",
+      "type": "string"
+     },
+     "interface_status": {
+      "$ref": "#/components/schemas/InterfaceStatus"
+     }
+    },
+    "required": [
+     "apps",
+     "covered",
+     "interface_id",
+     "interface_name",
+     "interface_status"
+    ],
+    "title": "Combination",
+    "type": "object"
+   },
+   "EmbeddingStatusOut": {
+    "properties": {
+     "apps_indexed": {
+      "title": "Apps Indexed",
+      "type": "integer"
+     },
+     "apps_total": {
+      "title": "Apps Total",
+      "type": "integer"
+     },
+     "capabilities_indexed": {
+      "title": "Capabilities Indexed",
+      "type": "integer"
+     },
+     "capabilities_total": {
+      "title": "Capabilities Total",
+      "type": "integer"
+     },
+     "interfaces_indexed": {
+      "title": "Interfaces Indexed",
+      "type": "integer"
+     },
+     "interfaces_total": {
+      "title": "Interfaces Total",
+      "type": "integer"
+     },
+     "model_error": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Model Error"
+     },
+     "model_id": {
+      "title": "Model Id",
+      "type": "string"
+     },
+     "model_loaded": {
+      "title": "Model Loaded",
+      "type": "boolean"
+     },
+     "pending": {
+      "title": "Pending",
+      "type": "integer"
+     },
+     "worker_last_error": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Worker Last Error"
+     },
+     "worker_running": {
+      "title": "Worker Running",
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "model_id",
+     "model_loaded",
+     "model_error",
+     "worker_running",
+     "worker_last_error",
+     "apps_total",
+     "apps_indexed",
+     "capabilities_total",
+     "capabilities_indexed",
+     "interfaces_total",
+     "interfaces_indexed",
+     "pending"
+    ],
+    "title": "EmbeddingStatusOut",
+    "type": "object"
+   },
+   "EndpointOut": {
+    "properties": {
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "kind": {
+      "enum": [
+       "app",
+       "system"
+      ],
+      "title": "Kind",
+      "type": "string"
+     },
+     "lifecycle_status": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/LifecycleStatus"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Slug"
+     }
+    },
+    "required": [
+     "kind",
+     "id",
+     "name"
+    ],
+    "title": "EndpointOut",
+    "type": "object"
+   },
+   "EndpointRef": {
+    "description": "One end of an interface: a catalog app by slug or an external system by name.",
+    "properties": {
+     "app": {
+      "anyOf": [
+       {
+        "maxLength": 120,
+        "minLength": 1,
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "App"
+     },
+     "system": {
+      "anyOf": [
+       {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "System"
+     }
+    },
+    "title": "EndpointRef",
+    "type": "object"
+   },
+   "Evidence": {
+    "properties": {
+     "capability": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/MatchedCapability"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "interface": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/InterfaceSummary"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "keyword_hits": {
+      "default": [],
+      "items": {
+       "type": "string"
+      },
+      "title": "Keyword Hits",
+      "type": "array"
+     },
+     "req_idx": {
+      "title": "Req Idx",
+      "type": "integer"
+     },
+     "score": {
+      "title": "Score",
+      "type": "number"
+     },
+     "similarity": {
+      "title": "Similarity",
+      "type": "number"
+     },
+     "status": {
+      "enum": [
+       "covered",
+       "partial",
+       "gap"
+      ],
+      "title": "Status",
+      "type": "string"
+     },
+     "via": {
+      "enum": [
+       "capability",
+       "interface",
+       "summary",
+       "none"
+      ],
+      "title": "Via",
+      "type": "string"
+     }
+    },
+    "required": [
+     "req_idx",
+     "status",
+     "score",
+     "similarity",
+     "via"
+    ],
+    "title": "Evidence",
+    "type": "object"
+   },
+   "ExternalSystemIn": {
+    "properties": {
+     "description": {
+      "default": "",
+      "maxLength": 4000,
+      "title": "Description",
+      "type": "string"
+     },
+     "name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "maxLength": 1000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "vendor": {
+      "anyOf": [
+       {
+        "maxLength": 200,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vendor"
+     }
+    },
+    "required": [
+     "name"
+    ],
+    "title": "ExternalSystemIn",
+    "type": "object"
+   },
+   "ExternalSystemOut": {
+    "properties": {
+     "description": {
+      "title": "Description",
+      "type": "string"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "interface_count": {
+      "title": "Interface Count",
+      "type": "integer"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "vendor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vendor"
+     }
+    },
+    "required": [
+     "id",
+     "name",
+     "description",
+     "vendor",
+     "url",
+     "interface_count"
+    ],
+    "title": "ExternalSystemOut",
+    "type": "object"
+   },
+   "FacetValue": {
+    "properties": {
+     "count": {
+      "title": "Count",
+      "type": "integer"
+     },
+     "value": {
+      "title": "Value",
+      "type": "string"
+     }
+    },
+    "required": [
+     "value",
+     "count"
+    ],
+    "title": "FacetValue",
+    "type": "object"
+   },
+   "FeedbackIn": {
+    "properties": {
+     "comment": {
+      "anyOf": [
+       {
+        "maxLength": 20000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Comment"
+     },
+     "expected_app_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Expected App Slug"
+     },
+     "rating": {
+      "enum": [
+       "up",
+       "down"
+      ],
+      "title": "Rating",
+      "type": "string"
+     }
+    },
+    "required": [
+     "rating"
+    ],
+    "title": "FeedbackIn",
+    "type": "object"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "title": "Detail",
+      "type": "array"
+     }
+    },
+    "title": "HTTPValidationError",
+    "type": "object"
+   },
+   "HealthOut": {
+    "properties": {
+     "database": {
+      "default": true,
+      "title": "Database",
+      "type": "boolean"
+     },
+     "detail": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Detail"
+     },
+     "model_loaded": {
+      "default": false,
+      "title": "Model Loaded",
+      "type": "boolean"
+     },
+     "status": {
+      "enum": [
+       "ok",
+       "starting",
+       "error"
+      ],
+      "title": "Status",
+      "type": "string"
+     }
+    },
+    "required": [
+     "status"
+    ],
+    "title": "HealthOut",
+    "type": "object"
+   },
+   "ImportIssue": {
+    "properties": {
+     "field": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Field"
+     },
+     "kind": {
+      "default": "app",
+      "enum": [
+       "app",
+       "system",
+       "interface"
+      ],
+      "title": "Kind",
+      "type": "string"
+     },
+     "message": {
+      "title": "Message",
+      "type": "string"
+     },
+     "row": {
+      "title": "Row",
+      "type": "integer"
+     },
+     "slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Slug"
+     }
+    },
+    "required": [
+     "row",
+     "message"
+    ],
+    "title": "ImportIssue",
+    "type": "object"
+   },
+   "ImportItem": {
+    "properties": {
+     "action": {
+      "enum": [
+       "created",
+       "updated",
+       "unchanged",
+       "skipped",
+       "invalid"
+      ],
+      "title": "Action",
+      "type": "string"
+     },
+     "changed_fields": {
+      "default": [],
+      "items": {
+       "type": "string"
+      },
+      "title": "Changed Fields",
+      "type": "array"
+     },
+     "kind": {
+      "default": "app",
+      "enum": [
+       "app",
+       "system",
+       "interface"
+      ],
+      "title": "Kind",
+      "type": "string"
+     },
+     "row": {
+      "title": "Row",
+      "type": "integer"
+     },
+     "slug": {
+      "title": "Slug",
+      "type": "string"
+     }
+    },
+    "required": [
+     "row",
+     "slug",
+     "action"
+    ],
+    "title": "ImportItem",
+    "type": "object"
+   },
+   "ImportReport": {
+    "properties": {
+     "committed": {
+      "title": "Committed",
+      "type": "boolean"
+     },
+     "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+     },
+     "errors": {
+      "items": {
+       "$ref": "#/components/schemas/ImportIssue"
+      },
+      "title": "Errors",
+      "type": "array"
+     },
+     "format": {
+      "title": "Format",
+      "type": "string"
+     },
+     "import_run_id": {
+      "anyOf": [
+       {
+        "format": "uuid",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Import Run Id"
+     },
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/ImportItem"
+      },
+      "title": "Items",
+      "type": "array"
+     },
+     "mode": {
+      "enum": [
+       "upsert",
+       "create_only"
+      ],
+      "title": "Mode",
+      "type": "string"
+     },
+     "stats": {
+      "$ref": "#/components/schemas/ImportStats"
+     },
+     "warnings": {
+      "items": {
+       "$ref": "#/components/schemas/ImportIssue"
+      },
+      "title": "Warnings",
+      "type": "array"
+     }
+    },
+    "required": [
+     "import_run_id",
+     "format",
+     "mode",
+     "dry_run",
+     "committed",
+     "stats",
+     "items",
+     "errors",
+     "warnings"
+    ],
+    "title": "ImportReport",
+    "type": "object"
+   },
+   "ImportRunOut": {
+    "properties": {
+     "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+     },
+     "dry_run": {
+      "title": "Dry Run",
+      "type": "boolean"
+     },
+     "errors": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "title": "Errors",
+      "type": "array"
+     },
+     "filename": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Filename"
+     },
+     "format": {
+      "title": "Format",
+      "type": "string"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "mode": {
+      "title": "Mode",
+      "type": "string"
+     },
+     "stats": {
+      "additionalProperties": true,
+      "title": "Stats",
+      "type": "object"
+     },
+     "user_id": {
+      "anyOf": [
+       {
+        "format": "uuid",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "User Id"
+     }
+    },
+    "required": [
+     "id",
+     "user_id",
+     "filename",
+     "format",
+     "mode",
+     "dry_run",
+     "stats",
+     "errors",
+     "created_at"
+    ],
+    "title": "ImportRunOut",
+    "type": "object"
+   },
+   "ImportStats": {
+    "properties": {
+     "created": {
+      "default": 0,
+      "title": "Created",
+      "type": "integer"
+     },
+     "invalid": {
+      "default": 0,
+      "title": "Invalid",
+      "type": "integer"
+     },
+     "skipped": {
+      "default": 0,
+      "title": "Skipped",
+      "type": "integer"
+     },
+     "total": {
+      "default": 0,
+      "title": "Total",
+      "type": "integer"
+     },
+     "unchanged": {
+      "default": 0,
+      "title": "Unchanged",
+      "type": "integer"
+     },
+     "updated": {
+      "default": 0,
+      "title": "Updated",
+      "type": "integer"
+     }
+    },
+    "title": "ImportStats",
+    "type": "object"
+   },
+   "InterfaceFrequency": {
+    "enum": [
+     "realtime",
+     "batch",
+     "on_demand"
+    ],
+    "title": "InterfaceFrequency",
+    "type": "string"
+   },
+   "InterfaceIn": {
+    "properties": {
+     "bidirectional": {
+      "default": false,
+      "title": "Bidirectional",
+      "type": "boolean"
+     },
+     "data_objects": {
+      "default": [],
+      "items": {
+       "maxLength": 120,
+       "type": "string"
+      },
+      "maxItems": 30,
+      "title": "Data Objects",
+      "type": "array"
+     },
+     "description": {
+      "default": "",
+      "maxLength": 4000,
+      "title": "Description",
+      "type": "string"
+     },
+     "frequency": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/InterfaceFrequency"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "from": {
+      "$ref": "#/components/schemas/EndpointRef"
+     },
+     "name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+     },
+     "status": {
+      "$ref": "#/components/schemas/InterfaceStatus",
+      "default": "active"
+     },
+     "to": {
+      "$ref": "#/components/schemas/EndpointRef"
+     },
+     "type": {
+      "$ref": "#/components/schemas/InterfaceType",
+      "default": "other"
+     }
+    },
+    "required": [
+     "from",
+     "to",
+     "name"
+    ],
+    "title": "InterfaceIn",
+    "type": "object"
+   },
+   "InterfaceOut": {
+    "properties": {
+     "bidirectional": {
+      "title": "Bidirectional",
+      "type": "boolean"
+     },
+     "data_objects": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Data Objects",
+      "type": "array"
+     },
+     "description": {
+      "title": "Description",
+      "type": "string"
+     },
+     "frequency": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/InterfaceFrequency"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "from": {
+      "$ref": "#/components/schemas/EndpointOut"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "indexed": {
+      "title": "Indexed",
+      "type": "boolean"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "status": {
+      "$ref": "#/components/schemas/InterfaceStatus"
+     },
+     "to": {
+      "$ref": "#/components/schemas/EndpointOut"
+     },
+     "type": {
+      "$ref": "#/components/schemas/InterfaceType"
+     },
+     "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "from",
+     "to",
+     "name",
+     "type",
+     "data_objects",
+     "frequency",
+     "status",
+     "bidirectional",
+     "description",
+     "indexed",
+     "updated_at"
+    ],
+    "title": "InterfaceOut",
+    "type": "object"
+   },
+   "InterfaceStatus": {
+    "enum": [
+     "planned",
+     "active",
+     "deprecated"
+    ],
+    "title": "InterfaceStatus",
+    "type": "string"
+   },
+   "InterfaceSummary": {
+    "description": "An interface as seen from one app: the other side and the direction of the data flow.",
+    "properties": {
+     "counterpart": {
+      "$ref": "#/components/schemas/EndpointOut"
+     },
+     "data_objects": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Data Objects",
+      "type": "array"
+     },
+     "direction": {
+      "enum": [
+       "outgoing",
+       "incoming",
+       "both"
+      ],
+      "title": "Direction",
+      "type": "string"
+     },
+     "frequency": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/InterfaceFrequency"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "status": {
+      "$ref": "#/components/schemas/InterfaceStatus"
+     },
+     "type": {
+      "$ref": "#/components/schemas/InterfaceType"
+     }
+    },
+    "required": [
+     "id",
+     "name",
+     "direction",
+     "counterpart",
+     "type",
+     "data_objects",
+     "frequency",
+     "status"
+    ],
+    "title": "InterfaceSummary",
+    "type": "object"
+   },
+   "InterfaceType": {
+    "enum": [
+     "rest_api",
+     "soap",
+     "file_transfer",
+     "database",
+     "messaging",
+     "sso",
+     "ui_embedding",
+     "other"
+    ],
+    "title": "InterfaceType",
+    "type": "string"
+   },
+   "Landscape": {
+    "properties": {
+     "edges": {
+      "items": {
+       "$ref": "#/components/schemas/LandscapeEdge"
+      },
+      "title": "Edges",
+      "type": "array"
+     },
+     "nodes": {
+      "items": {
+       "$ref": "#/components/schemas/LandscapeNode"
+      },
+      "title": "Nodes",
+      "type": "array"
+     }
+    },
+    "required": [
+     "nodes",
+     "edges"
+    ],
+    "title": "Landscape",
+    "type": "object"
+   },
+   "LandscapeEdge": {
+    "properties": {
+     "bidirectional": {
+      "title": "Bidirectional",
+      "type": "boolean"
+     },
+     "data_objects": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Data Objects",
+      "type": "array"
+     },
+     "frequency": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/InterfaceFrequency"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "source": {
+      "title": "Source",
+      "type": "string"
+     },
+     "status": {
+      "$ref": "#/components/schemas/InterfaceStatus"
+     },
+     "target": {
+      "title": "Target",
+      "type": "string"
+     },
+     "type": {
+      "$ref": "#/components/schemas/InterfaceType"
+     }
+    },
+    "required": [
+     "id",
+     "source",
+     "target",
+     "name",
+     "type",
+     "status",
+     "bidirectional",
+     "data_objects",
+     "frequency"
+    ],
+    "title": "LandscapeEdge",
+    "type": "object"
+   },
+   "LandscapeNode": {
+    "properties": {
+     "degree": {
+      "title": "Degree",
+      "type": "integer"
+     },
+     "domains": {
+      "default": [],
+      "items": {
+       "type": "string"
+      },
+      "title": "Domains",
+      "type": "array"
+     },
+     "id": {
+      "title": "Id",
+      "type": "string"
+     },
+     "kind": {
+      "enum": [
+       "app",
+       "system"
+      ],
+      "title": "Kind",
+      "type": "string"
+     },
+     "lifecycle_status": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/LifecycleStatus"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Slug"
+     }
+    },
+    "required": [
+     "id",
+     "kind",
+     "name",
+     "degree"
+    ],
+    "title": "LandscapeNode",
+    "type": "object"
+   },
+   "LicenseType": {
+    "enum": [
+     "oss",
+     "commercial",
+     "internal",
+     "other"
+    ],
+    "title": "LicenseType",
+    "type": "string"
+   },
+   "LifecycleStatus": {
+    "enum": [
+     "idea",
+     "pilot",
+     "active",
+     "deprecated",
+     "retired"
+    ],
+    "title": "LifecycleStatus",
+    "type": "string"
+   },
+   "LinkItem": {
+    "properties": {
+     "label": {
+      "maxLength": 120,
+      "title": "Label",
+      "type": "string"
+     },
+     "url": {
+      "maxLength": 1000,
+      "title": "Url",
+      "type": "string"
+     }
+    },
+    "required": [
+     "label",
+     "url"
+    ],
+    "title": "LinkItem",
+    "type": "object"
+   },
+   "LoginRequest": {
+    "properties": {
+     "email": {
+      "title": "Email",
+      "type": "string"
+     },
+     "password": {
+      "title": "Password",
+      "type": "string"
+     }
+    },
+    "required": [
+     "email",
+     "password"
+    ],
+    "title": "LoginRequest",
+    "type": "object"
+   },
+   "LoginResponse": {
+    "properties": {
+     "access_token": {
+      "title": "Access Token",
+      "type": "string"
+     },
+     "token_type": {
+      "default": "bearer",
+      "title": "Token Type",
+      "type": "string"
+     },
+     "user": {
+      "$ref": "#/components/schemas/UserOut"
+     }
+    },
+    "required": [
+     "user",
+     "access_token"
+    ],
+    "title": "LoginResponse",
+    "type": "object"
+   },
+   "MaintainerIn": {
+    "properties": {
+     "email": {
+      "anyOf": [
+       {
+        "maxLength": 320,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Email"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/MaintainerKind",
+      "default": "person"
+     },
+     "name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+     },
+     "org_unit": {
+      "anyOf": [
+       {
+        "maxLength": 120,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Org Unit"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "maxLength": 1000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     }
+    },
+    "required": [
+     "name"
+    ],
+    "title": "MaintainerIn",
+    "type": "object"
+   },
+   "MaintainerKind": {
+    "enum": [
+     "person",
+     "team"
+    ],
+    "title": "MaintainerKind",
+    "type": "string"
+   },
+   "MaintainerOut": {
+    "properties": {
+     "email": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Email"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/MaintainerKind"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "org_unit": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Org Unit"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     }
+    },
+    "required": [
+     "id",
+     "name",
+     "email",
+     "kind",
+     "org_unit",
+     "url"
+    ],
+    "title": "MaintainerOut",
+    "type": "object"
+   },
+   "MaintainerRef": {
+    "description": "Reference to a maintainer: by id, else matched by email, else by name (created when missing).",
+    "properties": {
+     "email": {
+      "anyOf": [
+       {
+        "maxLength": 320,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Email"
+     },
+     "id": {
+      "anyOf": [
+       {
+        "format": "uuid",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Id"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/MaintainerKind",
+      "default": "person"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "org_unit": {
+      "anyOf": [
+       {
+        "maxLength": 120,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Org Unit"
+     },
+     "role": {
+      "$ref": "#/components/schemas/MaintainerRole",
+      "default": "maintainer"
+     }
+    },
+    "title": "MaintainerRef",
+    "type": "object"
+   },
+   "MaintainerRole": {
+    "enum": [
+     "owner",
+     "maintainer",
+     "contact"
+    ],
+    "title": "MaintainerRole",
+    "type": "string"
+   },
+   "MatchedCapability": {
+    "properties": {
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/CapabilityKind"
+     },
+     "text": {
+      "title": "Text",
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "kind",
+     "text"
+    ],
+    "title": "MatchedCapability",
+    "type": "object"
+   },
+   "Page_AppListItem_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/AppListItem"
+      },
+      "title": "Items",
+      "type": "array"
+     },
+     "page": {
+      "title": "Page",
+      "type": "integer"
+     },
+     "size": {
+      "title": "Size",
+      "type": "integer"
+     },
+     "total": {
+      "title": "Total",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "items",
+     "total",
+     "page",
+     "size"
+    ],
+    "title": "Page[AppListItem]",
+    "type": "object"
+   },
+   "Page_SearchLogOut_": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/SearchLogOut"
+      },
+      "title": "Items",
+      "type": "array"
+     },
+     "page": {
+      "title": "Page",
+      "type": "integer"
+     },
+     "size": {
+      "title": "Size",
+      "type": "integer"
+     },
+     "total": {
+      "title": "Total",
+      "type": "integer"
+     }
+    },
+    "required": [
+     "items",
+     "total",
+     "page",
+     "size"
+    ],
+    "title": "Page[SearchLogOut]",
+    "type": "object"
+   },
+   "ParseRequest": {
+    "properties": {
+     "text": {
+      "maxLength": 20000,
+      "title": "Text",
+      "type": "string"
+     }
+    },
+    "required": [
+     "text"
+    ],
+    "title": "ParseRequest",
+    "type": "object"
+   },
+   "ParseResponse": {
+    "properties": {
+     "requirements": {
+      "items": {
+       "$ref": "#/components/schemas/ParsedRequirement"
+      },
+      "title": "Requirements",
+      "type": "array"
+     }
+    },
+    "required": [
+     "requirements"
+    ],
+    "title": "ParseResponse",
+    "type": "object"
+   },
+   "ParsedRequirement": {
+    "properties": {
+     "idx": {
+      "title": "Idx",
+      "type": "integer"
+     },
+     "priority": {
+      "anyOf": [
+       {
+        "enum": [
+         "must",
+         "should",
+         "could"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Priority"
+     },
+     "text": {
+      "title": "Text",
+      "type": "string"
+     },
+     "weight": {
+      "title": "Weight",
+      "type": "number"
+     }
+    },
+    "required": [
+     "idx",
+     "text",
+     "priority",
+     "weight"
+    ],
+    "title": "ParsedRequirement",
+    "type": "object"
+   },
+   "ReindexRequest": {
+    "properties": {
+     "scope": {
+      "default": "stale",
+      "enum": [
+       "stale",
+       "all"
+      ],
+      "title": "Scope",
+      "type": "string"
+     }
+    },
+    "title": "ReindexRequest",
+    "type": "object"
+   },
+   "RequirementIn": {
+    "properties": {
+     "priority": {
+      "anyOf": [
+       {
+        "enum": [
+         "must",
+         "should",
+         "could"
+        ],
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Priority"
+     },
+     "text": {
+      "maxLength": 20000,
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+     }
+    },
+    "required": [
+     "text"
+    ],
+    "title": "RequirementIn",
+    "type": "object"
+   },
+   "ResultApp": {
+    "properties": {
+     "domains": {
+      "default": [],
+      "items": {
+       "type": "string"
+      },
+      "title": "Domains",
+      "type": "array"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "lifecycle_status": {
+      "$ref": "#/components/schemas/LifecycleStatus"
+     },
+     "maintainers": {
+      "default": [],
+      "description": "Names, owners first",
+      "items": {
+       "type": "string"
+      },
+      "title": "Maintainers",
+      "type": "array"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "short_description": {
+      "title": "Short Description",
+      "type": "string"
+     },
+     "slug": {
+      "title": "Slug",
+      "type": "string"
+     },
+     "tags": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+     },
+     "tech_stack": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Tech Stack",
+      "type": "array"
+     },
+     "vendor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Vendor"
+     }
+    },
+    "required": [
+     "id",
+     "slug",
+     "name",
+     "short_description",
+     "lifecycle_status",
+     "vendor",
+     "tags",
+     "tech_stack"
+    ],
+    "title": "ResultApp",
+    "type": "object"
+   },
+   "Role": {
+    "enum": [
+     "viewer",
+     "editor",
+     "admin"
+    ],
+    "title": "Role",
+    "type": "string"
+   },
+   "SearchConfigOut": {
+    "properties": {
+     "capability_atomic_warn_len": {
+      "title": "Capability Atomic Warn Len",
+      "type": "integer"
+     },
+     "max_requirements": {
+      "title": "Max Requirements",
+      "type": "integer"
+     },
+     "model_id": {
+      "title": "Model Id",
+      "type": "string"
+     },
+     "priority_weights": {
+      "additionalProperties": {
+       "type": "number"
+      },
+      "title": "Priority Weights",
+      "type": "object"
+     },
+     "thresholds": {
+      "$ref": "#/components/schemas/ThresholdsOut"
+     }
+    },
+    "required": [
+     "model_id",
+     "thresholds",
+     "priority_weights",
+     "max_requirements",
+     "capability_atomic_warn_len"
+    ],
+    "title": "SearchConfigOut",
+    "type": "object"
+   },
+   "SearchFilters": {
+    "properties": {
+     "domains": {
+      "default": [],
+      "description": "Any of these domains",
+      "items": {
+       "type": "string"
+      },
+      "title": "Domains",
+      "type": "array"
+     },
+     "license_types": {
+      "default": [],
+      "items": {
+       "$ref": "#/components/schemas/LicenseType"
+      },
+      "title": "License Types",
+      "type": "array"
+     },
+     "lifecycle": {
+      "anyOf": [
+       {
+        "items": {
+         "$ref": "#/components/schemas/LifecycleStatus"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "Allowed lifecycle states; default excludes 'retired'.",
+      "title": "Lifecycle"
+     },
+     "maintainer": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Maintainer"
+     },
+     "tags": {
+      "default": [],
+      "items": {
+       "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+     }
+    },
+    "title": "SearchFilters",
+    "type": "object"
+   },
+   "SearchLogOut": {
+    "properties": {
+     "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+     },
+     "duration_ms": {
+      "title": "Duration Ms",
+      "type": "integer"
+     },
+     "embedding_model": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Embedding Model"
+     },
+     "feedback": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Feedback"
+     },
+     "filters": {
+      "additionalProperties": true,
+      "title": "Filters",
+      "type": "object"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "no_match": {
+      "title": "No Match",
+      "type": "boolean"
+     },
+     "query_text": {
+      "title": "Query Text",
+      "type": "string"
+     },
+     "requirements": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "title": "Requirements",
+      "type": "array"
+     },
+     "results": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "title": "Results",
+      "type": "array"
+     },
+     "user_id": {
+      "anyOf": [
+       {
+        "format": "uuid",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "User Id"
+     }
+    },
+    "required": [
+     "id",
+     "user_id",
+     "query_text",
+     "requirements",
+     "filters",
+     "results",
+     "no_match",
+     "embedding_model",
+     "duration_ms",
+     "feedback",
+     "created_at"
+    ],
+    "title": "SearchLogOut",
+    "type": "object"
+   },
+   "SearchRequest": {
+    "properties": {
+     "filters": {
+      "$ref": "#/components/schemas/SearchFilters",
+      "default": {
+       "domains": [],
+       "license_types": [],
+       "tags": []
+      }
+     },
+     "limit": {
+      "default": 10,
+      "maximum": 50.0,
+      "minimum": 1.0,
+      "title": "Limit",
+      "type": "integer"
+     },
+     "requirements": {
+      "anyOf": [
+       {
+        "items": {
+         "$ref": "#/components/schemas/RequirementIn"
+        },
+        "maxItems": 30,
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Requirements"
+     },
+     "text": {
+      "anyOf": [
+       {
+        "maxLength": 20000,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text"
+     }
+    },
+    "title": "SearchRequest",
+    "type": "object"
+   },
+   "SearchResponse": {
+    "properties": {
+     "candidates_considered": {
+      "title": "Candidates Considered",
+      "type": "integer"
+     },
+     "catalog_gaps": {
+      "items": {
+       "type": "integer"
+      },
+      "title": "Catalog Gaps",
+      "type": "array"
+     },
+     "combinations": {
+      "default": [],
+      "items": {
+       "$ref": "#/components/schemas/Combination"
+      },
+      "title": "Combinations",
+      "type": "array"
+     },
+     "connections": {
+      "$ref": "#/components/schemas/Landscape",
+      "default": {
+       "edges": [],
+       "nodes": []
+      },
+      "description": "Interfaces between the result apps, and external systems two or more of them share"
+     },
+     "duration_ms": {
+      "title": "Duration Ms",
+      "type": "integer"
+     },
+     "requirements": {
+      "items": {
+       "$ref": "#/components/schemas/ParsedRequirement"
+      },
+      "title": "Requirements",
+      "type": "array"
+     },
+     "results": {
+      "items": {
+       "$ref": "#/components/schemas/SearchResult"
+      },
+      "title": "Results",
+      "type": "array"
+     },
+     "search_log_id": {
+      "anyOf": [
+       {
+        "format": "uuid",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Search Log Id"
+     },
+     "status": {
+      "enum": [
+       "ok",
+       "no_match"
+      ],
+      "title": "Status",
+      "type": "string"
+     },
+     "thresholds": {
+      "$ref": "#/components/schemas/ThresholdsOut"
+     }
+    },
+    "required": [
+     "status",
+     "requirements",
+     "results",
+     "catalog_gaps",
+     "thresholds",
+     "candidates_considered",
+     "duration_ms",
+     "search_log_id"
+    ],
+    "title": "SearchResponse",
+    "type": "object"
+   },
+   "SearchResult": {
+    "properties": {
+     "app": {
+      "$ref": "#/components/schemas/ResultApp"
+     },
+     "coverage": {
+      "title": "Coverage",
+      "type": "number"
+     },
+     "evidence": {
+      "items": {
+       "$ref": "#/components/schemas/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+     },
+     "final": {
+      "title": "Final",
+      "type": "number"
+     },
+     "flags": {
+      "items": {
+       "type": "string"
+      },
+      "title": "Flags",
+      "type": "array"
+     },
+     "label": {
+      "enum": [
+       "strong",
+       "partial",
+       "weak"
+      ],
+      "title": "Label",
+      "type": "string"
+     },
+     "recommended": {
+      "default": true,
+      "title": "Recommended",
+      "type": "boolean"
+     },
+     "signals": {
+      "$ref": "#/components/schemas/Signals"
+     },
+     "soft": {
+      "title": "Soft",
+      "type": "number"
+     }
+    },
+    "required": [
+     "app",
+     "final",
+     "coverage",
+     "soft",
+     "label",
+     "flags",
+     "signals",
+     "evidence"
+    ],
+    "title": "SearchResult",
+    "type": "object"
+   },
+   "Signals": {
+    "properties": {
+     "capability_rank": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Capability Rank"
+     },
+     "fts_rank": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fts Rank"
+     },
+     "rrf": {
+      "title": "Rrf",
+      "type": "number"
+     },
+     "summary_rank": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Summary Rank"
+     }
+    },
+    "required": [
+     "rrf",
+     "summary_rank",
+     "capability_rank",
+     "fts_rank"
+    ],
+    "title": "Signals",
+    "type": "object"
+   },
+   "SimilarApp": {
+    "properties": {
+     "name": {
+      "title": "Name",
+      "type": "string"
+     },
+     "short_description": {
+      "title": "Short Description",
+      "type": "string"
+     },
+     "similarity": {
+      "title": "Similarity",
+      "type": "number"
+     },
+     "slug": {
+      "title": "Slug",
+      "type": "string"
+     }
+    },
+    "required": [
+     "slug",
+     "name",
+     "short_description",
+     "similarity"
+    ],
+    "title": "SimilarApp",
+    "type": "object"
+   },
+   "TagCategory": {
+    "enum": [
+     "general",
+     "tech",
+     "domain"
+    ],
+    "title": "TagCategory",
+    "type": "string"
+   },
+   "TagCreate": {
+    "properties": {
+     "category": {
+      "$ref": "#/components/schemas/TagCategory",
+      "default": "general"
+     },
+     "name": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+     }
+    },
+    "required": [
+     "name"
+    ],
+    "title": "TagCreate",
+    "type": "object"
+   },
+   "TagOut": {
+    "properties": {
+     "app_count": {
+      "title": "App Count",
+      "type": "integer"
+     },
+     "category": {
+      "$ref": "#/components/schemas/TagCategory"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "name": {
+      "title": "Name",
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "name",
+     "category",
+     "app_count"
+    ],
+    "title": "TagOut",
+    "type": "object"
+   },
+   "TagUpdate": {
+    "properties": {
+     "merge_into": {
+      "anyOf": [
+       {
+        "format": "uuid",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Merge Into"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "maxLength": 120,
+        "minLength": 1,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     }
+    },
+    "title": "TagUpdate",
+    "type": "object"
+   },
+   "ThresholdsOut": {
+    "properties": {
+     "covered": {
+      "title": "Covered",
+      "type": "number"
+     },
+     "min_top_coverage": {
+      "title": "Min Top Coverage",
+      "type": "number"
+     },
+     "model": {
+      "title": "Model",
+      "type": "string"
+     },
+     "nomatch": {
+      "title": "Nomatch",
+      "type": "number"
+     },
+     "partial": {
+      "title": "Partial",
+      "type": "number"
+     }
+    },
+    "required": [
+     "model",
+     "covered",
+     "partial",
+     "nomatch",
+     "min_top_coverage"
+    ],
+    "title": "ThresholdsOut",
+    "type": "object"
+   },
+   "UserCreate": {
+    "properties": {
+     "display_name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Display Name",
+      "type": "string"
+     },
+     "email": {
+      "maxLength": 320,
+      "title": "Email",
+      "type": "string"
+     },
+     "password": {
+      "maxLength": 256,
+      "minLength": 10,
+      "title": "Password",
+      "type": "string"
+     },
+     "role": {
+      "$ref": "#/components/schemas/Role",
+      "default": "viewer"
+     }
+    },
+    "required": [
+     "email",
+     "display_name",
+     "password"
+    ],
+    "title": "UserCreate",
+    "type": "object"
+   },
+   "UserOut": {
+    "properties": {
+     "auth_provider": {
+      "title": "Auth Provider",
+      "type": "string"
+     },
+     "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+     },
+     "display_name": {
+      "title": "Display Name",
+      "type": "string"
+     },
+     "email": {
+      "title": "Email",
+      "type": "string"
+     },
+     "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+     },
+     "is_active": {
+      "title": "Is Active",
+      "type": "boolean"
+     },
+     "last_login_at": {
+      "anyOf": [
+       {
+        "format": "date-time",
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Login At"
+     },
+     "role": {
+      "$ref": "#/components/schemas/Role"
+     }
+    },
+    "required": [
+     "id",
+     "email",
+     "display_name",
+     "role",
+     "auth_provider",
+     "is_active",
+     "created_at",
+     "last_login_at"
+    ],
+    "title": "UserOut",
+    "type": "object"
+   },
+   "UserUpdate": {
+    "properties": {
+     "display_name": {
+      "anyOf": [
+       {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Display Name"
+     },
+     "is_active": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Is Active"
+     },
+     "password": {
+      "anyOf": [
+       {
+        "maxLength": 256,
+        "minLength": 10,
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Password"
+     },
+     "role": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Role"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "title": "UserUpdate",
+    "type": "object"
+   },
+   "ValidationError": {
+    "properties": {
+     "ctx": {
+      "title": "Context",
+      "type": "object"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "title": "Location",
+      "type": "array"
+     },
+     "msg": {
+      "title": "Message",
+      "type": "string"
+     },
+     "type": {
+      "title": "Error Type",
+      "type": "string"
+     }
+    },
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError",
+    "type": "object"
+   }
+  }
+ },
+ "info": {
+  "title": "Appfit API",
+  "version": "0.1.0"
+ },
+ "openapi": "3.1.0",
+ "paths": {
+  "/api/admin/embeddings/reindex": {
+   "post": {
+    "operationId": "reindex_api_admin_embeddings_reindex_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReindexRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EmbeddingStatusOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Reindex",
+    "tags": [
+     "admin"
+    ]
+   }
+  },
+  "/api/admin/embeddings/status": {
+   "get": {
+    "operationId": "embeddings_status_api_admin_embeddings_status_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EmbeddingStatusOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Embeddings Status",
+    "tags": [
+     "admin"
+    ]
+   }
+  },
+  "/api/admin/import-runs": {
+   "get": {
+    "operationId": "import_runs_api_admin_import_runs_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "limit",
+      "required": false,
+      "schema": {
+       "default": 25,
+       "maximum": 200,
+       "minimum": 1,
+       "title": "Limit",
+       "type": "integer"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/ImportRunOut"
+         },
+         "title": "Response Import Runs Api Admin Import Runs Get",
+         "type": "array"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Import Runs",
+    "tags": [
+     "admin"
+    ]
+   }
+  },
+  "/api/admin/search-logs": {
+   "get": {
+    "operationId": "search_logs_api_admin_search_logs_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "only_feedback",
+      "required": false,
+      "schema": {
+       "default": false,
+       "title": "Only Feedback",
+       "type": "boolean"
+      }
+     },
+     {
+      "in": "query",
+      "name": "only_no_match",
+      "required": false,
+      "schema": {
+       "default": false,
+       "title": "Only No Match",
+       "type": "boolean"
+      }
+     },
+     {
+      "in": "query",
+      "name": "page",
+      "required": false,
+      "schema": {
+       "default": 1,
+       "minimum": 1,
+       "title": "Page",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "query",
+      "name": "size",
+      "required": false,
+      "schema": {
+       "default": 25,
+       "maximum": 200,
+       "minimum": 1,
+       "title": "Size",
+       "type": "integer"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_SearchLogOut_"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Search Logs",
+    "tags": [
+     "admin"
+    ]
+   }
+  },
+  "/api/apps": {
+   "get": {
+    "operationId": "list_apps_api_apps_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "page",
+      "required": false,
+      "schema": {
+       "default": 1,
+       "minimum": 1,
+       "title": "Page",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "query",
+      "name": "size",
+      "required": false,
+      "schema": {
+       "default": 25,
+       "maximum": 200,
+       "minimum": 1,
+       "title": "Size",
+       "type": "integer"
+      }
+     },
+     {
+      "in": "query",
+      "name": "q",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "in": "query",
+      "name": "tags",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "type": "string"
+       },
+       "title": "Tags",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "status",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "$ref": "#/components/schemas/LifecycleStatus"
+       },
+       "title": "Status",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "license_type",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "$ref": "#/components/schemas/LicenseType"
+       },
+       "title": "License Type",
+       "type": "array"
+      }
+     },
+     {
+      "description": "Any of these domains",
+      "in": "query",
+      "name": "domain",
+      "required": false,
+      "schema": {
+       "default": [],
+       "description": "Any of these domains",
+       "items": {
+        "type": "string"
+       },
+       "title": "Domain",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "maintainer",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Maintainer"
+      }
+     },
+     {
+      "in": "query",
+      "name": "sort",
+      "required": false,
+      "schema": {
+       "default": "name",
+       "enum": [
+        "name",
+        "updated",
+        "relevance"
+       ],
+       "title": "Sort",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Page_AppListItem_"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "List Apps",
+    "tags": [
+     "apps"
+    ]
+   },
+   "post": {
+    "operationId": "create_app_api_apps_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AppIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Create App",
+    "tags": [
+     "apps"
+    ]
+   }
+  },
+  "/api/apps/facets": {
+   "get": {
+    "operationId": "app_facets_api_apps_facets_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "q",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "in": "query",
+      "name": "tags",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "type": "string"
+       },
+       "title": "Tags",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "status",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "$ref": "#/components/schemas/LifecycleStatus"
+       },
+       "title": "Status",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "license_type",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "$ref": "#/components/schemas/LicenseType"
+       },
+       "title": "License Type",
+       "type": "array"
+      }
+     },
+     {
+      "description": "Any of these domains",
+      "in": "query",
+      "name": "domain",
+      "required": false,
+      "schema": {
+       "default": [],
+       "description": "Any of these domains",
+       "items": {
+        "type": "string"
+       },
+       "title": "Domain",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "maintainer",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Maintainer"
+      }
+     },
+     {
+      "in": "query",
+      "name": "sort",
+      "required": false,
+      "schema": {
+       "default": "name",
+       "enum": [
+        "name",
+        "updated",
+        "relevance"
+       ],
+       "title": "Sort",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppFacets"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "App Facets",
+    "tags": [
+     "apps"
+    ]
+   }
+  },
+  "/api/apps/{slug}": {
+   "delete": {
+    "operationId": "delete_app_api_apps__slug__delete",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "slug",
+      "required": true,
+      "schema": {
+       "title": "Slug",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Delete App",
+    "tags": [
+     "apps"
+    ]
+   },
+   "get": {
+    "operationId": "get_app_api_apps__slug__get",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "slug",
+      "required": true,
+      "schema": {
+       "title": "Slug",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get App",
+    "tags": [
+     "apps"
+    ]
+   },
+   "put": {
+    "operationId": "replace_app_api_apps__slug__put",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "slug",
+      "required": true,
+      "schema": {
+       "title": "Slug",
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AppIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AppOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Replace App",
+    "tags": [
+     "apps"
+    ]
+   }
+  },
+  "/api/apps/{slug}/similar": {
+   "get": {
+    "operationId": "get_similar_api_apps__slug__similar_get",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "slug",
+      "required": true,
+      "schema": {
+       "title": "Slug",
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "limit",
+      "required": false,
+      "schema": {
+       "default": 5,
+       "maximum": 200,
+       "minimum": 1,
+       "title": "Limit",
+       "type": "integer"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/SimilarApp"
+         },
+         "title": "Response Get Similar Api Apps  Slug  Similar Get",
+         "type": "array"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get Similar",
+    "tags": [
+     "apps"
+    ]
+   }
+  },
+  "/api/auth/change-password": {
+   "post": {
+    "operationId": "change_password_api_auth_change_password_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ChangePasswordRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Change Password",
+    "tags": [
+     "auth"
+    ]
+   }
+  },
+  "/api/auth/login": {
+   "post": {
+    "operationId": "login_api_auth_login_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/LoginRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/LoginResponse"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Login",
+    "tags": [
+     "auth"
+    ]
+   }
+  },
+  "/api/auth/logout": {
+   "post": {
+    "operationId": "logout_api_auth_logout_post",
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Logout",
+    "tags": [
+     "auth"
+    ]
+   }
+  },
+  "/api/auth/me": {
+   "get": {
+    "operationId": "me_api_auth_me_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Me",
+    "tags": [
+     "auth"
+    ]
+   }
+  },
+  "/api/export": {
+   "get": {
+    "operationId": "export_api_export_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "format",
+      "required": false,
+      "schema": {
+       "default": "json",
+       "enum": [
+        "json",
+        "csv"
+       ],
+       "title": "Format",
+       "type": "string"
+      }
+     },
+     {
+      "description": "CSV only: which table to export",
+      "in": "query",
+      "name": "kind",
+      "required": false,
+      "schema": {
+       "default": "apps",
+       "description": "CSV only: which table to export",
+       "enum": [
+        "apps",
+        "interfaces"
+       ],
+       "title": "Kind",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Export",
+    "tags": [
+     "import"
+    ]
+   }
+  },
+  "/api/external-systems": {
+   "get": {
+    "operationId": "list_systems_api_external_systems_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/ExternalSystemOut"
+         },
+         "title": "Response List Systems Api External Systems Get",
+         "type": "array"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "List Systems",
+    "tags": [
+     "interfaces"
+    ]
+   },
+   "post": {
+    "operationId": "create_system_api_external_systems_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ExternalSystemIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ExternalSystemOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Create System",
+    "tags": [
+     "interfaces"
+    ]
+   }
+  },
+  "/api/external-systems/{system_id}": {
+   "delete": {
+    "operationId": "delete_system_api_external_systems__system_id__delete",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "system_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "System Id",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Delete System",
+    "tags": [
+     "interfaces"
+    ]
+   },
+   "put": {
+    "operationId": "update_system_api_external_systems__system_id__put",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "system_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "System Id",
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ExternalSystemIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ExternalSystemOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Update System",
+    "tags": [
+     "interfaces"
+    ]
+   }
+  },
+  "/api/health": {
+   "get": {
+    "operationId": "liveness_api_health_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HealthOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Liveness",
+    "tags": [
+     "health"
+    ]
+   }
+  },
+  "/api/health/ready": {
+   "get": {
+    "operationId": "readiness_api_health_ready_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HealthOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Readiness",
+    "tags": [
+     "health"
+    ]
+   }
+  },
+  "/api/import": {
+   "post": {
+    "operationId": "import_file_api_import_post",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "format",
+      "required": false,
+      "schema": {
+       "default": "auto",
+       "enum": [
+        "auto",
+        "csv",
+        "json"
+       ],
+       "title": "Format",
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "mode",
+      "required": false,
+      "schema": {
+       "default": "upsert",
+       "enum": [
+        "upsert",
+        "create_only"
+       ],
+       "title": "Mode",
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "dry_run",
+      "required": false,
+      "schema": {
+       "default": true,
+       "title": "Dry Run",
+       "type": "boolean"
+      }
+     },
+     {
+      "in": "query",
+      "name": "skip_invalid",
+      "required": false,
+      "schema": {
+       "default": false,
+       "title": "Skip Invalid",
+       "type": "boolean"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_import_file_api_import_post"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImportReport"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Import File",
+    "tags": [
+     "import"
+    ]
+   }
+  },
+  "/api/import/interfaces-template.csv": {
+   "get": {
+    "operationId": "interfaces_template_api_import_interfaces_template_csv_get",
+    "responses": {
+     "200": {
+      "content": {
+       "text/plain": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Interfaces Template",
+    "tags": [
+     "import"
+    ]
+   }
+  },
+  "/api/import/schema.json": {
+   "get": {
+    "operationId": "schema_api_import_schema_json_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "title": "Response Schema Api Import Schema Json Get",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Schema",
+    "tags": [
+     "import"
+    ]
+   }
+  },
+  "/api/import/template.csv": {
+   "get": {
+    "operationId": "template_api_import_template_csv_get",
+    "responses": {
+     "200": {
+      "content": {
+       "text/plain": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Template",
+    "tags": [
+     "import"
+    ]
+   }
+  },
+  "/api/interfaces": {
+   "get": {
+    "operationId": "list_interfaces_api_interfaces_get",
+    "parameters": [
+     {
+      "description": "Slug of an app at either end",
+      "in": "query",
+      "name": "app",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "description": "Slug of an app at either end",
+       "title": "App"
+      }
+     },
+     {
+      "description": "Name of an external system at either end",
+      "in": "query",
+      "name": "system",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "description": "Name of an external system at either end",
+       "title": "System"
+      }
+     },
+     {
+      "in": "query",
+      "name": "type",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "$ref": "#/components/schemas/InterfaceType"
+       },
+       "title": "Type",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "status",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "$ref": "#/components/schemas/InterfaceStatus"
+       },
+       "title": "Status",
+       "type": "array"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/InterfaceOut"
+         },
+         "title": "Response List Interfaces Api Interfaces Get",
+         "type": "array"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "List Interfaces",
+    "tags": [
+     "interfaces"
+    ]
+   },
+   "post": {
+    "operationId": "create_interface_api_interfaces_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/InterfaceIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/InterfaceOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Create Interface",
+    "tags": [
+     "interfaces"
+    ]
+   }
+  },
+  "/api/interfaces/{interface_id}": {
+   "delete": {
+    "operationId": "delete_interface_api_interfaces__interface_id__delete",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "interface_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "Interface Id",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Delete Interface",
+    "tags": [
+     "interfaces"
+    ]
+   },
+   "get": {
+    "operationId": "get_interface_api_interfaces__interface_id__get",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "interface_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "Interface Id",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/InterfaceOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get Interface",
+    "tags": [
+     "interfaces"
+    ]
+   },
+   "put": {
+    "operationId": "update_interface_api_interfaces__interface_id__put",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "interface_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "Interface Id",
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/InterfaceIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/InterfaceOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Update Interface",
+    "tags": [
+     "interfaces"
+    ]
+   }
+  },
+  "/api/landscape": {
+   "get": {
+    "operationId": "get_landscape_api_landscape_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "domain",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "type": "string"
+       },
+       "title": "Domain",
+       "type": "array"
+      }
+     },
+     {
+      "description": "Default: every state except retired",
+      "in": "query",
+      "name": "lifecycle",
+      "required": false,
+      "schema": {
+       "default": [],
+       "description": "Default: every state except retired",
+       "items": {
+        "$ref": "#/components/schemas/LifecycleStatus"
+       },
+       "title": "Lifecycle",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "type",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "$ref": "#/components/schemas/InterfaceType"
+       },
+       "title": "Type",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "status",
+      "required": false,
+      "schema": {
+       "default": [],
+       "items": {
+        "$ref": "#/components/schemas/InterfaceStatus"
+       },
+       "title": "Status",
+       "type": "array"
+      }
+     },
+     {
+      "in": "query",
+      "name": "include_systems",
+      "required": false,
+      "schema": {
+       "default": true,
+       "title": "Include Systems",
+       "type": "boolean"
+      }
+     },
+     {
+      "in": "query",
+      "name": "include_unconnected",
+      "required": false,
+      "schema": {
+       "default": false,
+       "title": "Include Unconnected",
+       "type": "boolean"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Landscape"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Get Landscape",
+    "tags": [
+     "interfaces"
+    ]
+   }
+  },
+  "/api/maintainers": {
+   "get": {
+    "operationId": "list_maintainers_api_maintainers_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "q",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/MaintainerOut"
+         },
+         "title": "Response List Maintainers Api Maintainers Get",
+         "type": "array"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "List Maintainers",
+    "tags": [
+     "maintainers"
+    ]
+   },
+   "post": {
+    "operationId": "create_maintainer_api_maintainers_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MaintainerIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MaintainerOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Create Maintainer",
+    "tags": [
+     "maintainers"
+    ]
+   }
+  },
+  "/api/maintainers/{maintainer_id}": {
+   "delete": {
+    "operationId": "delete_maintainer_api_maintainers__maintainer_id__delete",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "maintainer_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "Maintainer Id",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Delete Maintainer",
+    "tags": [
+     "maintainers"
+    ]
+   },
+   "patch": {
+    "operationId": "update_maintainer_api_maintainers__maintainer_id__patch",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "maintainer_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "Maintainer Id",
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/MaintainerIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/MaintainerOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Update Maintainer",
+    "tags": [
+     "maintainers"
+    ]
+   }
+  },
+  "/api/meta/enums": {
+   "get": {
+    "operationId": "enums_api_meta_enums_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "items": {
+           "type": "string"
+          },
+          "type": "array"
+         },
+         "title": "Response Enums Api Meta Enums Get",
+         "type": "object"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Enums",
+    "tags": [
+     "meta"
+    ]
+   }
+  },
+  "/api/meta/search-config": {
+   "get": {
+    "operationId": "search_config_api_meta_search_config_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SearchConfigOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "Search Config",
+    "tags": [
+     "meta"
+    ]
+   }
+  },
+  "/api/search": {
+   "post": {
+    "operationId": "search_api_search_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SearchRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/SearchResponse"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Search",
+    "tags": [
+     "search"
+    ]
+   }
+  },
+  "/api/search/parse": {
+   "post": {
+    "operationId": "parse_api_search_parse_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ParseRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ParseResponse"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Parse",
+    "tags": [
+     "search"
+    ]
+   }
+  },
+  "/api/search/{log_id}/feedback": {
+   "post": {
+    "operationId": "feedback_api_search__log_id__feedback_post",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "log_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "Log Id",
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/FeedbackIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Feedback",
+    "tags": [
+     "search"
+    ]
+   }
+  },
+  "/api/tags": {
+   "get": {
+    "operationId": "list_tags_api_tags_get",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "category",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "$ref": "#/components/schemas/TagCategory"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Category"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/TagOut"
+         },
+         "title": "Response List Tags Api Tags Get",
+         "type": "array"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "List Tags",
+    "tags": [
+     "tags"
+    ]
+   },
+   "post": {
+    "operationId": "create_tag_api_tags_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TagCreate"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TagOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Create Tag",
+    "tags": [
+     "tags"
+    ]
+   }
+  },
+  "/api/tags/{tag_id}": {
+   "delete": {
+    "operationId": "delete_tag_api_tags__tag_id__delete",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "tag_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "Tag Id",
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Delete Tag",
+    "tags": [
+     "tags"
+    ]
+   },
+   "patch": {
+    "description": "Rename a tag, or merge it into another tag of any category (apps are re-indexed).",
+    "operationId": "update_tag_api_tags__tag_id__patch",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "tag_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "Tag Id",
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TagUpdate"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TagOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Update Tag",
+    "tags": [
+     "tags"
+    ]
+   }
+  },
+  "/api/users": {
+   "get": {
+    "operationId": "list_users_api_users_get",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/UserOut"
+         },
+         "title": "Response List Users Api Users Get",
+         "type": "array"
+        }
+       }
+      },
+      "description": "Successful Response"
+     }
+    },
+    "summary": "List Users",
+    "tags": [
+     "users"
+    ]
+   },
+   "post": {
+    "operationId": "create_user_api_users_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UserCreate"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Create User",
+    "tags": [
+     "users"
+    ]
+   }
+  },
+  "/api/users/{user_id}": {
+   "patch": {
+    "operationId": "update_user_api_users__user_id__patch",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "user_id",
+      "required": true,
+      "schema": {
+       "format": "uuid",
+       "title": "User Id",
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UserUpdate"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserOut"
+        }
+       }
+      },
+      "description": "Successful Response"
+     },
+     "422": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      },
+      "description": "Validation Error"
+     }
+    },
+    "summary": "Update User",
+    "tags": [
+     "users"
+    ]
+   }
+  }
+ }
+}

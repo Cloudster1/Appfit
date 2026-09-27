@@ -1,0 +1,615 @@
+# Labelled evaluation queries for Appfit matching.
+# relevant: graded relevance per app slug (2 = ideal match, 1 = acceptable).
+# expect_no_match: true means no app in seed_apps.json covers the use case.
+# Retired apps are never labelled (default search excludes them).
+queries:
+  - id: q01
+    lang: de
+    text: |
+      Muss:
+      - Eingangsrechnungen per OCR automatisch auslesen
+      - Freigabe-Workflow für Rechnungen abhängig vom Betrag
+      - Export der gebuchten Rechnungen an DATEV
+      Kann:
+      - Rechnungen am Handy freigeben
+    relevant:
+      belegfix: 2
+      invoiceflow-ap: 1
+    expect_no_match: false
+
+  - id: q02
+    lang: en
+    text: |
+      - Automate accounts payable for several company codes
+      - Match invoices against purchase orders and goods receipts
+      - Post approved invoices directly into SAP S/4HANA
+      - Receive e-invoices via Peppol
+    relevant:
+      invoiceflow-ap: 2
+      belegfix: 1
+    expect_no_match: false
+
+  - id: q03
+    lang: de
+    text: |
+      - Mitarbeitende fotografieren Quittungen unterwegs mit dem Handy
+      - Tagegeld für Inlands- und Auslandsreisen wird automatisch berechnet
+      - Die Führungskraft genehmigt die Spesenabrechnung
+      - Übergabe der Spesen an SAP
+    relevant:
+      traveldesk: 2
+      spesenmeister: 1
+    expect_no_match: false
+
+  - id: q04
+    lang: en
+    text: |
+      Must have:
+      - Employees clock in and out at a terminal or in a mobile app
+      - Leave requests approved by the line manager
+      - Overtime and flexitime balances calculated automatically
+      - Checks against the German Working Hours Act
+    relevant:
+      zeitwerk: 2
+    expect_no_match: false
+
+  - id: q05
+    lang: de
+    text: |
+      Wir suchen ein Bewerbermanagementsystem. Stellenanzeigen sollen mit einem Klick auf mehreren Jobbörsen erscheinen. Lebensläufe sollen automatisch ausgelesen werden. Vorstellungsgespräche sollen anhand der Kalender der Führungskräfte geplant werden.
+    relevant:
+      talentscout: 2
+    expect_no_match: false
+
+  - id: q06
+    lang: en
+    text: |
+      - Employees report IT problems through a self-service portal
+      - SLAs with automatic escalation when they are about to be breached
+      - CMDB with automatic discovery of servers and clients
+      - Change approvals by a CAB
+    relevant:
+      servicehub-itsm: 2
+      kundendesk: 1
+    expect_no_match: false
+
+  - id: q07
+    lang: de
+    text: |
+      - Kundenanfragen aus E-Mail und Website-Chat in einem Ticketsystem bearbeiten
+      - Kunden sehen den Status ihrer Anfrage in einem Portal
+      - Nach Abschluss wird die Kundenzufriedenheit abgefragt
+      - Antwortvorlagen für das Support-Team
+    relevant:
+      kundendesk: 2
+      servicehub-itsm: 1
+    expect_no_match: false
+
+  - id: q08
+    lang: de
+    text: |
+      - Wer das Unternehmen verlässt, soll automatisch in allen Cloud-Anwendungen gesperrt werden
+      - Führungskräfte bestätigen regelmäßig, welche Berechtigungen ihre Mitarbeitenden haben
+      - Anmeldung an allen Anwendungen mit einem Konto und zweitem Faktor
+    relevant:
+      identitygate: 2
+      onboardly: 1
+    expect_no_match: false
+
+  - id: q09
+    lang: de
+    text: |
+      Muss:
+      - Revisionssichere Archivierung von Belegen gemäß GoBD
+      - Aufbewahrungsfristen verwalten und Dokumente danach löschen
+      - Anbindung an SAP
+      Soll:
+      - Volltextsuche auch in gescannten Dokumenten
+    relevant:
+      docuvault: 2
+    expect_no_match: false
+
+  - id: q10
+    lang: en
+    text: |
+      - Several people edit the same document at the same time
+      - Share files with external partners using expiring links
+      - Open and edit documents directly within Microsoft Teams
+    relevant:
+      teamspace-docs: 2
+      talkspace: 1
+    expect_no_match: false
+
+  - id: q11
+    lang: en
+    text: |
+      - We keep missing the deadline to cancel supplier agreements before they renew automatically
+      - Legal wants to provide pre-approved clauses for new agreements
+      - Contracts must be approved by legal and management before signing
+    relevant:
+      vertragswerk: 2
+    expect_no_match: false
+
+  - id: q12
+    lang: en
+    text: |
+      - Send newsletters to segmented mailing lists
+      - GDPR-compliant double opt-in for subscribers
+      - A/B test subject lines
+      - Report open and click rates per campaign
+    relevant:
+      mailwave: 2
+    expect_no_match: false
+
+  - id: q13
+    lang: de
+    text: |
+      - Verkaufschancen mit Vertriebsphasen verfolgen
+      - Umsatzprognose je Region
+      - Angebote aus dem Produktkatalog erstellen, Rabatte mit Genehmigung
+      - E-Mails und Termine aus Outlook dem Kunden zuordnen
+    relevant:
+      pipelinepro-crm: 2
+    expect_no_match: false
+
+  - id: q14
+    lang: en
+    text: |
+      - Every employee can create purchase requisitions
+      - Approval depending on amount and cost center
+      - Ordering from supplier punchout catalogs
+      - Approved requisitions become purchase orders in SAP MM
+    relevant:
+      einkaufsportal: 2
+    expect_no_match: false
+
+  - id: q15
+    lang: de
+    text: |
+      - Kommissionierung mit mobilen Scannern
+      - Versandetiketten für DHL und UPS direkt aus dem System drucken
+      - Chargenverfolgung im Lager
+      - Inventur ohne Betriebsunterbrechung (permanente Inventur)
+    relevant:
+      lagerlogix: 2
+    expect_no_match: false
+
+  - id: q16
+    lang: de
+    text: |
+      - Führerscheinkontrolle für alle Dienstwagenfahrer
+      - Fahrtenbuch, das steuerlich anerkannt wird
+      - Tankkarten verwalten und Tankbelege importieren
+      - Mitarbeitende können Poolfahrzeuge reservieren
+    relevant:
+      fleetcontrol: 2
+    expect_no_match: false
+
+  - id: q17
+    lang: en
+    text: |
+      - Book desks on a floor plan for hybrid work
+      - Book meeting rooms from Outlook
+      - Rooms are released automatically if nobody shows up
+    relevant:
+      roomie: 2
+    expect_no_match: false
+
+  - id: q18
+    lang: en
+    text: |
+      Must have:
+      - Employees pre-register their guests
+      - Guests check in on a tablet at reception and sign an NDA
+      - Print visitor badges
+      - Notify the host when the guest arrives
+    relevant:
+      empfang-plus: 2
+    expect_no_match: false
+
+  - id: q19
+    lang: mixed
+    text: |
+      - Projektplanung mit Gantt-Diagrammen und Meilensteinen
+      - Resource planning across all projects
+      - Sync tasks with Jira
+      - Budgetübersicht über das Projektportfolio
+    relevant:
+      planboard: 2
+    expect_no_match: false
+
+  - id: q20
+    lang: de
+    text: |
+      - Internes Wiki für Anleitungen und Prozessbeschreibungen
+      - Seitenvorlagen für Besprechungsprotokolle
+      - Volltextsuche über Seiten und Anhänge
+      - Übernahme unserer bestehenden Confluence-Inhalte
+    relevant:
+      wissenswiki: 2
+      teamspace-docs: 1
+    expect_no_match: false
+
+  - id: q21
+    lang: en
+    text: |
+      - Management dashboards with drill-down into details
+      - Data from SAP BW and SQL databases
+      - Each sales manager only sees the figures of their own region
+      - Monthly report sent automatically by email as PDF
+    relevant:
+      insightboard: 2
+    expect_no_match: false
+
+  - id: q22
+    lang: de
+    text: |
+      - Übersicht, welche Tabellen und Datenquellen es im Unternehmen gibt
+      - Nachvollziehen, aus welchem Quellsystem eine Kennzahl im Bericht stammt
+      - Fachglossar für Kennzahlen
+      - Verantwortliche je Datenbestand festlegen
+    relevant:
+      datenkompass: 2
+    expect_no_match: false
+
+  - id: q23
+    lang: en
+    text: |
+      - Collect Prometheus metrics and application logs in one place
+      - Tracing across microservices
+      - Alerts to Microsoft Teams and on-call rotation with escalation
+    relevant:
+      watchtower: 2
+    expect_no_match: false
+
+  - id: q24
+    lang: en
+    text: |
+      - Pipelines defined as code in the Git repository
+      - Build Docker images and run tests on every merge request
+      - Deploy to Kubernetes with an approval step for production
+      - Scan dependencies for known vulnerabilities
+    relevant:
+      buildline: 2
+    expect_no_match: false
+
+  - id: q25
+    lang: en
+    text: |
+      - Store API keys and database passwords of our applications centrally
+      - Rotate database credentials automatically
+      - Inject secrets into Kubernetes workloads at runtime
+      - Every access to a secret must be audited
+    relevant:
+      tresor: 2
+      buildline: 1
+    expect_no_match: false
+
+  - id: q26
+    lang: de
+    text: |
+      - Sicherung unserer VMware-Server und der Microsoft-365-Postfächer
+      - Backups dürfen durch Ransomware nicht verändert werden können
+      - Regelmäßige automatische Wiederherstellungstests
+      - Kopie der Sicherungen am zweiten Standort
+    relevant:
+      safecopy: 2
+    expect_no_match: false
+
+  - id: q27
+    lang: en
+    text: |
+      - Assign mandatory trainings such as data protection to all employees
+      - Automatic reminders when a training is overdue
+      - Certificates after passing a quiz
+      - Upload our own SCORM courses
+    relevant:
+      lernhafen: 2
+    expect_no_match: false
+
+  - id: q28
+    lang: de
+    text: |
+      - Anonyme Mitarbeiterbefragung zur Zufriedenheit
+      - Kurze Pulsbefragungen alle paar Wochen
+      - eNPS messen
+      - Ergebnisse je Abteilung, aber nur ab einer Mindestanzahl an Antworten
+    relevant:
+      pulsecheck: 2
+    expect_no_match: false
+
+  - id: q29
+    lang: de
+    text: |
+      - Verträge rechtsgültig elektronisch unterschreiben (QES)
+      - Mehrere Unterzeichner in festgelegter Reihenfolge
+      - Lückenloser Nachweis aller Signaturschritte
+    relevant:
+      signfix: 2
+      vertragswerk: 1
+    expect_no_match: false
+
+  - id: q30
+    lang: en
+    text: |
+      - Maintain the record of processing activities under the GDPR
+      - Carry out data protection impact assessments
+      - Track data subject requests and their deadlines
+      - Document data breaches and report them within 72 hours
+    relevant:
+      datenschutzcockpit: 2
+    expect_no_match: false
+
+  - id: q31
+    lang: de
+    text: |
+      - Risikoregister mit Bewertung von Eintrittswahrscheinlichkeit und Schadenshöhe
+      - ISMS nach ISO 27001 inklusive Anwendbarkeitserklärung
+      - Hinweisgebersystem gemäß Hinweisgeberschutzgesetz
+    relevant:
+      riskradar: 2
+    expect_no_match: false
+
+  - id: q32
+    lang: en
+    text: |
+      - Handle customer and supplier complaints
+      - Structured problem solving with 8D reports
+      - Corrective and preventive actions with effectiveness check
+      - Manage calibration dates of our measuring equipment
+    relevant:
+      qualitas: 2
+    expect_no_match: false
+
+  - id: q33
+    lang: de
+    text: |
+      - Maschinendaten über OPC UA erfassen
+      - Gesamtanlageneffektivität (OEE) und Stillstandsanalyse
+      - Rückverfolgbarkeit jeder Charge vom Rohmaterial bis zum Endprodukt
+      - Fertigungsaufträge aus SAP PP übernehmen
+    relevant:
+      shopfloor-mes: 2
+      lagerlogix: 1
+    expect_no_match: false
+
+  - id: q34
+    lang: mixed
+    text: |
+      - Übersetzung von Word- und PowerPoint-Dateien
+      - Layout must be preserved after translation
+      - Einheitliche Fachbegriffe über ein Glossar
+      - Our texts must not be used to train the model
+    relevant:
+      lingua-bridge: 2
+    expect_no_match: false
+
+  - id: q35
+    lang: de
+    text: |
+      Fachbereiche sollen Papieranträge ohne IT-Unterstützung durch Online-Formulare ersetzen können. Die Formulare brauchen Pflichtfelder, eine mehrstufige Genehmigung und am Ende ein PDF. Die Daten sollen per Schnittstelle an andere Systeme gehen.
+    relevant:
+      formbaukasten: 2
+    expect_no_match: false
+
+  - id: q36
+    lang: en
+    text: |
+      - Expose internal APIs to partners through one gateway
+      - Rate limiting per consumer
+      - OAuth 2.0 protection
+      - Developer portal with OpenAPI docs
+    relevant:
+      apiport: 2
+    expect_no_match: false
+
+  - id: q37
+    lang: de
+    text: |
+      - Lohn- und Gehaltsabrechnung für Deutschland
+      - ELStAM-Abruf und Meldungen an die Sozialversicherung
+      - Dienstwagen als geldwerter Vorteil
+      - Zeitdaten und Zuschläge aus der Zeiterfassung übernehmen
+    relevant:
+      lohnpilot: 2
+    expect_no_match: false
+
+  - id: q38
+    lang: en
+    text: |
+      - Checklists for HR, IT and the manager when someone new joins
+      - New hires can upload their documents before day one
+      - Laptop and accounts are ordered automatically
+      - Offboarding with return of equipment
+    relevant:
+      onboardly: 2
+      identitygate: 1
+    expect_no_match: false
+
+  - id: q39
+    lang: de
+    text: |
+      - Umsatzsteuer-Voranmeldung per ELSTER
+      - Kontoauszüge elektronisch einlesen und offene Posten ausgleichen
+      - SEPA-Zahlungsdateien erzeugen
+      - Anlagenbuchhaltung mit Abschreibungen
+    relevant:
+      finanzbuch: 2
+    expect_no_match: false
+
+  - id: q40
+    lang: en
+    text: |
+      - Online shop for business customers with individual price lists
+      - Customers order from their own procurement system via punchout
+      - Payment by PayPal, Klarna or invoice
+      - Orders are transferred to SAP
+    relevant:
+      shopkern: 2
+    expect_no_match: false
+
+  - id: q41
+    lang: mixed
+    text: |
+      - Mitarbeitende stellen Fragen zu internen Richtlinien in natürlicher Sprache
+      - Answers must include links to the source documents
+      - Only documents the user is allowed to read may be used
+    relevant:
+      ki-assistent: 2
+      wissenswiki: 1
+    expect_no_match: false
+
+  # ------------------------------------------------------------ no match expected
+  - id: q42
+    lang: en
+    text: |
+      - Simulation of wind tunnel aerodynamics for vehicle bodies
+      - Mesh generation and turbulence models
+      - Run simulations on a GPU cluster
+    relevant: {}
+    expect_no_match: true
+
+  - id: q43
+    lang: de
+    text: |
+      - Wöchentlicher Kantinen-Speiseplan mit Allergenkennzeichnung
+      - Mitarbeitende bestellen ihr Mittagessen vorab
+      - Anzeige der Nährwerte je Gericht
+    relevant: {}
+    expect_no_match: true
+
+  - id: q44
+    lang: en
+    text: |
+      - Electronic health records for patients of our company doctor
+      - Diagnoses coded with ICD-10
+      - Issue electronic prescriptions
+    relevant: {}
+    expect_no_match: true
+
+  - id: q45
+    lang: de
+    text: |
+      - 3D-Konstruktion von Bauteilen und Baugruppen
+      - Ableitung technischer Zeichnungen aus dem 3D-Modell
+      - Festigkeitsberechnung mit der Finite-Elemente-Methode
+    relevant: {}
+    expect_no_match: true
+
+  - id: q46
+    lang: en
+    text: |
+      - Place bids for electricity on the EPEX spot day-ahead market
+      - Manage our energy trading positions
+      - Forecast electricity prices for the next week
+    relevant: {}
+    expect_no_match: true
+
+  - id: q47
+    lang: de
+    text: |
+      - Beiträge für LinkedIn und Instagram im Voraus planen und automatisch veröffentlichen
+      - Kommentare aus allen Social-Media-Kanälen in einem Postfach beantworten
+      - Reichweite und Follower-Entwicklung auswerten
+    relevant: {}
+    expect_no_match: true
+
+  - id: q48
+    lang: en
+    text: |
+      - Host our corporate podcast episodes
+      - Generate an RSS feed and distribute to Spotify and Apple Podcasts
+      - Download statistics per episode
+    relevant: {}
+    expect_no_match: true
+
+  - id: q49
+    lang: de
+    text: |
+      - Nebenkostenabrechnung für die Mieter unserer Werkswohnungen
+      - Zählerstände für Wasser und Heizung je Wohnung erfassen
+      - Wohnungsübergabeprotokolle mit Mängelliste
+    relevant: {}
+    expect_no_match: true
+
+  - id: q50
+    lang: mixed
+    text: |
+      - Turnierplan für das jährliche Tischkicker-Turnier erstellen
+      - Players enter match results in an app
+      - Elo-Rangliste aller Spielerinnen und Spieler
+    relevant: {}
+    expect_no_match: true
+
+  # ---------------------------------------------------------- interfaces
+  # These depend on documented interfaces (seed_apps.json "interfaces"), not only on capabilities.
+  - id: q51
+    lang: de
+    text: |
+      Muss:
+      - Arbeitszeiten am Terminal erfassen
+      - Zeitdaten und Zuschläge automatisch an die Lohnabrechnung übergeben
+    relevant:
+      zeitwerk: 2
+      lohnpilot: 1
+    expect_no_match: false
+
+  - id: q52
+    lang: en
+    text: |
+      - Take over applicant data automatically from our recruiting system
+      - Automatically open IT tickets for laptop and account setup
+      - Checklists for HR, IT and the manager
+    relevant:
+      onboardly: 2
+      servicehub-itsm: 1
+    expect_no_match: false
+
+  - id: q53
+    lang: de
+    text: |
+      - Kundenanfragen per E-Mail und Chat bearbeiten
+      - Kundendaten automatisch mit dem CRM synchronisieren
+    relevant:
+      kundendesk: 2
+      pipelinepro-crm: 1
+    expect_no_match: false
+
+  - id: q54
+    lang: mixed
+    text: |
+      - B2B-Onlineshop mit kundenspezifischen Preisen
+      - Orders from the web shop are transferred to SAP S/4HANA automatically
+    relevant:
+      shopkern: 2
+    expect_no_match: false
+
+  - id: q55
+    lang: de
+    text: |
+      - Kontoauszüge automatisch per EBICS von der Hausbank abrufen
+      - Offene Posten automatisch ausgleichen
+      - Überweisungen per EBICS an die Bank senden
+    relevant:
+      finanzbuch: 2
+    expect_no_match: false
+
+  - id: q56
+    lang: en
+    text: |
+      - Alerts from monitoring automatically create incidents in our ITSM tool
+      - Central log search across all services
+    relevant:
+      watchtower: 2
+      servicehub-itsm: 1
+    expect_no_match: false
+
+  - id: q57
+    lang: de
+    text: |
+      - Zentrales Vertragsregister mit Fristen
+      - Verträge direkt aus dem Vertragsmanagement elektronisch signieren lassen
+    relevant:
+      vertragswerk: 2
+      signfix: 1
+    expect_no_match: false

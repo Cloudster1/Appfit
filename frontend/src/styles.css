@@ -1,0 +1,98 @@
+/* Page ground behind cards; cards keep the Mantine body color. */
+:root {
+  --rb-ground: #f6f7fb;
+  --rb-tile-border: #e6e8f0;
+  --rb-cell-tint: 13%;
+}
+:root[data-mantine-color-scheme="dark"] {
+  --rb-ground: var(--mantine-color-dark-8);
+  --rb-tile-border: var(--mantine-color-dark-4);
+  --rb-cell-tint: 16%;
+}
+
+.rb-tile {
+  border: 1px solid var(--rb-tile-border);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+}
+.rb-tile:hover,
+.rb-tile:focus-visible {
+  border-color: var(--mantine-primary-color-filled);
+  outline: none;
+}
+.rb-tile[data-best="true"] {
+  border-color: var(--mantine-primary-color-filled);
+  box-shadow: 0 0 0 3px var(--mantine-primary-color-light);
+}
+.rb-tile[data-muted="true"] {
+  opacity: 0.8;
+}
+
+.rb-display {
+  font-family: var(--mantine-font-family-headings);
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-tile {
+    transition: none;
+  }
+}
+
+/* Facets beside the grid from the md breakpoint (62em) up; stacked above it on small screens. */
+.rb-portal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--mantine-spacing-xl);
+  align-items: start;
+}
+@media (min-width: 62em) {
+  .rb-portal {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+}
+
+.rb-eyebrow {
+  letter-spacing: 0.07em;
+}
+
+/* Matrix cells: a soft status tint so the capability text stays readable in both schemes. */
+.rb-cell {
+  background: color-mix(in srgb, var(--rb-cell-color) var(--rb-cell-tint), transparent);
+}
+
+/* Landscape graph */
+.rb-edge-label {
+  position: absolute;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: var(--mantine-color-body);
+  border: 1px solid var(--rb-tile-border);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.react-flow {
+  --xy-background-color: var(--rb-ground);
+}
+
+/* Landscape: graph with an optional details panel on the right (below it on small screens). */
+.rb-landscape {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--mantine-spacing-md);
+  align-items: start;
+}
+@media (min-width: 62em) {
+  .rb-landscape-open {
+    grid-template-columns: minmax(0, 1fr) 360px;
+  }
+  .rb-landscape-details {
+    max-height: calc(100dvh - 230px);
+    overflow-y: auto;
+  }
+}

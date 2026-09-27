@@ -1,0 +1,35 @@
+# Development overrides: hot reload for backend and frontend, DB port exposed.
+# Usage: docker compose -f compose.yaml -f compose.dev.yaml up
+services:
+  db:
+    ports:
+      - "${APPFIT_DB_PORT:-5432}:5432"
+
+  backend:
+    command: ["uvicorn", "appfit.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000",
+              "--reload", "--reload-dir", "/app/src"]
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/alembic:/app/alembic
+      - hf-cache:/models
+    environment:
+      WATCHFILES_FORCE_POLLING: "true"
+    ports:
+      - "${APPFIT_API_PORT:-8000}:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    command: ["sh", "-c", "pnpm install --frozen-lockfile && pnpm dev --host 0.0.0.0 --port 5173"]
+    environment:
+      VITE_API_PROXY_TARGET: http://backend:8000
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./frontend:/app
+      - frontend-node-modules:/app/node_modules
+    ports:
+      - "${APPFIT_WEB_PORT:-5173}:5173"
+
+volumes:
+  frontend-node-modules:

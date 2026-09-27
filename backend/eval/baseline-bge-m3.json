@@ -1,0 +1,1594 @@
+{
+  "model": "BAAI/bge-m3",
+  "embedded_before_eval": 0,
+  "queries": 57,
+  "pairs": 174,
+  "rrf_lists": 3,
+  "rrf_ceiling": 0.0492,
+  "current": {
+    "thresholds": {
+      "model": "BAAI/bge-m3",
+      "covered": 0.69,
+      "partial": 0.57,
+      "nomatch": 0.3,
+      "min_top_coverage": 0.34
+    },
+    "pairs": {
+      "confusion (label -> predicted)": {
+        "covered": {
+          "covered": 59,
+          "partial": 13
+        },
+        "partial": {
+          "covered": 14,
+          "partial": 32,
+          "none": 1
+        },
+        "none": {
+          "none": 39,
+          "partial": 14,
+          "covered": 2
+        }
+      },
+      "covered_precision": 0.7867,
+      "covered_recall": 0.8194,
+      "partial_or_better_precision": 0.8806,
+      "partial_or_better_recall": 0.9916
+    },
+    "ranking": {
+      "recall@1": 0.7812,
+      "recall@3": 0.9062,
+      "recall@5": 0.9688,
+      "recall@10": 0.9792,
+      "mrr": 0.9792,
+      "ndcg@10": 0.9611,
+      "no_match_balanced_accuracy": 0.9792,
+      "no_match_confusion": {
+        "match_ok": 46,
+        "false_no_match": 2,
+        "no_match_ok": 9,
+        "false_match": 0
+      },
+      "queries": [
+        {
+          "id": "q01",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "belegfix:1.0",
+            "traveldesk:0.8417",
+            "spesenmeister:0.7068"
+          ],
+          "relevant": {
+            "belegfix": 2,
+            "invoiceflow-ap": 1
+          }
+        },
+        {
+          "id": "q02",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "invoiceflow-ap:0.9154",
+            "shopkern:0.6331",
+            "traveldesk:0.5996"
+          ],
+          "relevant": {
+            "invoiceflow-ap": 2,
+            "belegfix": 1
+          }
+        },
+        {
+          "id": "q03",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "traveldesk:0.7282",
+            "spesenmeister:0.5793",
+            "zeitwerk:0.4741"
+          ],
+          "relevant": {
+            "traveldesk": 2,
+            "spesenmeister": 1
+          }
+        },
+        {
+          "id": "q04",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "zeitwerk:0.7257",
+            "traveldesk:0.4422",
+            "shopfloor-mes:0.2863"
+          ],
+          "relevant": {
+            "zeitwerk": 2
+          }
+        },
+        {
+          "id": "q05",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "talentscout:0.6683",
+            "zeitwerk:0.3899",
+            "lernhafen:0.3046"
+          ],
+          "relevant": {
+            "talentscout": 2
+          }
+        },
+        {
+          "id": "q06",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "servicehub-itsm:1.0",
+            "invoiceflow-ap:0.4599",
+            "watchtower:0.3836"
+          ],
+          "relevant": {
+            "servicehub-itsm": 2,
+            "kundendesk": 1
+          }
+        },
+        {
+          "id": "q07",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "kundendesk:1.0",
+            "onboardly:0.5574",
+            "datenschutzcockpit:0.5315"
+          ],
+          "relevant": {
+            "kundendesk": 2,
+            "servicehub-itsm": 1
+          }
+        },
+        {
+          "id": "q08",
+          "expect_no_match": false,
+          "predicted_no_match": true,
+          "top3": [
+            "empfang-plus:0.4327",
+            "identitygate:0.3155",
+            "talentscout:0.28"
+          ],
+          "relevant": {
+            "identitygate": 2,
+            "onboardly": 1
+          }
+        },
+        {
+          "id": "q09",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "docuvault:1.0",
+            "belegfix:0.3776",
+            "ki-assistent:0.3337"
+          ],
+          "relevant": {
+            "docuvault": 2
+          }
+        },
+        {
+          "id": "q10",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "teamspace-docs:1.0",
+            "talkspace:0.628",
+            "ki-assistent:0.6039"
+          ],
+          "relevant": {
+            "teamspace-docs": 2,
+            "talkspace": 1
+          }
+        },
+        {
+          "id": "q11",
+          "expect_no_match": false,
+          "predicted_no_match": true,
+          "top3": [
+            "traveldesk:0.4687",
+            "vertragswerk:0.4585",
+            "signfix:0.4559"
+          ],
+          "relevant": {
+            "vertragswerk": 2
+          }
+        },
+        {
+          "id": "q12",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "mailwave:0.9217",
+            "talentscout:0.4546",
+            "pipelinepro-crm:0.2558"
+          ],
+          "relevant": {
+            "mailwave": 2
+          }
+        },
+        {
+          "id": "q13",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "pipelinepro-crm:0.9918",
+            "vertragswerk:0.4477",
+            "invoiceflow-ap:0.3431"
+          ],
+          "relevant": {
+            "pipelinepro-crm": 2
+          }
+        },
+        {
+          "id": "q14",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "einkaufsportal:0.9035",
+            "shopkern:0.704",
+            "invoiceflow-ap:0.596"
+          ],
+          "relevant": {
+            "einkaufsportal": 2
+          }
+        },
+        {
+          "id": "q15",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "lagerlogix:1.0",
+            "fleetcontrol:0.4322",
+            "qualitas:0.4299"
+          ],
+          "relevant": {
+            "lagerlogix": 2
+          }
+        },
+        {
+          "id": "q16",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "fleetcontrol:0.7662",
+            "roomie:0.3192",
+            "lohnpilot:0.2506"
+          ],
+          "relevant": {
+            "fleetcontrol": 2
+          }
+        },
+        {
+          "id": "q17",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "roomie:1.0",
+            "pipelinepro-crm:0.4091",
+            "talentscout:0.4048"
+          ],
+          "relevant": {
+            "roomie": 2
+          }
+        },
+        {
+          "id": "q18",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "empfang-plus:0.9189",
+            "talkspace:0.697",
+            "roomie:0.5162"
+          ],
+          "relevant": {
+            "empfang-plus": 2
+          }
+        },
+        {
+          "id": "q19",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "planboard:1.0",
+            "zeitwerk:0.4994",
+            "servicehub-itsm:0.3697"
+          ],
+          "relevant": {
+            "planboard": 2
+          }
+        },
+        {
+          "id": "q20",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "wissenswiki:1.0",
+            "teamspace-docs:0.5433",
+            "ki-assistent:0.5003"
+          ],
+          "relevant": {
+            "wissenswiki": 2,
+            "teamspace-docs": 1
+          }
+        },
+        {
+          "id": "q21",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "insightboard:0.7745",
+            "pipelinepro-crm:0.5891",
+            "safecopy:0.4741"
+          ],
+          "relevant": {
+            "insightboard": 2
+          }
+        },
+        {
+          "id": "q22",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "datenkompass:0.915",
+            "insightboard:0.4467",
+            "datenschutzcockpit:0.4075"
+          ],
+          "relevant": {
+            "datenkompass": 2
+          }
+        },
+        {
+          "id": "q23",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "watchtower:1.0",
+            "planboard:0.7153",
+            "identitygate:0.5376"
+          ],
+          "relevant": {
+            "watchtower": 2
+          }
+        },
+        {
+          "id": "q24",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "buildline:1.0",
+            "watchtower:0.3695",
+            "apiport:0.3634"
+          ],
+          "relevant": {
+            "buildline": 2
+          }
+        },
+        {
+          "id": "q25",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "tresor:0.9989",
+            "datenkompass:0.477",
+            "buildline:0.4646"
+          ],
+          "relevant": {
+            "tresor": 2,
+            "buildline": 1
+          }
+        },
+        {
+          "id": "q26",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "safecopy:1.0",
+            "tresor:0.2566",
+            "docuvault:0.2497"
+          ],
+          "relevant": {
+            "safecopy": 2
+          }
+        },
+        {
+          "id": "q27",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "lernhafen:0.8088",
+            "talentscout:0.4842",
+            "onboardly:0.4523"
+          ],
+          "relevant": {
+            "lernhafen": 2
+          }
+        },
+        {
+          "id": "q28",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "pulsecheck:1.0",
+            "ki-assistent:0.2289",
+            "talentscout:0.1866"
+          ],
+          "relevant": {
+            "pulsecheck": 2
+          }
+        },
+        {
+          "id": "q29",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "signfix:1.0",
+            "vertragswerk:0.6038",
+            "finanzbuch:0.4331"
+          ],
+          "relevant": {
+            "signfix": 2,
+            "vertragswerk": 1
+          }
+        },
+        {
+          "id": "q30",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "datenschutzcockpit:0.7325",
+            "traveldesk:0.5811",
+            "planboard:0.5421"
+          ],
+          "relevant": {
+            "datenschutzcockpit": 2
+          }
+        },
+        {
+          "id": "q31",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "riskradar:0.7012",
+            "identitygate:0.3195",
+            "mailwave:0.2781"
+          ],
+          "relevant": {
+            "riskradar": 2
+          }
+        },
+        {
+          "id": "q32",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "qualitas:0.8248",
+            "riskradar:0.495",
+            "pipelinepro-crm:0.4831"
+          ],
+          "relevant": {
+            "qualitas": 2
+          }
+        },
+        {
+          "id": "q33",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "shopfloor-mes:1.0",
+            "shopkern:0.3366",
+            "einkaufsportal:0.2684"
+          ],
+          "relevant": {
+            "shopfloor-mes": 2,
+            "lagerlogix": 1
+          }
+        },
+        {
+          "id": "q34",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "lingua-bridge:1.0",
+            "ki-assistent:0.3419",
+            "datenkompass:0.3365"
+          ],
+          "relevant": {
+            "lingua-bridge": 2
+          }
+        },
+        {
+          "id": "q35",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "formbaukasten:0.7886",
+            "lernhafen:0.4189",
+            "teamspace-docs:0.3082"
+          ],
+          "relevant": {
+            "formbaukasten": 2
+          }
+        },
+        {
+          "id": "q36",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "apiport:0.9213",
+            "identitygate:0.491",
+            "talkspace:0.4505"
+          ],
+          "relevant": {
+            "apiport": 2
+          }
+        },
+        {
+          "id": "q37",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "lohnpilot:0.9062",
+            "zeitwerk:0.5778",
+            "finanzbuch:0.3709"
+          ],
+          "relevant": {
+            "lohnpilot": 2
+          }
+        },
+        {
+          "id": "q38",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "onboardly:0.9122",
+            "talentscout:0.4065",
+            "servicehub-itsm:0.3966"
+          ],
+          "relevant": {
+            "onboardly": 2,
+            "identitygate": 1
+          }
+        },
+        {
+          "id": "q39",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "finanzbuch:1.0",
+            "lohnpilot:0.3722",
+            "traveldesk:0.366"
+          ],
+          "relevant": {
+            "finanzbuch": 2
+          }
+        },
+        {
+          "id": "q40",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "shopkern:1.0",
+            "invoiceflow-ap:0.5941",
+            "shopfloor-mes:0.5593"
+          ],
+          "relevant": {
+            "shopkern": 2
+          }
+        },
+        {
+          "id": "q41",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "ki-assistent:0.8646",
+            "teamspace-docs:0.4455",
+            "insightboard:0.4271"
+          ],
+          "relevant": {
+            "ki-assistent": 2,
+            "wissenswiki": 1
+          }
+        },
+        {
+          "id": "q42",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "watchtower:0.3209",
+            "apiport:0.2638",
+            "datenkompass:0.2426"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q43",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "empfang-plus:0.3901",
+            "einkaufsportal:0.3179",
+            "traveldesk:0.2631"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q44",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "vertragswerk:0.3498",
+            "invoiceflow-ap:0.2869",
+            "fleetcontrol:0.2765"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q45",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "shopfloor-mes:0.2974",
+            "watchtower:0.1531",
+            "finanzbuch:0.1426"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q46",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "fleetcontrol:0.4611",
+            "pipelinepro-crm:0.4153",
+            "shopfloor-mes:0.3044"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q47",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "kundendesk:0.4198",
+            "belegfix:0.4016",
+            "watchtower:0.3975"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q48",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "kundendesk:0.2793",
+            "insightboard:0.266",
+            "apiport:0.264"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q49",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "lohnpilot:0.2879",
+            "shopfloor-mes:0.2574",
+            "finanzbuch:0.1629"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q50",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "zeitwerk:0.2872",
+            "lernhafen:0.287",
+            "kundendesk:0.2684"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q51",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "zeitwerk:1.0",
+            "lohnpilot:0.7861",
+            "planboard:0.7269"
+          ],
+          "relevant": {
+            "zeitwerk": 2,
+            "lohnpilot": 1
+          }
+        },
+        {
+          "id": "q52",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "onboardly:0.8857",
+            "talentscout:0.8478",
+            "servicehub-itsm:0.7339"
+          ],
+          "relevant": {
+            "onboardly": 2,
+            "servicehub-itsm": 1
+          }
+        },
+        {
+          "id": "q53",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "kundendesk:0.9995",
+            "pipelinepro-crm:0.7895",
+            "mailwave:0.7656"
+          ],
+          "relevant": {
+            "kundendesk": 2,
+            "pipelinepro-crm": 1
+          }
+        },
+        {
+          "id": "q54",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "shopkern:1.0",
+            "invoiceflow-ap:0.6088",
+            "pipelinepro-crm:0.6053"
+          ],
+          "relevant": {
+            "shopkern": 2
+          }
+        },
+        {
+          "id": "q55",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "finanzbuch:0.9975",
+            "belegfix:0.5547",
+            "datenkompass:0.3848"
+          ],
+          "relevant": {
+            "finanzbuch": 2
+          }
+        },
+        {
+          "id": "q56",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "watchtower:0.9995",
+            "talkspace:0.5989",
+            "identitygate:0.5533"
+          ],
+          "relevant": {
+            "watchtower": 2,
+            "servicehub-itsm": 1
+          }
+        },
+        {
+          "id": "q57",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "vertragswerk:1.0",
+            "signfix:0.7812",
+            "empfang-plus:0.5628"
+          ],
+          "relevant": {
+            "vertragswerk": 2,
+            "signfix": 1
+          }
+        }
+      ]
+    }
+  },
+  "suggested": {
+    "thresholds": {
+      "model": "BAAI/bge-m3",
+      "covered": 0.69,
+      "partial": 0.58,
+      "nomatch": 0.46,
+      "min_top_coverage": 0.32
+    },
+    "pairs": {
+      "confusion (label -> predicted)": {
+        "covered": {
+          "covered": 59,
+          "partial": 13
+        },
+        "partial": {
+          "covered": 14,
+          "partial": 30,
+          "none": 3
+        },
+        "none": {
+          "none": 42,
+          "partial": 11,
+          "covered": 2
+        }
+      },
+      "covered_precision": 0.7867,
+      "covered_recall": 0.8194,
+      "partial_or_better_precision": 0.8992,
+      "partial_or_better_recall": 0.9748
+    },
+    "ranking": {
+      "recall@1": 0.7812,
+      "recall@3": 0.9062,
+      "recall@5": 0.9583,
+      "recall@10": 0.9896,
+      "mrr": 0.9757,
+      "ndcg@10": 0.959,
+      "no_match_balanced_accuracy": 0.9896,
+      "no_match_confusion": {
+        "match_ok": 47,
+        "false_no_match": 1,
+        "no_match_ok": 9,
+        "false_match": 0
+      },
+      "queries": [
+        {
+          "id": "q01",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "belegfix:1.0",
+            "traveldesk:0.8399",
+            "spesenmeister:0.7037"
+          ],
+          "relevant": {
+            "belegfix": 2,
+            "invoiceflow-ap": 1
+          }
+        },
+        {
+          "id": "q02",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "invoiceflow-ap:0.915",
+            "shopkern:0.6301",
+            "traveldesk:0.5951"
+          ],
+          "relevant": {
+            "invoiceflow-ap": 2,
+            "belegfix": 1
+          }
+        },
+        {
+          "id": "q03",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "traveldesk:0.7265",
+            "spesenmeister:0.4988",
+            "zeitwerk:0.4671"
+          ],
+          "relevant": {
+            "traveldesk": 2,
+            "spesenmeister": 1
+          }
+        },
+        {
+          "id": "q04",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "zeitwerk:0.7238",
+            "traveldesk:0.4384",
+            "shopfloor-mes:0.2807"
+          ],
+          "relevant": {
+            "zeitwerk": 2
+          }
+        },
+        {
+          "id": "q05",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "talentscout:0.6671",
+            "zeitwerk:0.3826",
+            "lernhafen:0.2972"
+          ],
+          "relevant": {
+            "talentscout": 2
+          }
+        },
+        {
+          "id": "q06",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "servicehub-itsm:1.0",
+            "invoiceflow-ap:0.4527",
+            "watchtower:0.3796"
+          ],
+          "relevant": {
+            "servicehub-itsm": 2,
+            "kundendesk": 1
+          }
+        },
+        {
+          "id": "q07",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "kundendesk:1.0",
+            "onboardly:0.551",
+            "servicehub-itsm:0.4912"
+          ],
+          "relevant": {
+            "kundendesk": 2,
+            "servicehub-itsm": 1
+          }
+        },
+        {
+          "id": "q08",
+          "expect_no_match": false,
+          "predicted_no_match": true,
+          "top3": [
+            "empfang-plus:0.325",
+            "identitygate:0.3073",
+            "zeitwerk:0.2731"
+          ],
+          "relevant": {
+            "identitygate": 2,
+            "onboardly": 1
+          }
+        },
+        {
+          "id": "q09",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "docuvault:1.0",
+            "belegfix:0.3726",
+            "ki-assistent:0.3293"
+          ],
+          "relevant": {
+            "docuvault": 2
+          }
+        },
+        {
+          "id": "q10",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "teamspace-docs:1.0",
+            "ki-assistent:0.5999",
+            "signfix:0.5533"
+          ],
+          "relevant": {
+            "teamspace-docs": 2,
+            "talkspace": 1
+          }
+        },
+        {
+          "id": "q11",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "traveldesk:0.4628",
+            "signfix:0.4494",
+            "vertragswerk:0.3522"
+          ],
+          "relevant": {
+            "vertragswerk": 2
+          }
+        },
+        {
+          "id": "q12",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "mailwave:0.9216",
+            "talentscout:0.372",
+            "pipelinepro-crm:0.2492"
+          ],
+          "relevant": {
+            "mailwave": 2
+          }
+        },
+        {
+          "id": "q13",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "pipelinepro-crm:0.9918",
+            "vertragswerk:0.4433",
+            "servicehub-itsm:0.3338"
+          ],
+          "relevant": {
+            "pipelinepro-crm": 2
+          }
+        },
+        {
+          "id": "q14",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "einkaufsportal:0.9027",
+            "shopkern:0.7007",
+            "invoiceflow-ap:0.5912"
+          ],
+          "relevant": {
+            "einkaufsportal": 2
+          }
+        },
+        {
+          "id": "q15",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "lagerlogix:1.0",
+            "fleetcontrol:0.3494",
+            "qualitas:0.3466"
+          ],
+          "relevant": {
+            "lagerlogix": 2
+          }
+        },
+        {
+          "id": "q16",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "fleetcontrol:0.6876",
+            "roomie:0.3166",
+            "lohnpilot:0.2439"
+          ],
+          "relevant": {
+            "fleetcontrol": 2
+          }
+        },
+        {
+          "id": "q17",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "roomie:1.0",
+            "pipelinepro-crm:0.4024",
+            "talentscout:0.3962"
+          ],
+          "relevant": {
+            "roomie": 2
+          }
+        },
+        {
+          "id": "q18",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "empfang-plus:0.9188",
+            "talkspace:0.6939",
+            "roomie:0.5133"
+          ],
+          "relevant": {
+            "empfang-plus": 2
+          }
+        },
+        {
+          "id": "q19",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "planboard:1.0",
+            "zeitwerk:0.4935",
+            "lernhafen:0.3591"
+          ],
+          "relevant": {
+            "planboard": 2
+          }
+        },
+        {
+          "id": "q20",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "wissenswiki:1.0",
+            "teamspace-docs:0.5375",
+            "ki-assistent:0.4945"
+          ],
+          "relevant": {
+            "wissenswiki": 2,
+            "teamspace-docs": 1
+          }
+        },
+        {
+          "id": "q21",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "insightboard:0.7745",
+            "pipelinepro-crm:0.5838",
+            "safecopy:0.4712"
+          ],
+          "relevant": {
+            "insightboard": 2
+          }
+        },
+        {
+          "id": "q22",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "datenkompass:0.9145",
+            "datenschutzcockpit:0.4013",
+            "ki-assistent:0.3241"
+          ],
+          "relevant": {
+            "datenkompass": 2
+          }
+        },
+        {
+          "id": "q23",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "watchtower:1.0",
+            "planboard:0.7119",
+            "insightboard:0.469"
+          ],
+          "relevant": {
+            "watchtower": 2
+          }
+        },
+        {
+          "id": "q24",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "buildline:1.0",
+            "watchtower:0.3613",
+            "apiport:0.3548"
+          ],
+          "relevant": {
+            "buildline": 2
+          }
+        },
+        {
+          "id": "q25",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "tresor:0.9989",
+            "datenkompass:0.4743",
+            "buildline:0.4574"
+          ],
+          "relevant": {
+            "tresor": 2,
+            "buildline": 1
+          }
+        },
+        {
+          "id": "q26",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "safecopy:1.0",
+            "tresor:0.2465",
+            "docuvault:0.2429"
+          ],
+          "relevant": {
+            "safecopy": 2
+          }
+        },
+        {
+          "id": "q27",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "lernhafen:0.8073",
+            "talentscout:0.4029",
+            "fleetcontrol:0.355"
+          ],
+          "relevant": {
+            "lernhafen": 2
+          }
+        },
+        {
+          "id": "q28",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "pulsecheck:1.0",
+            "lernhafen:0.1698",
+            "ki-assistent:0.1475"
+          ],
+          "relevant": {
+            "pulsecheck": 2
+          }
+        },
+        {
+          "id": "q29",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "signfix:1.0",
+            "vertragswerk:0.5993",
+            "finanzbuch:0.4254"
+          ],
+          "relevant": {
+            "signfix": 2,
+            "vertragswerk": 1
+          }
+        },
+        {
+          "id": "q30",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "datenschutzcockpit:0.7309",
+            "traveldesk:0.5758",
+            "planboard:0.536"
+          ],
+          "relevant": {
+            "datenschutzcockpit": 2
+          }
+        },
+        {
+          "id": "q31",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "riskradar:0.6979",
+            "identitygate:0.3162",
+            "mailwave:0.2684"
+          ],
+          "relevant": {
+            "riskradar": 2
+          }
+        },
+        {
+          "id": "q32",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "qualitas:0.824",
+            "riskradar:0.4891",
+            "pipelinepro-crm:0.4764"
+          ],
+          "relevant": {
+            "qualitas": 2
+          }
+        },
+        {
+          "id": "q33",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "shopfloor-mes:1.0",
+            "shopkern:0.3307",
+            "einkaufsportal:0.2625"
+          ],
+          "relevant": {
+            "shopfloor-mes": 2,
+            "lagerlogix": 1
+          }
+        },
+        {
+          "id": "q34",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "lingua-bridge:1.0",
+            "datenkompass:0.3339",
+            "signfix:0.3036"
+          ],
+          "relevant": {
+            "lingua-bridge": 2
+          }
+        },
+        {
+          "id": "q35",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "formbaukasten:0.7881",
+            "lernhafen:0.4107",
+            "teamspace-docs:0.2997"
+          ],
+          "relevant": {
+            "formbaukasten": 2
+          }
+        },
+        {
+          "id": "q36",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "apiport:0.9212",
+            "talkspace:0.4431",
+            "identitygate:0.4098"
+          ],
+          "relevant": {
+            "apiport": 2
+          }
+        },
+        {
+          "id": "q37",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "lohnpilot:0.9053",
+            "zeitwerk:0.5731",
+            "finanzbuch:0.3663"
+          ],
+          "relevant": {
+            "lohnpilot": 2
+          }
+        },
+        {
+          "id": "q38",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "onboardly:0.9116",
+            "talentscout:0.4001",
+            "servicehub-itsm:0.3895"
+          ],
+          "relevant": {
+            "onboardly": 2,
+            "identitygate": 1
+          }
+        },
+        {
+          "id": "q39",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "finanzbuch:1.0",
+            "spesenmeister:0.3414",
+            "belegfix:0.2956"
+          ],
+          "relevant": {
+            "finanzbuch": 2
+          }
+        },
+        {
+          "id": "q40",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "shopkern:1.0",
+            "einkaufsportal:0.5227",
+            "invoiceflow-ap:0.5141"
+          ],
+          "relevant": {
+            "shopkern": 2
+          }
+        },
+        {
+          "id": "q41",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "ki-assistent:0.863",
+            "insightboard:0.4194",
+            "teamspace-docs:0.3382"
+          ],
+          "relevant": {
+            "ki-assistent": 2,
+            "wissenswiki": 1
+          }
+        },
+        {
+          "id": "q42",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "watchtower:0.3128",
+            "apiport:0.258",
+            "datenkompass:0.2363"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q43",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "empfang-plus:0.3878",
+            "einkaufsportal:0.3095",
+            "traveldesk:0.2534"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q44",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "invoiceflow-ap:0.2819",
+            "fleetcontrol:0.2715",
+            "shopkern:0.2619"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q45",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "shopfloor-mes:0.2885",
+            "watchtower:0.1419",
+            "finanzbuch:0.1356"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q46",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "fleetcontrol:0.4549",
+            "pipelinepro-crm:0.3065",
+            "shopfloor-mes:0.2958"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q47",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "belegfix:0.3973",
+            "mailwave:0.3133",
+            "talentscout:0.3123"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q48",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "apiport:0.2579",
+            "insightboard:0.2553",
+            "mailwave:0.2532"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q49",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "lohnpilot:0.2798",
+            "shopfloor-mes:0.2468",
+            "finanzbuch:0.1522"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q50",
+          "expect_no_match": true,
+          "predicted_no_match": true,
+          "top3": [
+            "lernhafen:0.282",
+            "kundendesk:0.2622",
+            "roomie:0.2599"
+          ],
+          "relevant": {}
+        },
+        {
+          "id": "q51",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "zeitwerk:1.0",
+            "lohnpilot:0.7831",
+            "kundendesk:0.5841"
+          ],
+          "relevant": {
+            "zeitwerk": 2,
+            "lohnpilot": 1
+          }
+        },
+        {
+          "id": "q52",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "onboardly:0.8851",
+            "talentscout:0.8454",
+            "servicehub-itsm:0.7309"
+          ],
+          "relevant": {
+            "onboardly": 2,
+            "servicehub-itsm": 1
+          }
+        },
+        {
+          "id": "q53",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "kundendesk:0.9995",
+            "pipelinepro-crm:0.7868",
+            "empfang-plus:0.6276"
+          ],
+          "relevant": {
+            "kundendesk": 2,
+            "pipelinepro-crm": 1
+          }
+        },
+        {
+          "id": "q54",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "shopkern:1.0",
+            "invoiceflow-ap:0.6046",
+            "pipelinepro-crm:0.6011"
+          ],
+          "relevant": {
+            "shopkern": 2
+          }
+        },
+        {
+          "id": "q55",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "finanzbuch:0.9975",
+            "belegfix:0.3479",
+            "invoiceflow-ap:0.3174"
+          ],
+          "relevant": {
+            "finanzbuch": 2
+          }
+        },
+        {
+          "id": "q56",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "watchtower:0.9995",
+            "talkspace:0.5949",
+            "identitygate:0.5466"
+          ],
+          "relevant": {
+            "watchtower": 2,
+            "servicehub-itsm": 1
+          }
+        },
+        {
+          "id": "q57",
+          "expect_no_match": false,
+          "predicted_no_match": false,
+          "top3": [
+            "vertragswerk:1.0",
+            "signfix:0.778",
+            "empfang-plus:0.5571"
+          ],
+          "relevant": {
+            "vertragswerk": 2,
+            "signfix": 1
+          }
+        }
+      ]
+    },
+    "thresholds_yaml": {
+      "BAAI/bge-m3": {
+        "covered": 0.69,
+        "partial": 0.58,
+        "nomatch": 0.46,
+        "min_top_coverage": 0.32
+      }
+    }
+  }
+}

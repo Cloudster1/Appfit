@@ -1,0 +1,189 @@
+# Human judgements for single (requirement, app) pairs.
+# covered: the app has a capability that clearly fulfils the requirement
+# partial: related but incomplete, or the app's area fits without a specific capability
+# none:    the app does not do this
+pairs:
+  # ------------------------------------------------------------ covered
+  - {requirement: "Rechnungen per OCR automatisch auslesen", app: belegfix, label: covered}
+  - {requirement: "Extract invoice data automatically from scanned PDF invoices", app: belegfix, label: covered}
+  - {requirement: "Match supplier invoices against purchase orders and goods receipts", app: invoiceflow-ap, label: covered}
+  - {requirement: "Rechnungen automatisch mit Bestellung und Wareneingang abgleichen", app: invoiceflow-ap, label: covered}
+  - {requirement: "E-Rechnungen im XRechnung-Format empfangen", app: invoiceflow-ap, label: covered}
+  - {requirement: "Export booked invoices to DATEV", app: belegfix, label: covered}
+  - {requirement: "Umsatzsteuer-Voranmeldung elektronisch an das Finanzamt übermitteln", app: finanzbuch, label: covered}
+  - {requirement: "Mahnwesen für überfällige Kundenrechnungen", app: finanzbuch, label: covered}
+  - {requirement: "Stellenanzeigen auf mehreren Jobportalen gleichzeitig veröffentlichen", app: talentscout, label: covered}
+  - {requirement: "Neue Mitarbeitende laden vor dem ersten Arbeitstag ihre Unterlagen in einem Portal hoch", app: onboardly, label: covered}
+  - {requirement: "Record working time with a physical time clock terminal", app: zeitwerk, label: covered}
+  - {requirement: "Check compliance with maximum working hours and minimum rest periods", app: zeitwerk, label: covered}
+  - {requirement: "Payroll including electronic reporting to social security agencies", app: lohnpilot, label: covered}
+  - {requirement: "Verpflegungsmehraufwand für Dienstreisen automatisch berechnen", app: traveldesk, label: covered}
+  - {requirement: "Firmenkreditkartenumsätze importieren und mit Belegen abgleichen", app: traveldesk, label: covered}
+  - {requirement: "Change requests are approved by a change advisory board", app: servicehub-itsm, label: covered}
+  - {requirement: "Mitarbeitende melden IT-Störungen über ein Self-Service-Portal", app: servicehub-itsm, label: covered}
+  - {requirement: "Live chat on our website for customer questions", app: kundendesk, label: covered}
+  - {requirement: "Multi-Faktor-Authentifizierung mit FIDO2-Sicherheitsschlüsseln", app: identitygate, label: covered}
+  - {requirement: "Benutzerkonten in SaaS-Anwendungen automatisch anlegen und entfernen", app: identitygate, label: covered}
+  - {requirement: "Regelmäßige Rezertifizierung von Zugriffsrechten durch Führungskräfte", app: identitygate, label: covered}
+  - {requirement: "Revision-proof archiving according to GoBD", app: docuvault, label: covered}
+  - {requirement: "Automatically delete documents once their retention period has expired", app: docuvault, label: covered}
+  - {requirement: "Mehrere Personen bearbeiten ein Dokument gleichzeitig im Browser", app: teamspace-docs, label: covered}
+  - {requirement: "Dateien mit externen Partnern über zeitlich begrenzte Links teilen", app: teamspace-docs, label: covered}
+  - {requirement: "Get reminded before the notice period of a contract ends", app: vertragswerk, label: covered}
+  - {requirement: "Draft contracts from templates using a library of approved clauses", app: vertragswerk, label: covered}
+  - {requirement: "Umsatzprognose nach Region und Produktlinie", app: pipelinepro-crm, label: covered}
+  - {requirement: "Double opt-in for newsletter sign-ups", app: mailwave, label: covered}
+  - {requirement: "Kundenindividuelle Preise im B2B-Onlineshop", app: shopkern, label: covered}
+  - {requirement: "Purchase requisitions approved according to cost center and amount limits", app: einkaufsportal, label: covered}
+  - {requirement: "Pick orders using mobile barcode scanners", app: lagerlogix, label: covered}
+  - {requirement: "Führerscheinkontrolle der Fahrer per App", app: fleetcontrol, label: covered}
+  - {requirement: "Elektronisches Fahrtenbuch, das vom Finanzamt anerkannt wird", app: fleetcontrol, label: covered}
+  - {requirement: "Besprechungsräume direkt im Outlook-Kalender buchen", app: roomie, label: covered}
+  - {requirement: "Besucherausweise ausdrucken", app: empfang-plus, label: covered}
+  - {requirement: "Visitors sign an NDA digitally when checking in", app: empfang-plus, label: covered}
+  - {requirement: "Gantt-Diagramme mit Abhängigkeiten zwischen Aufgaben", app: planboard, label: covered}
+  - {requirement: "Import existing Confluence pages", app: wissenswiki, label: covered}
+  - {requirement: "Zeilenbasierte Berechtigungen in Dashboards", app: insightboard, label: covered}
+  - {requirement: "Show the lineage of a KPI from the source system to the report", app: datenkompass, label: covered}
+  - {requirement: "Rufbereitschaftspläne mit Eskalationsstufen", app: watchtower, label: covered}
+  - {requirement: "Deploy to Kubernetes only after manual approval", app: buildline, label: covered}
+  - {requirement: "Automatically rotate database credentials", app: tresor, label: covered}
+  - {requirement: "Unveränderliche Backups zum Schutz vor Ransomware", app: safecopy, label: covered}
+  - {requirement: "Assign mandatory compliance trainings and remind employees when they are overdue", app: lernhafen, label: covered}
+  - {requirement: "Anonyme Mitarbeiterbefragung mit Mindestgruppengröße", app: pulsecheck, label: covered}
+  - {requirement: "Qualified electronic signature under eIDAS", app: signfix, label: covered}
+  - {requirement: "Record of processing activities according to Art. 30 GDPR", app: datenschutzcockpit, label: covered}
+  - {requirement: "Handle data subject access requests within the legal deadline", app: datenschutzcockpit, label: covered}
+  - {requirement: "Anonymer Meldekanal für Hinweisgeber nach HinSchG", app: riskradar, label: covered}
+  - {requirement: "8D reports for customer complaints", app: qualitas, label: covered}
+  - {requirement: "OEE berechnen und Stillstandsgründe analysieren", app: shopfloor-mes, label: covered}
+  - {requirement: "Translate PowerPoint files without breaking the layout", app: lingua-bridge, label: covered}
+  - {requirement: "Formulare ohne Programmierkenntnisse erstellen", app: formbaukasten, label: covered}
+  - {requirement: "Entwicklerportal mit interaktiver OpenAPI-Dokumentation", app: apiport, label: covered}
+  - {requirement: "Fragen zu internen Richtlinien in natürlicher Sprache beantworten lassen", app: ki-assistent, label: covered}
+
+  # ------------------------------------------------------------ partial
+  - {requirement: "Export invoices to both SAP and DATEV", app: belegfix, label: partial}
+  - {requirement: "Export invoices to both SAP and DATEV", app: invoiceflow-ap, label: partial}
+  - {requirement: "Rechnungen automatisch in DATEV exportieren", app: invoiceflow-ap, label: partial}
+  - {requirement: "Drei-Wege-Abgleich von Rechnungen mit Bestellung und Wareneingang", app: belegfix, label: partial}
+  - {requirement: "Travel expenses are exported to DATEV and to the payroll system", app: traveldesk, label: partial}
+  - {requirement: "Reisekosten für Auslandsreisen mit Auslandspauschalen abrechnen", app: spesenmeister, label: partial}
+  - {requirement: "Track time spent on projects and invoice it to customers", app: zeitwerk, label: partial}
+  - {requirement: "Track time spent on projects and invoice it to customers", app: planboard, label: partial}
+  - {requirement: "Schichtpläne automatisch anhand des Personalbedarfs optimieren", app: zeitwerk, label: partial}
+  - {requirement: "Gehaltsabrechnung auch für Mitarbeitende in Österreich", app: lohnpilot, label: partial}
+  - {requirement: "IT-Tickets an Entwicklungsteams in Jira und Azure DevOps übergeben", app: servicehub-itsm, label: partial}
+  - {requirement: "Customer support via WhatsApp", app: kundendesk, label: partial}
+  - {requirement: "Telefonische Störungsmeldungen mit automatischer Ticketanlage per Anruferkennung", app: servicehub-itsm, label: partial}
+  - {requirement: "Single sign-on for on-premises legacy applications via Kerberos", app: identitygate, label: partial}
+  - {requirement: "Passwort-Manager für Mitarbeitende mit Browser-Erweiterung", app: tresor, label: partial}
+  - {requirement: "Share documents with external partners", app: docuvault, label: partial}
+  - {requirement: "Revisionssichere Archivierung von Dokumenten nach GoBD", app: teamspace-docs, label: partial}
+  - {requirement: "Sign contracts with a qualified electronic signature", app: vertragswerk, label: partial}
+  - {requirement: "Kampagnen-E-Mails an tausende Kunden direkt aus dem CRM versenden", app: pipelinepro-crm, label: partial}
+  - {requirement: "SMS marketing campaigns", app: mailwave, label: partial}
+  - {requirement: "Online-Formulare per Drag-and-Drop erstellen", app: mailwave, label: partial}
+  - {requirement: "Webshop für Endkunden mit Ratenkauf", app: shopkern, label: partial}
+  - {requirement: "Order office supplies from supplier catalogs and track delivery status", app: einkaufsportal, label: partial}
+  - {requirement: "Inventur mit RFID-Lesegeräten statt Barcode", app: lagerlogix, label: partial}
+  - {requirement: "Real-time GPS tracking of all delivery vehicles on a map", app: fleetcontrol, label: partial}
+  - {requirement: "Parkplätze für Besucher reservieren", app: roomie, label: partial}
+  - {requirement: "Parkplätze für Besucher reservieren", app: empfang-plus, label: partial}
+  - {requirement: "Agile sprint planning with story points and burndown charts", app: planboard, label: partial}
+  - {requirement: "Wiki mit KI-gestützter Beantwortung von Fragen", app: wissenswiki, label: partial}
+  - {requirement: "Predictive sales forecasting with machine learning", app: pipelinepro-crm, label: partial}
+  - {requirement: "Datenqualität automatisch überwachen und bei Fehlern alarmieren", app: datenkompass, label: partial}
+  - {requirement: "Monitor SAP systems with SAP-specific health checks", app: watchtower, label: partial}
+  - {requirement: "Build iOS apps in the pipeline on macOS agents", app: buildline, label: partial}
+  - {requirement: "Back up Salesforce and Google Workspace data", app: safecopy, label: partial}
+  - {requirement: "Präsenzschulungen inklusive Raumbuchung organisieren", app: lernhafen, label: partial}
+  - {requirement: "Präsenzschulungen inklusive Raumbuchung organisieren", app: roomie, label: partial}
+  - {requirement: "Pulse surveys answered directly in Slack", app: pulsecheck, label: partial}
+  - {requirement: "Cookie-Consent-Banner auf der Website ausspielen", app: datenschutzcockpit, label: partial}
+  - {requirement: "Modellierung nach BSI IT-Grundschutz", app: riskradar, label: partial}
+  - {requirement: "Supplier audits with supplier ratings", app: qualitas, label: partial}
+  - {requirement: "Supplier audits with supplier ratings", app: einkaufsportal, label: partial}
+  - {requirement: "Maintenance work orders for machines including spare parts stock", app: shopfloor-mes, label: partial}
+  - {requirement: "Simultanes Dolmetschen in Videokonferenzen", app: lingua-bridge, label: partial}
+  - {requirement: "Simultanes Dolmetschen in Videokonferenzen", app: talkspace, label: partial}
+  - {requirement: "Formulare mit qualifizierter elektronischer Signatur unterschreiben lassen", app: formbaukasten, label: partial}
+
+  # ------------------------------------------------------------ none (topically close)
+  - {requirement: "Book train tickets and hotels", app: spesenmeister, label: none}
+  - {requirement: "Mahnwesen für überfällige Kundenrechnungen", app: belegfix, label: none}
+  - {requirement: "Interview scheduling based on calendar availability", app: onboardly, label: none}
+  - {requirement: "Gehaltsabrechnungen im Mitarbeiterportal bereitstellen", app: zeitwerk, label: none}
+  - {requirement: "Record working hours with a time clock terminal", app: lohnpilot, label: none}
+  - {requirement: "Configuration management database with automatic discovery", app: kundendesk, label: none}
+  - {requirement: "IT-Assets und Softwarelizenzen verwalten", app: kundendesk, label: none}
+  - {requirement: "Multi-factor authentication with hardware security keys", app: talkspace, label: none}
+  - {requirement: "Sign contracts with a qualified electronic signature", app: teamspace-docs, label: none}
+  - {requirement: "Real-time co-authoring of documents", app: docuvault, label: none}
+  - {requirement: "Kündigungsfristen von Verträgen überwachen", app: docuvault, label: none}
+  - {requirement: "Opportunity pipeline with sales stages", app: mailwave, label: none}
+  - {requirement: "Newsletter mit Double-Opt-in versenden", app: pipelinepro-crm, label: none}
+  - {requirement: "Supplier tenders with bid comparison", app: shopkern, label: none}
+  - {requirement: "Kommissionierung mit Barcode-Scannern", app: einkaufsportal, label: none}
+  - {requirement: "Import fuel card transactions", app: roomie, label: none}
+  - {requirement: "Poolfahrzeuge reservieren", app: roomie, label: none}
+  - {requirement: "Meeting rooms booked via Outlook", app: empfang-plus, label: none}
+  - {requirement: "Besucherausweise drucken", app: roomie, label: none}
+  - {requirement: "Kanban boards for agile teams", app: wissenswiki, label: none}
+  - {requirement: "Dashboards mit Drill-down", app: datenkompass, label: none}
+  - {requirement: "Data lineage from source to report", app: insightboard, label: none}
+  - {requirement: "Container-Images bauen und in eine Registry pushen", app: watchtower, label: none}
+  - {requirement: "Centralised log aggregation and search", app: buildline, label: none}
+  - {requirement: "Backup virtueller Maschinen", app: tresor, label: none}
+  - {requirement: "Rotate secrets automatically", app: safecopy, label: none}
+  - {requirement: "SCORM-Kurse bereitstellen", app: pulsecheck, label: none}
+  - {requirement: "Employee engagement survey with eNPS", app: lernhafen, label: none}
+  - {requirement: "Verzeichnis von Verarbeitungstätigkeiten nach DSGVO führen", app: riskradar, label: none}
+  - {requirement: "Whistleblower reporting channel", app: datenschutzcockpit, label: none}
+  - {requirement: "8D-Reports für Reklamationen", app: shopfloor-mes, label: none}
+  - {requirement: "Machine data acquisition via OPC UA", app: qualitas, label: none}
+  - {requirement: "Word-Dokumente in andere Sprachen übersetzen", app: teamspace-docs, label: none}
+  - {requirement: "Rate limiting per API consumer", app: identitygate, label: none}
+  - {requirement: "Urlaubsanträge von der Führungskraft genehmigen lassen", app: traveldesk, label: none}
+  - {requirement: "Travel requests with manager approval", app: zeitwerk, label: none}
+  - {requirement: "Lead management with lead scoring", app: kundendesk, label: none}
+  - {requirement: "Stellenanzeigen auf Jobbörsen veröffentlichen", app: onboardly, label: none}
+  - {requirement: "Supplier onboarding with certificate checks", app: onboardly, label: none}
+
+  # ------------------------------------------------------------ none (clearly unrelated)
+  - {requirement: "Kommissionierung im Lager", app: talentscout, label: none}
+  - {requirement: "ELStAM-Abruf für die Lohnabrechnung", app: watchtower, label: none}
+  - {requirement: "Qualified electronic signature", app: lagerlogix, label: none}
+  - {requirement: "Gantt charts for project planning", app: safecopy, label: none}
+  - {requirement: "Besucher am Empfang anmelden", app: buildline, label: none}
+  - {requirement: "Invoice OCR data extraction", app: fleetcontrol, label: none}
+  - {requirement: "Videokonferenzen mit Bildschirmfreigabe", app: finanzbuch, label: none}
+  - {requirement: "A/B tests for newsletter subject lines", app: apiport, label: none}
+  - {requirement: "Maschinelle Übersetzung von Dokumenten", app: empfang-plus, label: none}
+  - {requirement: "Electronic logbook for company cars", app: pulsecheck, label: none}
+  - {requirement: "Risiko-Heatmap für die Geschäftsführung", app: lingua-bridge, label: none}
+
+  # ---------------------------------------------------------- interfaces
+  # Evidence comes from a documented interface (planned interfaces count as partial at most).
+  - {requirement: "Lohnjournale aus der Lohnabrechnung in die Finanzbuchhaltung übernehmen", app: finanzbuch, label: covered}
+  - {requirement: "Kontoauszüge per EBICS von der Hausbank abrufen", app: finanzbuch, label: covered}
+  - {requirement: "Buchungsdaten an DATEV übergeben", app: finanzbuch, label: covered}
+  - {requirement: "IT-Tickets werden automatisch beim Onboarding neuer Mitarbeitender angelegt", app: servicehub-itsm, label: covered}
+  - {requirement: "Monitoring alerts automatically create incidents", app: servicehub-itsm, label: covered}
+  - {requirement: "Contacts are synchronised to the newsletter tool", app: pipelinepro-crm, label: covered}
+  - {requirement: "Kundendaten mit dem Helpdesk synchronisieren", app: pipelinepro-crm, label: covered}
+  - {requirement: "Integration mit SAP S/4HANA", app: docuvault, label: covered}
+  - {requirement: "Integration with SAP S/4HANA", app: shopfloor-mes, label: covered}
+  - {requirement: "Integration mit SAP S/4HANA", app: einkaufsportal, label: covered}
+  - {requirement: "Fertigungsrückmeldungen an SAP melden", app: shopfloor-mes, label: covered}
+  - {requirement: "Verträge zur elektronischen Signatur an einen Signaturdienst senden", app: vertragswerk, label: covered}
+  - {requirement: "Signaturanfragen aus dem Vertragsmanagement empfangen", app: signfix, label: covered}
+  - {requirement: "Benutzerkonten werden per SCIM automatisch angelegt", app: lernhafen, label: covered}
+  - {requirement: "Wiki-Inhalte als Wissensquelle für einen KI-Assistenten bereitstellen", app: wissenswiki, label: partial}
+  - {requirement: "Berichtsmetadaten in einen Datenkatalog übertragen", app: insightboard, label: partial}
+  - {requirement: "Finanzkennzahlen aus der Buchhaltung auswerten", app: insightboard, label: covered}
+  - {requirement: "Integration mit SAP S/4HANA", app: zeitwerk, label: none}
+  - {requirement: "Integration with SAP S/4HANA", app: talentscout, label: none}
+  - {requirement: "Zeitdaten an die Lohnabrechnung übergeben", app: finanzbuch, label: none}
+  - {requirement: "Kontoauszüge per EBICS von der Hausbank abrufen", app: lohnpilot, label: none}
+  - {requirement: "Reisekosten als CSV an die Lohnbuchhaltung übergeben", app: lohnpilot, label: none}
