@@ -14,6 +14,8 @@ ENUM_MAX_LEN = 16
 EMAIL_MAX_LEN = 320
 NAME_MAX_LEN = 200
 SLUG_MAX_LEN = 120
+# Path segments under /api/apps/ that are routes, so no app may use them as its slug.
+RESERVED_SLUGS = frozenset({"facets"})
 SHORT_DESCRIPTION_MAX_LEN = 300
 DESCRIPTION_MAX_LEN = 20_000
 CAPABILITY_TEXT_MAX_LEN = 500
@@ -34,6 +36,8 @@ CAPABILITY_ATOMIC_WARN_LEN = 200
 # Paging
 DEFAULT_PAGE_SIZE = 25
 MAX_PAGE_SIZE = 200
+# Keeps OFFSET = (page - 1) * size far inside PostgreSQL's bigint range.
+MAX_PAGE = 1_000_000
 
 # Search input
 MAX_SEARCH_TEXT_LEN = 20_000
@@ -79,6 +83,9 @@ EVAL_COVERED_MIN_PRECISION = 0.75
 IMPORT_FORMAT_VERSION = 1
 CSV_MULTI_VALUE_SEPARATOR = "|"
 CSV_SNIFF_BYTES = 64_000
+# Spreadsheets run a cell starting with one of these as a formula; exports prefix it with the escape.
+CSV_FORMULA_START_CHARS = ("=", "+", "-", "@", "\t", "\r")
+CSV_FORMULA_ESCAPE = "'"
 
 # Text analysis
 MIN_CONTENT_TOKEN_LEN = 2

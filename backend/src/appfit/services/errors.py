@@ -19,5 +19,9 @@ class ConflictError(ServiceError):
     status_code = HTTPStatus.CONFLICT
 
 
+class TooLargeError(ServiceError):
+    status_code = HTTPStatus.REQUEST_ENTITY_TOO_LARGE
+
+
 class UnavailableError(ServiceError):
     status_code = HTTPStatus.SERVICE_UNAVAILABLE

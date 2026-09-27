@@ -1,11 +1,13 @@
+from http import HTTPStatus
 from typing import Literal
 
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
 
 from appfit.api.deps import active_model_id
+from appfit.api.openapi import errors
 from appfit.auth.deps import require_admin, require_editor, require_viewer
-from appfit.config import DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, SCORE_DECIMALS, SIMILAR_APPS_LIMIT
+from appfit.config import DEFAULT_PAGE_SIZE, MAX_PAGE, MAX_PAGE_SIZE, SCORE_DECIMALS, SIMILAR_APPS_LIMIT
 from appfit.db.engine import get_db
 from appfit.models import App, LicenseType, LifecycleStatus, User
 from appfit.schemas.app import AppFacets, AppIn, AppListItem, AppOut, FacetValue, SimilarApp
@@ -47,22 +49,24 @@ def app_filters(
 @router.get("", response_model=Page[AppListItem])
 def list_apps(
     filters: svc.AppFilters = Depends(app_filters),
-    page: int = Query(default=1, ge=1),
+    page: int = Query(default=1, ge=1, le=MAX_PAGE),
     size: int = Query(default=DEFAULT_PAGE_SIZE, ge=1, le=MAX_PAGE_SIZE),
     db: Session = Depends(get_db),
     model_id: str = Depends(active_model_id),
     _: User = Depends(require_viewer),
 ) -> Page[AppListItem]:
+    """Catalog page, filtered by keyword, tags, lifecycle, licence, domain and maintainer."""
     items, total = svc.list_apps(db, filters, offset=(page - 1) * size, limit=size)
     return Page(items=[svc.to_list_item(a, model_id) for a in items], total=total, page=page, size=size)
 
 
 @router.get("/facets", response_model=AppFacets)
-def app_facets(
+def get_app_facets(
     filters: svc.AppFilters = Depends(app_filters),
     db: Session = Depends(get_db),
     _: User = Depends(require_viewer),
 ) -> AppFacets:
+    """Counts per lifecycle status, licence type and domain for the same filters as the list."""
     counts = svc.facet_counts(db, filters)
 
     def values(rows: list[tuple[str, int]]) -> list[FacetValue]:
@@ -82,22 +86,24 @@ def get_app(
     model_id: str = Depends(active_model_id),
     _: User = Depends(require_viewer),
 ) -> AppOut:
+    """One app with capabilities, tags, maintainers and interfaces."""
     return svc.to_app_out(_get_or_404(db, slug), model_id)
 
 
-@router.post("", response_model=AppOut, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=AppOut, status_code=status.HTTP_201_CREATED, responses=errors(HTTPStatus.CONFLICT))
 def create_app(
     body: AppIn,
     db: Session = Depends(get_db),
     model_id: str = Depends(active_model_id),
     user: User = Depends(require_editor),
 ) -> AppOut:
+    """Create an app; the slug is derived from the name unless given. Indexing runs in the background."""
     app, _ = svc.create_app(db, body.as_full_update(), user.id)
     db.commit()
     return svc.to_app_out(app, model_id)
 
 
-@router.put("/{slug}", response_model=AppOut)
+@router.put("/{slug}", response_model=AppOut, responses=errors(HTTPStatus.CONFLICT))
 def replace_app(
     slug: str,
     body: AppIn,
@@ -105,6 +111,7 @@ def replace_app(
     model_id: str = Depends(active_model_id),
     user: User = Depends(require_editor),
 ) -> AppOut:
+    """Replace all fields of an app; collections given replace the current ones."""
     app = _get_or_404(db, slug)
     svc.update_app(db, app, body.as_full_update(), user.id)
     db.commit()
@@ -114,18 +121,20 @@ def replace_app(
 
 @router.delete("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_app(slug: str, db: Session = Depends(get_db), _: User = Depends(require_admin)) -> None:
+    """Delete an app with its capabilities and interfaces."""
     svc.delete_app(db, _get_or_404(db, slug))
     db.commit()
 
 
 @router.get("/{slug}/similar", response_model=list[SimilarApp])
-def get_similar(
+def list_similar_apps(
     slug: str,
     limit: int = Query(default=SIMILAR_APPS_LIMIT, ge=1, le=MAX_PAGE_SIZE),
     db: Session = Depends(get_db),
     model_id: str = Depends(active_model_id),
     _: User = Depends(require_viewer),
 ) -> list[SimilarApp]:
+    """Apps whose summaries are closest to this one's."""
     app = _get_or_404(db, slug)
     return [
         SimilarApp(

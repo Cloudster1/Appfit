@@ -4,3250 +4,4579 @@
  */
 
 export interface paths {
-  "/api/admin/embeddings/reindex": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Liveness
+         * @description The process is up; does not check dependencies.
+         */
+        get: operations["liveness"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Reindex */
-    post: operations["reindex_api_admin_embeddings_reindex_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/admin/embeddings/status": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/health/ready": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Readiness
+         * @description 200 once the database answers and the embedding model is loaded, else 503 with the reason.
+         */
+        get: operations["readiness"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Embeddings Status */
-    get: operations["embeddings_status_api_admin_embeddings_status_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/admin/import-runs": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Login
+         * @description Sign in with email and password; sets the session cookie and returns the token for bearer use.
+         */
+        post: operations["login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Import Runs */
-    get: operations["import_runs_api_admin_import_runs_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/admin/search-logs": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Logout
+         * @description Clear the session cookie.
+         */
+        post: operations["logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Search Logs */
-    get: operations["search_logs_api_admin_search_logs_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/apps": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Current User
+         * @description The signed-in user.
+         */
+        get: operations["current_user"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Apps */
-    get: operations["list_apps_api_apps_get"];
-    put?: never;
-    /** Create App */
-    post: operations["create_app_api_apps_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/apps/facets": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/auth/change-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Change Password
+         * @description Change the signed-in user's password; the current one must be given.
+         */
+        post: operations["change_password"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** App Facets */
-    get: operations["app_facets_api_apps_facets_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/apps/{slug}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Users
+         * @description All user accounts.
+         */
+        get: operations["list_users"];
+        put?: never;
+        /**
+         * Create User
+         * @description Create a local account with a role.
+         */
+        post: operations["create_user"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get App */
-    get: operations["get_app_api_apps__slug__get"];
-    /** Replace App */
-    put: operations["replace_app_api_apps__slug__put"];
-    post?: never;
-    /** Delete App */
-    delete: operations["delete_app_api_apps__slug__delete"];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/apps/{slug}/similar": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/users/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update User
+         * @description Change name, role, active flag or password; admins cannot demote or deactivate themselves.
+         */
+        patch: operations["update_user"];
+        trace?: never;
     };
-    /** Get Similar */
-    get: operations["get_similar_api_apps__slug__similar_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/auth/change-password": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/apps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Apps
+         * @description Catalog page, filtered by keyword, tags, lifecycle, licence, domain and maintainer.
+         */
+        get: operations["list_apps"];
+        put?: never;
+        /**
+         * Create App
+         * @description Create an app; the slug is derived from the name unless given. Indexing runs in the background.
+         */
+        post: operations["create_app"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Change Password */
-    post: operations["change_password_api_auth_change_password_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/auth/login": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/apps/facets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get App Facets
+         * @description Counts per lifecycle status, licence type and domain for the same filters as the list.
+         */
+        get: operations["get_app_facets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Login */
-    post: operations["login_api_auth_login_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/auth/logout": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/apps/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get App
+         * @description One app with capabilities, tags, maintainers and interfaces.
+         */
+        get: operations["get_app"];
+        /**
+         * Replace App
+         * @description Replace all fields of an app; collections given replace the current ones.
+         */
+        put: operations["replace_app"];
+        post?: never;
+        /**
+         * Delete App
+         * @description Delete an app with its capabilities and interfaces.
+         */
+        delete: operations["delete_app"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Logout */
-    post: operations["logout_api_auth_logout_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/auth/me": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/apps/{slug}/similar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Similar Apps
+         * @description Apps whose summaries are closest to this one's.
+         */
+        get: operations["list_similar_apps"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Me */
-    get: operations["me_api_auth_me_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/export": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/interfaces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Interfaces
+         * @description Interfaces, optionally only those touching one app or external system.
+         */
+        get: operations["list_interfaces"];
+        put?: never;
+        /**
+         * Create Interface
+         * @description Document an interface; an external system named as an endpoint is created when new.
+         */
+        post: operations["create_interface"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Export */
-    get: operations["export_api_export_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/external-systems": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/interfaces/{interface_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Interface
+         * @description One interface with both endpoints.
+         */
+        get: operations["get_interface"];
+        /**
+         * Update Interface
+         * @description Replace all fields of an interface.
+         */
+        put: operations["update_interface"];
+        post?: never;
+        /**
+         * Delete Interface
+         * @description Delete an interface.
+         */
+        delete: operations["delete_interface"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Systems */
-    get: operations["list_systems_api_external_systems_get"];
-    put?: never;
-    /** Create System */
-    post: operations["create_system_api_external_systems_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/external-systems/{system_id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/external-systems": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List External Systems
+         * @description External systems with the number of interfaces using each.
+         */
+        get: operations["list_external_systems"];
+        put?: never;
+        /**
+         * Create External System
+         * @description Register an external system (outside the catalog).
+         */
+        post: operations["create_external_system"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    /** Update System */
-    put: operations["update_system_api_external_systems__system_id__put"];
-    post?: never;
-    /** Delete System */
-    delete: operations["delete_system_api_external_systems__system_id__delete"];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/health": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/external-systems/{system_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update External System
+         * @description Rename or describe an external system; interface texts are re-indexed.
+         */
+        put: operations["update_external_system"];
+        post?: never;
+        /**
+         * Delete External System
+         * @description Delete an external system that no interface uses.
+         */
+        delete: operations["delete_external_system"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Liveness */
-    get: operations["liveness_api_health_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/health/ready": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/landscape": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Landscape
+         * @description Nodes (apps, external systems) and edges (interfaces) for the landscape graph.
+         */
+        get: operations["get_landscape"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Readiness */
-    get: operations["readiness_api_health_ready_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/import": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Tags
+         * @description Tags with the number of apps using each.
+         */
+        get: operations["list_tags"];
+        put?: never;
+        /**
+         * Create Tag
+         * @description Create a tag, or return the existing one with that name and category.
+         */
+        post: operations["create_tag"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Import File */
-    post: operations["import_file_api_import_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/import/interfaces-template.csv": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/tags/{tag_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Tag
+         * @description Remove a tag from all apps and delete it.
+         */
+        delete: operations["delete_tag"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Tag
+         * @description Rename a tag, or merge it into another tag of any category (apps are re-indexed).
+         */
+        patch: operations["update_tag"];
+        trace?: never;
     };
-    /** Interfaces Template */
-    get: operations["interfaces_template_api_import_interfaces_template_csv_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/import/schema.json": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/maintainers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Maintainers
+         * @description People and teams, optionally filtered by name or email.
+         */
+        get: operations["list_maintainers"];
+        put?: never;
+        /**
+         * Create Maintainer
+         * @description Create a person or team.
+         */
+        post: operations["create_maintainer"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Schema */
-    get: operations["schema_api_import_schema_json_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/import/template.csv": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/maintainers/{maintainer_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Maintainer
+         * @description Delete a person or team and their app assignments.
+         */
+        delete: operations["delete_maintainer"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Maintainer
+         * @description Change a person or team.
+         */
+        patch: operations["update_maintainer"];
+        trace?: never;
     };
-    /** Template */
-    get: operations["template_api_import_template_csv_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/interfaces": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/search/parse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Parse Search Text
+         * @description Split free text into requirements with priorities, as the search would.
+         */
+        post: operations["parse_search_text"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Interfaces */
-    get: operations["list_interfaces_api_interfaces_get"];
-    put?: never;
-    /** Create Interface */
-    post: operations["create_interface_api_interfaces_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/interfaces/{interface_id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Search Apps
+         * @description Rank apps against requirements with per-requirement evidence, gaps and connections.
+         */
+        post: operations["search_apps"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get Interface */
-    get: operations["get_interface_api_interfaces__interface_id__get"];
-    /** Update Interface */
-    put: operations["update_interface_api_interfaces__interface_id__put"];
-    post?: never;
-    /** Delete Interface */
-    delete: operations["delete_interface_api_interfaces__interface_id__delete"];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/landscape": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/search/{log_id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rate Search
+         * @description Rate a search result list, optionally naming the app that was expected.
+         */
+        post: operations["rate_search"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Get Landscape */
-    get: operations["get_landscape_api_landscape_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/maintainers": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import File
+         * @description Import apps, external systems and interfaces from CSV or JSON; a dry run reports without saving.
+         */
+        post: operations["import_file"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Maintainers */
-    get: operations["list_maintainers_api_maintainers_get"];
-    put?: never;
-    /** Create Maintainer */
-    post: operations["create_maintainer_api_maintainers_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/maintainers/{maintainer_id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/import/template.csv": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Apps Template
+         * @description CSV template for apps with one example row.
+         */
+        get: operations["get_apps_template"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post?: never;
-    /** Delete Maintainer */
-    delete: operations["delete_maintainer_api_maintainers__maintainer_id__delete"];
-    options?: never;
-    head?: never;
-    /** Update Maintainer */
-    patch: operations["update_maintainer_api_maintainers__maintainer_id__patch"];
-    trace?: never;
-  };
-  "/api/meta/enums": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/import/interfaces-template.csv": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Interfaces Template
+         * @description CSV template for interfaces with example rows.
+         */
+        get: operations["get_interfaces_template"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Enums */
-    get: operations["enums_api_meta_enums_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/meta/search-config": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/import/schema.json": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Import Schema
+         * @description JSON Schema of the JSON import format.
+         */
+        get: operations["get_import_schema"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** Search Config */
-    get: operations["search_config_api_meta_search_config_get"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/search": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Catalog
+         * @description The whole catalog as JSON (import format) or as CSV of apps or interfaces.
+         */
+        get: operations["export_catalog"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Search */
-    post: operations["search_api_search_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/search/parse": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/admin/embeddings/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Embedding Status
+         * @description Model state and how many apps, capabilities and interfaces are indexed.
+         */
+        get: operations["get_embedding_status"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Parse */
-    post: operations["parse_api_search_parse_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/search/{log_id}/feedback": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/admin/embeddings/reindex": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reindex Embeddings
+         * @description Wake the indexer; scope 'all' marks everything stale first (e.g. after a model change).
+         */
+        post: operations["reindex_embeddings"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /** Feedback */
-    post: operations["feedback_api_search__log_id__feedback_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/tags": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/admin/search-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Search Logs
+         * @description Past searches with results and feedback, newest first.
+         */
+        get: operations["list_search_logs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Tags */
-    get: operations["list_tags_api_tags_get"];
-    put?: never;
-    /** Create Tag */
-    post: operations["create_tag_api_tags_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/tags/{tag_id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/admin/import-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Import Runs
+         * @description Past imports with their reports, newest first.
+         */
+        get: operations["list_import_runs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post?: never;
-    /** Delete Tag */
-    delete: operations["delete_tag_api_tags__tag_id__delete"];
-    options?: never;
-    head?: never;
-    /**
-     * Update Tag
-     * @description Rename a tag, or merge it into another tag of any category (apps are re-indexed).
-     */
-    patch: operations["update_tag_api_tags__tag_id__patch"];
-    trace?: never;
-  };
-  "/api/users": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/meta/enums": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Enums
+         * @description Allowed values of every enum in the API.
+         */
+        get: operations["list_enums"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /** List Users */
-    get: operations["list_users_api_users_get"];
-    put?: never;
-    /** Create User */
-    post: operations["create_user_api_users_post"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/users/{user_id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/meta/search-config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Search Config
+         * @description Active model, score thresholds and requirement limits for clients.
+         */
+        get: operations["get_search_config"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    /** Update User */
-    patch: operations["update_user_api_users__user_id__patch"];
-    trace?: never;
-  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    /** AppFacets */
-    AppFacets: {
-      /** Domain */
-      domain: components["schemas"]["FacetValue"][];
-      /** License Type */
-      license_type: components["schemas"]["FacetValue"][];
-      /** Lifecycle */
-      lifecycle: components["schemas"]["FacetValue"][];
+    schemas: {
+        /** AppFacets */
+        AppFacets: {
+            /** Lifecycle */
+            lifecycle: components["schemas"]["FacetValue"][];
+            /** License Type */
+            license_type: components["schemas"]["FacetValue"][];
+            /** Domain */
+            domain: components["schemas"]["FacetValue"][];
+        };
+        /**
+         * AppFields
+         * @description All editable app fields; `None` means "not given" in partial updates.
+         */
+        AppFields: {
+            /** Slug */
+            slug?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Short Description */
+            short_description?: string | null;
+            /** Description */
+            description?: string | null;
+            lifecycle_status?: components["schemas"]["LifecycleStatus"] | null;
+            /** License */
+            license?: string | null;
+            license_type?: components["schemas"]["LicenseType"] | null;
+            /** Vendor */
+            vendor?: string | null;
+            /** Version */
+            version?: string | null;
+            /** Homepage Url */
+            homepage_url?: string | null;
+            /** Repo Url */
+            repo_url?: string | null;
+            /** Docs Url */
+            docs_url?: string | null;
+            /** Links */
+            links?: components["schemas"]["LinkItem"][] | null;
+            /** Extra */
+            extra?: {
+                [key: string]: unknown;
+            } | null;
+            /** Tags */
+            tags?: string[] | null;
+            /** Tech Stack */
+            tech_stack?: string[] | null;
+            /** Domains */
+            domains?: string[] | null;
+            /** Maintainers */
+            maintainers?: components["schemas"]["MaintainerRef"][] | null;
+            /** Capabilities */
+            capabilities?: components["schemas"]["CapabilityIn"][] | null;
+        };
+        /**
+         * AppIn
+         * @description Create/replace payload: omitted fields fall back to defaults (full replace semantics).
+         */
+        AppIn: {
+            /** Slug */
+            slug?: string | null;
+            /** Name */
+            name: string;
+            /**
+             * Short Description
+             * @default
+             */
+            short_description: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** @default active */
+            lifecycle_status: components["schemas"]["LifecycleStatus"];
+            /** License */
+            license?: string | null;
+            license_type?: components["schemas"]["LicenseType"] | null;
+            /** Vendor */
+            vendor?: string | null;
+            /** Version */
+            version?: string | null;
+            /** Homepage Url */
+            homepage_url?: string | null;
+            /** Repo Url */
+            repo_url?: string | null;
+            /** Docs Url */
+            docs_url?: string | null;
+            /**
+             * Links
+             * @default []
+             */
+            links: components["schemas"]["LinkItem"][];
+            /**
+             * Extra
+             * @default {}
+             */
+            extra: {
+                [key: string]: unknown;
+            };
+            /**
+             * Tags
+             * @default []
+             */
+            tags: string[];
+            /**
+             * Tech Stack
+             * @default []
+             */
+            tech_stack: string[];
+            /**
+             * Domains
+             * @default []
+             */
+            domains: string[];
+            /**
+             * Maintainers
+             * @default []
+             */
+            maintainers: components["schemas"]["MaintainerRef"][];
+            /**
+             * Capabilities
+             * @default []
+             */
+            capabilities: components["schemas"]["CapabilityIn"][];
+        };
+        /** AppListItem */
+        AppListItem: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Short Description */
+            short_description: string;
+            lifecycle_status: components["schemas"]["LifecycleStatus"];
+            license_type: components["schemas"]["LicenseType"] | null;
+            /** Vendor */
+            vendor: string | null;
+            /** Tags */
+            tags: string[];
+            /** Tech Stack */
+            tech_stack: string[];
+            /** Domains */
+            domains: string[];
+            /** Maintainers */
+            maintainers: string[];
+            /** Capability Count */
+            capability_count: number;
+            /**
+             * Embedding Status
+             * @enum {string}
+             */
+            embedding_status: "indexed" | "pending";
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** AppMaintainerOut */
+        AppMaintainerOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Email */
+            email: string | null;
+            kind: components["schemas"]["MaintainerKind"];
+            /** Org Unit */
+            org_unit: string | null;
+            /** Url */
+            url: string | null;
+            role: components["schemas"]["MaintainerRole"];
+        };
+        /** AppOut */
+        AppOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Short Description */
+            short_description: string;
+            /** Description */
+            description: string;
+            lifecycle_status: components["schemas"]["LifecycleStatus"];
+            /** License */
+            license: string | null;
+            license_type: components["schemas"]["LicenseType"] | null;
+            /** Vendor */
+            vendor: string | null;
+            /** Version */
+            version: string | null;
+            /** Homepage Url */
+            homepage_url: string | null;
+            /** Repo Url */
+            repo_url: string | null;
+            /** Docs Url */
+            docs_url: string | null;
+            /** Links */
+            links: components["schemas"]["LinkItem"][];
+            /** Extra */
+            extra: {
+                [key: string]: unknown;
+            };
+            /** Tags */
+            tags: string[];
+            /** Tech Stack */
+            tech_stack: string[];
+            /** Domains */
+            domains: string[];
+            /** Maintainers */
+            maintainers: components["schemas"]["AppMaintainerOut"][];
+            /** Capabilities */
+            capabilities: components["schemas"]["CapabilityOut"][];
+            /**
+             * Embedding Status
+             * @enum {string}
+             */
+            embedding_status: "indexed" | "pending";
+            /**
+             * Interfaces
+             * @default []
+             */
+            interfaces: components["schemas"]["InterfaceSummary"][];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** Body_import_file */
+        Body_import_file: {
+            /** File */
+            file: string;
+        };
+        /** CapabilityIn */
+        CapabilityIn: {
+            /** Id */
+            id?: string | null;
+            /** @default capability */
+            kind: components["schemas"]["CapabilityKind"];
+            /** Text */
+            text: string;
+            /** Details */
+            details?: string | null;
+        };
+        /**
+         * CapabilityKind
+         * @enum {string}
+         */
+        CapabilityKind: "capability" | "requirement" | "feature";
+        /** CapabilityOut */
+        CapabilityOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["CapabilityKind"];
+            /** Text */
+            text: string;
+            /** Details */
+            details: string | null;
+            /** Position */
+            position: number;
+            /**
+             * Indexed
+             * @default false
+             */
+            indexed: boolean;
+        };
+        /** ChangePasswordRequest */
+        ChangePasswordRequest: {
+            /** Current Password */
+            current_password: string;
+            /** New Password */
+            new_password: string;
+        };
+        /**
+         * Combination
+         * @description Two connected result apps that together cover more requirements than either alone.
+         */
+        Combination: {
+            /**
+             * Apps
+             * @description Slugs of the two apps
+             */
+            apps: string[];
+            /**
+             * Covered
+             * @description Requirement indexes covered by at least one of them
+             */
+            covered: number[];
+            /**
+             * Interface Id
+             * Format: uuid
+             */
+            interface_id: string;
+            /** Interface Name */
+            interface_name: string;
+            interface_status: components["schemas"]["InterfaceStatus"];
+        };
+        /** EmbeddingStatusOut */
+        EmbeddingStatusOut: {
+            /** Model Id */
+            model_id: string;
+            /** Model Loaded */
+            model_loaded: boolean;
+            /** Model Error */
+            model_error: string | null;
+            /** Worker Running */
+            worker_running: boolean;
+            /** Worker Last Error */
+            worker_last_error: string | null;
+            /** Apps Total */
+            apps_total: number;
+            /** Apps Indexed */
+            apps_indexed: number;
+            /** Capabilities Total */
+            capabilities_total: number;
+            /** Capabilities Indexed */
+            capabilities_indexed: number;
+            /** Interfaces Total */
+            interfaces_total: number;
+            /** Interfaces Indexed */
+            interfaces_indexed: number;
+            /** Pending */
+            pending: number;
+        };
+        /** EndpointOut */
+        EndpointOut: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "app" | "system";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Slug */
+            slug?: string | null;
+            lifecycle_status?: components["schemas"]["LifecycleStatus"] | null;
+        };
+        /**
+         * EndpointRef
+         * @description One end of an interface: exactly one of `app` (a catalog app's slug) or `system` (an external system's name).
+         */
+        EndpointRef: {
+            /** App */
+            app?: string | null;
+            /** System */
+            system?: string | null;
+        };
+        /**
+         * ErrorOut
+         * @description Body of every error response except request validation errors (422).
+         */
+        ErrorOut: {
+            /** Detail */
+            detail: string;
+        };
+        /** Evidence */
+        Evidence: {
+            /** Req Idx */
+            req_idx: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "covered" | "partial" | "gap";
+            /** Score */
+            score: number;
+            /** Similarity */
+            similarity: number;
+            /**
+             * Via
+             * @enum {string}
+             */
+            via: "capability" | "interface" | "summary" | "none";
+            capability?: components["schemas"]["MatchedCapability"] | null;
+            interface?: components["schemas"]["InterfaceSummary"] | null;
+            /**
+             * Keyword Hits
+             * @default []
+             */
+            keyword_hits: string[];
+        };
+        /** ExternalSystemIn */
+        ExternalSystemIn: {
+            /** Name */
+            name: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Vendor */
+            vendor?: string | null;
+            /** Url */
+            url?: string | null;
+        };
+        /** ExternalSystemOut */
+        ExternalSystemOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Description */
+            description: string;
+            /** Vendor */
+            vendor: string | null;
+            /** Url */
+            url: string | null;
+            /** Interface Count */
+            interface_count: number;
+        };
+        /** FacetValue */
+        FacetValue: {
+            /** Value */
+            value: string;
+            /** Count */
+            count: number;
+        };
+        /** FeedbackIn */
+        FeedbackIn: {
+            /**
+             * Rating
+             * @enum {string}
+             */
+            rating: "up" | "down";
+            /** Expected App Slug */
+            expected_app_slug?: string | null;
+            /** Comment */
+            comment?: string | null;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HealthOut */
+        HealthOut: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ok" | "starting" | "error";
+            /**
+             * Database
+             * @default true
+             */
+            database: boolean;
+            /**
+             * Model Loaded
+             * @default false
+             */
+            model_loaded: boolean;
+            /** Detail */
+            detail?: string | null;
+        };
+        /**
+         * ImportFile
+         * @description JSON import/export document; export produces exactly this shape so files round-trip.
+         *
+         *     Interfaces are applied after the apps, so they may refer to apps defined in the same file.
+         */
+        ImportFile: {
+            /**
+             * Version
+             * @default 1
+             * @constant
+             */
+            version: 1;
+            /** Apps */
+            apps: components["schemas"]["AppFields"][];
+            /**
+             * External Systems
+             * @default []
+             */
+            external_systems: components["schemas"]["ExternalSystemIn"][];
+            /**
+             * Interfaces
+             * @default []
+             */
+            interfaces: components["schemas"]["InterfaceIn"][];
+        };
+        /** ImportIssue */
+        ImportIssue: {
+            /** Row */
+            row: number;
+            /**
+             * Kind
+             * @default app
+             * @enum {string}
+             */
+            kind: "app" | "system" | "interface";
+            /** Field */
+            field?: string | null;
+            /** Message */
+            message: string;
+            /** Slug */
+            slug?: string | null;
+        };
+        /** ImportItem */
+        ImportItem: {
+            /** Row */
+            row: number;
+            /**
+             * Kind
+             * @default app
+             * @enum {string}
+             */
+            kind: "app" | "system" | "interface";
+            /** Slug */
+            slug: string;
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "created" | "updated" | "unchanged" | "skipped" | "invalid";
+            /**
+             * Changed Fields
+             * @default []
+             */
+            changed_fields: string[];
+        };
+        /** ImportReport */
+        ImportReport: {
+            /** Import Run Id */
+            import_run_id: string | null;
+            /** Format */
+            format: string;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "upsert" | "create_only";
+            /** Dry Run */
+            dry_run: boolean;
+            /** Committed */
+            committed: boolean;
+            stats: components["schemas"]["ImportStats"];
+            /** Items */
+            items: components["schemas"]["ImportItem"][];
+            /** Errors */
+            errors: components["schemas"]["ImportIssue"][];
+            /** Warnings */
+            warnings: components["schemas"]["ImportIssue"][];
+        };
+        /** ImportRunOut */
+        ImportRunOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** User Id */
+            user_id: string | null;
+            /** Filename */
+            filename: string | null;
+            /** Format */
+            format: string;
+            /** Mode */
+            mode: string;
+            /** Dry Run */
+            dry_run: boolean;
+            /** Stats */
+            stats: {
+                [key: string]: unknown;
+            };
+            /** Errors */
+            errors: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** ImportStats */
+        ImportStats: {
+            /**
+             * Total
+             * @default 0
+             */
+            total: number;
+            /**
+             * Created
+             * @default 0
+             */
+            created: number;
+            /**
+             * Updated
+             * @default 0
+             */
+            updated: number;
+            /**
+             * Unchanged
+             * @default 0
+             */
+            unchanged: number;
+            /**
+             * Skipped
+             * @default 0
+             */
+            skipped: number;
+            /**
+             * Invalid
+             * @default 0
+             */
+            invalid: number;
+        };
+        /**
+         * InterfaceFrequency
+         * @enum {string}
+         */
+        InterfaceFrequency: "realtime" | "batch" | "on_demand";
+        /** InterfaceIn */
+        InterfaceIn: {
+            from: components["schemas"]["EndpointRef"];
+            to: components["schemas"]["EndpointRef"];
+            /** Name */
+            name: string;
+            /** @default other */
+            type: components["schemas"]["InterfaceType"];
+            /**
+             * Data Objects
+             * @default []
+             */
+            data_objects: string[];
+            frequency?: components["schemas"]["InterfaceFrequency"] | null;
+            /** @default active */
+            status: components["schemas"]["InterfaceStatus"];
+            /**
+             * Bidirectional
+             * @default false
+             */
+            bidirectional: boolean;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+        };
+        /** InterfaceOut */
+        InterfaceOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            from: components["schemas"]["EndpointOut"];
+            to: components["schemas"]["EndpointOut"];
+            /** Name */
+            name: string;
+            type: components["schemas"]["InterfaceType"];
+            /** Data Objects */
+            data_objects: string[];
+            frequency: components["schemas"]["InterfaceFrequency"] | null;
+            status: components["schemas"]["InterfaceStatus"];
+            /** Bidirectional */
+            bidirectional: boolean;
+            /** Description */
+            description: string;
+            /** Indexed */
+            indexed: boolean;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * InterfaceStatus
+         * @enum {string}
+         */
+        InterfaceStatus: "planned" | "active" | "deprecated";
+        /**
+         * InterfaceSummary
+         * @description An interface as seen from one app: the other side and the direction of the data flow.
+         */
+        InterfaceSummary: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /**
+             * Direction
+             * @enum {string}
+             */
+            direction: "outgoing" | "incoming" | "both";
+            counterpart: components["schemas"]["EndpointOut"];
+            type: components["schemas"]["InterfaceType"];
+            /** Data Objects */
+            data_objects: string[];
+            frequency: components["schemas"]["InterfaceFrequency"] | null;
+            status: components["schemas"]["InterfaceStatus"];
+        };
+        /**
+         * InterfaceType
+         * @enum {string}
+         */
+        InterfaceType: "rest_api" | "soap" | "file_transfer" | "database" | "messaging" | "sso" | "ui_embedding" | "other";
+        /** Landscape */
+        Landscape: {
+            /** Nodes */
+            nodes: components["schemas"]["LandscapeNode"][];
+            /** Edges */
+            edges: components["schemas"]["LandscapeEdge"][];
+        };
+        /** LandscapeEdge */
+        LandscapeEdge: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Source */
+            source: string;
+            /** Target */
+            target: string;
+            /** Name */
+            name: string;
+            type: components["schemas"]["InterfaceType"];
+            status: components["schemas"]["InterfaceStatus"];
+            /** Bidirectional */
+            bidirectional: boolean;
+            /** Data Objects */
+            data_objects: string[];
+            frequency: components["schemas"]["InterfaceFrequency"] | null;
+        };
+        /** LandscapeNode */
+        LandscapeNode: {
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "app" | "system";
+            /** Name */
+            name: string;
+            /** Slug */
+            slug?: string | null;
+            lifecycle_status?: components["schemas"]["LifecycleStatus"] | null;
+            /**
+             * Domains
+             * @default []
+             */
+            domains: string[];
+            /** Degree */
+            degree: number;
+        };
+        /**
+         * LicenseType
+         * @enum {string}
+         */
+        LicenseType: "oss" | "commercial" | "internal" | "other";
+        /**
+         * LifecycleStatus
+         * @enum {string}
+         */
+        LifecycleStatus: "idea" | "pilot" | "active" | "deprecated" | "retired";
+        /** LinkItem */
+        LinkItem: {
+            /** Label */
+            label: string;
+            /** Url */
+            url: string;
+        };
+        /** LoginRequest */
+        LoginRequest: {
+            /** Email */
+            email: string;
+            /** Password */
+            password: string;
+        };
+        /** LoginResponse */
+        LoginResponse: {
+            user: components["schemas"]["UserOut"];
+            /** Access Token */
+            access_token: string;
+            /**
+             * Token Type
+             * @default bearer
+             */
+            token_type: string;
+        };
+        /** MaintainerIn */
+        MaintainerIn: {
+            /** Name */
+            name: string;
+            /** Email */
+            email?: string | null;
+            /** @default person */
+            kind: components["schemas"]["MaintainerKind"];
+            /** Org Unit */
+            org_unit?: string | null;
+            /** Url */
+            url?: string | null;
+        };
+        /**
+         * MaintainerKind
+         * @enum {string}
+         */
+        MaintainerKind: "person" | "team";
+        /** MaintainerOut */
+        MaintainerOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Email */
+            email: string | null;
+            kind: components["schemas"]["MaintainerKind"];
+            /** Org Unit */
+            org_unit: string | null;
+            /** Url */
+            url: string | null;
+        };
+        /**
+         * MaintainerRef
+         * @description Reference to a maintainer: by id, else matched by email, else by name (created when missing).
+         */
+        MaintainerRef: {
+            /** Id */
+            id?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Email */
+            email?: string | null;
+            /** @default person */
+            kind: components["schemas"]["MaintainerKind"];
+            /** Org Unit */
+            org_unit?: string | null;
+            /** @default maintainer */
+            role: components["schemas"]["MaintainerRole"];
+        };
+        /**
+         * MaintainerRole
+         * @enum {string}
+         */
+        MaintainerRole: "owner" | "maintainer" | "contact";
+        /** MatchedCapability */
+        MatchedCapability: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["CapabilityKind"];
+            /** Text */
+            text: string;
+        };
+        /** Page[AppListItem] */
+        Page_AppListItem_: {
+            /** Items */
+            items: components["schemas"]["AppListItem"][];
+            /** Total */
+            total: number;
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+        };
+        /** Page[SearchLogOut] */
+        Page_SearchLogOut_: {
+            /** Items */
+            items: components["schemas"]["SearchLogOut"][];
+            /** Total */
+            total: number;
+            /** Page */
+            page: number;
+            /** Size */
+            size: number;
+        };
+        /** ParseRequest */
+        ParseRequest: {
+            /** Text */
+            text: string;
+        };
+        /** ParseResponse */
+        ParseResponse: {
+            /** Requirements */
+            requirements: components["schemas"]["ParsedRequirement"][];
+        };
+        /** ParsedRequirement */
+        ParsedRequirement: {
+            /** Idx */
+            idx: number;
+            /** Text */
+            text: string;
+            /** Priority */
+            priority: ("must" | "should" | "could") | null;
+            /** Weight */
+            weight: number;
+        };
+        /** ReindexRequest */
+        ReindexRequest: {
+            /**
+             * Scope
+             * @default stale
+             * @enum {string}
+             */
+            scope: "stale" | "all";
+        };
+        /** RequirementIn */
+        RequirementIn: {
+            /** Text */
+            text: string;
+            /** Priority */
+            priority?: ("must" | "should" | "could") | null;
+        };
+        /** ResultApp */
+        ResultApp: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Short Description */
+            short_description: string;
+            lifecycle_status: components["schemas"]["LifecycleStatus"];
+            /** Vendor */
+            vendor: string | null;
+            /** Tags */
+            tags: string[];
+            /** Tech Stack */
+            tech_stack: string[];
+            /**
+             * Domains
+             * @default []
+             */
+            domains: string[];
+            /**
+             * Maintainers
+             * @description Names, owners first
+             * @default []
+             */
+            maintainers: string[];
+        };
+        /**
+         * Role
+         * @enum {string}
+         */
+        Role: "viewer" | "editor" | "admin";
+        /** SearchConfigOut */
+        SearchConfigOut: {
+            /** Model Id */
+            model_id: string;
+            thresholds: components["schemas"]["ThresholdsOut"];
+            /** Priority Weights */
+            priority_weights: {
+                [key: string]: number;
+            };
+            /** Max Requirements */
+            max_requirements: number;
+            /** Capability Atomic Warn Len */
+            capability_atomic_warn_len: number;
+        };
+        /** SearchFilters */
+        SearchFilters: {
+            /**
+             * Lifecycle
+             * @description Allowed lifecycle states; default excludes 'retired'.
+             */
+            lifecycle?: components["schemas"]["LifecycleStatus"][] | null;
+            /**
+             * Tags
+             * @default []
+             */
+            tags: string[];
+            /**
+             * License Types
+             * @default []
+             */
+            license_types: components["schemas"]["LicenseType"][];
+            /**
+             * Domains
+             * @description Any of these domains
+             * @default []
+             */
+            domains: string[];
+            /** Maintainer */
+            maintainer?: string | null;
+        };
+        /** SearchLogOut */
+        SearchLogOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** User Id */
+            user_id: string | null;
+            /** Query Text */
+            query_text: string;
+            /** Requirements */
+            requirements: {
+                [key: string]: unknown;
+            }[];
+            /** Filters */
+            filters: {
+                [key: string]: unknown;
+            };
+            /** Results */
+            results: {
+                [key: string]: unknown;
+            }[];
+            /** No Match */
+            no_match: boolean;
+            /** Embedding Model */
+            embedding_model: string | null;
+            /** Duration Ms */
+            duration_ms: number;
+            /** Feedback */
+            feedback: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /**
+         * SearchRequest
+         * @description Give `text` (split into requirements) or a `requirements` list with at least one non-blank item.
+         */
+        SearchRequest: {
+            /** Text */
+            text?: string | null;
+            /** Requirements */
+            requirements?: components["schemas"]["RequirementIn"][] | null;
+            /**
+             * @default {
+             *       "tags": [],
+             *       "license_types": [],
+             *       "domains": []
+             *     }
+             */
+            filters: components["schemas"]["SearchFilters"];
+            /**
+             * Limit
+             * @default 10
+             */
+            limit: number;
+        };
+        /** SearchResponse */
+        SearchResponse: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ok" | "no_match";
+            /** Requirements */
+            requirements: components["schemas"]["ParsedRequirement"][];
+            /** Results */
+            results: components["schemas"]["SearchResult"][];
+            /** Catalog Gaps */
+            catalog_gaps: number[];
+            /**
+             * @description Interfaces between the result apps, and external systems two or more of them share
+             * @default {
+             *       "nodes": [],
+             *       "edges": []
+             *     }
+             */
+            connections: components["schemas"]["Landscape"];
+            /**
+             * Combinations
+             * @default []
+             */
+            combinations: components["schemas"]["Combination"][];
+            thresholds: components["schemas"]["ThresholdsOut"];
+            /** Candidates Considered */
+            candidates_considered: number;
+            /** Duration Ms */
+            duration_ms: number;
+            /** Search Log Id */
+            search_log_id: string | null;
+        };
+        /** SearchResult */
+        SearchResult: {
+            app: components["schemas"]["ResultApp"];
+            /** Final */
+            final: number;
+            /** Coverage */
+            coverage: number;
+            /** Soft */
+            soft: number;
+            /**
+             * Label
+             * @enum {string}
+             */
+            label: "strong" | "partial" | "weak";
+            /** Flags */
+            flags: string[];
+            signals: components["schemas"]["Signals"];
+            /** Evidence */
+            evidence: components["schemas"]["Evidence"][];
+            /**
+             * Recommended
+             * @default true
+             */
+            recommended: boolean;
+        };
+        /** Signals */
+        Signals: {
+            /** Rrf */
+            rrf: number;
+            /** Summary Rank */
+            summary_rank: number | null;
+            /** Capability Rank */
+            capability_rank: number | null;
+            /** Fts Rank */
+            fts_rank: number | null;
+        };
+        /** SimilarApp */
+        SimilarApp: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Short Description */
+            short_description: string;
+            /** Similarity */
+            similarity: number;
+        };
+        /**
+         * TagCategory
+         * @enum {string}
+         */
+        TagCategory: "general" | "tech" | "domain";
+        /** TagCreate */
+        TagCreate: {
+            /** Name */
+            name: string;
+            /** @default general */
+            category: components["schemas"]["TagCategory"];
+        };
+        /** TagOut */
+        TagOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            category: components["schemas"]["TagCategory"];
+            /** App Count */
+            app_count: number;
+        };
+        /** TagUpdate */
+        TagUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Merge Into */
+            merge_into?: string | null;
+        };
+        /** ThresholdsOut */
+        ThresholdsOut: {
+            /** Model */
+            model: string;
+            /** Covered */
+            covered: number;
+            /** Partial */
+            partial: number;
+            /** Nomatch */
+            nomatch: number;
+            /** Min Top Coverage */
+            min_top_coverage: number;
+        };
+        /** UserCreate */
+        UserCreate: {
+            /** Email */
+            email: string;
+            /** Display Name */
+            display_name: string;
+            /** @default viewer */
+            role: components["schemas"]["Role"];
+            /** Password */
+            password: string;
+        };
+        /** UserOut */
+        UserOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Email */
+            email: string;
+            /** Display Name */
+            display_name: string;
+            role: components["schemas"]["Role"];
+            /** Auth Provider */
+            auth_provider: string;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Last Login At */
+            last_login_at: string | null;
+        };
+        /** UserUpdate */
+        UserUpdate: {
+            /** Display Name */
+            display_name?: string | null;
+            role?: components["schemas"]["Role"] | null;
+            /** Is Active */
+            is_active?: boolean | null;
+            /** Password */
+            password?: string | null;
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
+        };
     };
-    /**
-     * AppIn
-     * @description Create/replace payload: omitted fields fall back to defaults (full replace semantics).
-     */
-    AppIn: {
-      /**
-       * Capabilities
-       * @default []
-       */
-      capabilities: components["schemas"]["CapabilityIn"][];
-      /**
-       * Description
-       * @default
-       */
-      description: string;
-      /** Docs Url */
-      docs_url?: string | null;
-      /**
-       * Domains
-       * @default []
-       */
-      domains: string[];
-      /**
-       * Extra
-       * @default {}
-       */
-      extra: {
-        [key: string]: unknown;
-      };
-      /** Homepage Url */
-      homepage_url?: string | null;
-      /** License */
-      license?: string | null;
-      license_type?: components["schemas"]["LicenseType"] | null;
-      /** @default active */
-      lifecycle_status: components["schemas"]["LifecycleStatus"];
-      /**
-       * Links
-       * @default []
-       */
-      links: components["schemas"]["LinkItem"][];
-      /**
-       * Maintainers
-       * @default []
-       */
-      maintainers: components["schemas"]["MaintainerRef"][];
-      /** Name */
-      name: string;
-      /** Repo Url */
-      repo_url?: string | null;
-      /**
-       * Short Description
-       * @default
-       */
-      short_description: string;
-      /** Slug */
-      slug?: string | null;
-      /**
-       * Tags
-       * @default []
-       */
-      tags: string[];
-      /**
-       * Tech Stack
-       * @default []
-       */
-      tech_stack: string[];
-      /** Vendor */
-      vendor?: string | null;
-      /** Version */
-      version?: string | null;
-    };
-    /** AppListItem */
-    AppListItem: {
-      /** Capability Count */
-      capability_count: number;
-      /** Domains */
-      domains: string[];
-      /**
-       * Embedding Status
-       * @enum {string}
-       */
-      embedding_status: "indexed" | "pending";
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      license_type: components["schemas"]["LicenseType"] | null;
-      lifecycle_status: components["schemas"]["LifecycleStatus"];
-      /** Maintainers */
-      maintainers: string[];
-      /** Name */
-      name: string;
-      /** Short Description */
-      short_description: string;
-      /** Slug */
-      slug: string;
-      /** Tags */
-      tags: string[];
-      /** Tech Stack */
-      tech_stack: string[];
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-      /** Vendor */
-      vendor: string | null;
-    };
-    /** AppMaintainerOut */
-    AppMaintainerOut: {
-      /** Email */
-      email: string | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      kind: components["schemas"]["MaintainerKind"];
-      /** Name */
-      name: string;
-      /** Org Unit */
-      org_unit: string | null;
-      role: components["schemas"]["MaintainerRole"];
-      /** Url */
-      url: string | null;
-    };
-    /** AppOut */
-    AppOut: {
-      /** Capabilities */
-      capabilities: components["schemas"]["CapabilityOut"][];
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /** Description */
-      description: string;
-      /** Docs Url */
-      docs_url: string | null;
-      /** Domains */
-      domains: string[];
-      /**
-       * Embedding Status
-       * @enum {string}
-       */
-      embedding_status: "indexed" | "pending";
-      /** Extra */
-      extra: {
-        [key: string]: unknown;
-      };
-      /** Homepage Url */
-      homepage_url: string | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Interfaces
-       * @default []
-       */
-      interfaces: components["schemas"]["InterfaceSummary"][];
-      /** License */
-      license: string | null;
-      license_type: components["schemas"]["LicenseType"] | null;
-      lifecycle_status: components["schemas"]["LifecycleStatus"];
-      /** Links */
-      links: components["schemas"]["LinkItem"][];
-      /** Maintainers */
-      maintainers: components["schemas"]["AppMaintainerOut"][];
-      /** Name */
-      name: string;
-      /** Repo Url */
-      repo_url: string | null;
-      /** Short Description */
-      short_description: string;
-      /** Slug */
-      slug: string;
-      /** Tags */
-      tags: string[];
-      /** Tech Stack */
-      tech_stack: string[];
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-      /** Vendor */
-      vendor: string | null;
-      /** Version */
-      version: string | null;
-    };
-    /** Body_import_file_api_import_post */
-    Body_import_file_api_import_post: {
-      /** File */
-      file: string;
-    };
-    /** CapabilityIn */
-    CapabilityIn: {
-      /** Details */
-      details?: string | null;
-      /** Id */
-      id?: string | null;
-      /** @default capability */
-      kind: components["schemas"]["CapabilityKind"];
-      /** Text */
-      text: string;
-    };
-    /**
-     * CapabilityKind
-     * @enum {string}
-     */
-    CapabilityKind: "capability" | "requirement" | "feature";
-    /** CapabilityOut */
-    CapabilityOut: {
-      /** Details */
-      details: string | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Indexed
-       * @default false
-       */
-      indexed: boolean;
-      kind: components["schemas"]["CapabilityKind"];
-      /** Position */
-      position: number;
-      /** Text */
-      text: string;
-    };
-    /** ChangePasswordRequest */
-    ChangePasswordRequest: {
-      /** Current Password */
-      current_password: string;
-      /** New Password */
-      new_password: string;
-    };
-    /**
-     * Combination
-     * @description Two connected result apps that together cover more requirements than either alone.
-     */
-    Combination: {
-      /**
-       * Apps
-       * @description Slugs of the two apps
-       */
-      apps: string[];
-      /**
-       * Covered
-       * @description Requirement indexes covered by at least one of them
-       */
-      covered: number[];
-      /**
-       * Interface Id
-       * Format: uuid
-       */
-      interface_id: string;
-      /** Interface Name */
-      interface_name: string;
-      interface_status: components["schemas"]["InterfaceStatus"];
-    };
-    /** EmbeddingStatusOut */
-    EmbeddingStatusOut: {
-      /** Apps Indexed */
-      apps_indexed: number;
-      /** Apps Total */
-      apps_total: number;
-      /** Capabilities Indexed */
-      capabilities_indexed: number;
-      /** Capabilities Total */
-      capabilities_total: number;
-      /** Interfaces Indexed */
-      interfaces_indexed: number;
-      /** Interfaces Total */
-      interfaces_total: number;
-      /** Model Error */
-      model_error: string | null;
-      /** Model Id */
-      model_id: string;
-      /** Model Loaded */
-      model_loaded: boolean;
-      /** Pending */
-      pending: number;
-      /** Worker Last Error */
-      worker_last_error: string | null;
-      /** Worker Running */
-      worker_running: boolean;
-    };
-    /** EndpointOut */
-    EndpointOut: {
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Kind
-       * @enum {string}
-       */
-      kind: "app" | "system";
-      lifecycle_status?: components["schemas"]["LifecycleStatus"] | null;
-      /** Name */
-      name: string;
-      /** Slug */
-      slug?: string | null;
-    };
-    /**
-     * EndpointRef
-     * @description One end of an interface: a catalog app by slug or an external system by name.
-     */
-    EndpointRef: {
-      /** App */
-      app?: string | null;
-      /** System */
-      system?: string | null;
-    };
-    /** Evidence */
-    Evidence: {
-      capability?: components["schemas"]["MatchedCapability"] | null;
-      interface?: components["schemas"]["InterfaceSummary"] | null;
-      /**
-       * Keyword Hits
-       * @default []
-       */
-      keyword_hits: string[];
-      /** Req Idx */
-      req_idx: number;
-      /** Score */
-      score: number;
-      /** Similarity */
-      similarity: number;
-      /**
-       * Status
-       * @enum {string}
-       */
-      status: "covered" | "partial" | "gap";
-      /**
-       * Via
-       * @enum {string}
-       */
-      via: "capability" | "interface" | "summary" | "none";
-    };
-    /** ExternalSystemIn */
-    ExternalSystemIn: {
-      /**
-       * Description
-       * @default
-       */
-      description: string;
-      /** Name */
-      name: string;
-      /** Url */
-      url?: string | null;
-      /** Vendor */
-      vendor?: string | null;
-    };
-    /** ExternalSystemOut */
-    ExternalSystemOut: {
-      /** Description */
-      description: string;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** Interface Count */
-      interface_count: number;
-      /** Name */
-      name: string;
-      /** Url */
-      url: string | null;
-      /** Vendor */
-      vendor: string | null;
-    };
-    /** FacetValue */
-    FacetValue: {
-      /** Count */
-      count: number;
-      /** Value */
-      value: string;
-    };
-    /** FeedbackIn */
-    FeedbackIn: {
-      /** Comment */
-      comment?: string | null;
-      /** Expected App Slug */
-      expected_app_slug?: string | null;
-      /**
-       * Rating
-       * @enum {string}
-       */
-      rating: "up" | "down";
-    };
-    /** HTTPValidationError */
-    HTTPValidationError: {
-      /** Detail */
-      detail?: components["schemas"]["ValidationError"][];
-    };
-    /** HealthOut */
-    HealthOut: {
-      /**
-       * Database
-       * @default true
-       */
-      database: boolean;
-      /** Detail */
-      detail?: string | null;
-      /**
-       * Model Loaded
-       * @default false
-       */
-      model_loaded: boolean;
-      /**
-       * Status
-       * @enum {string}
-       */
-      status: "ok" | "starting" | "error";
-    };
-    /** ImportIssue */
-    ImportIssue: {
-      /** Field */
-      field?: string | null;
-      /**
-       * Kind
-       * @default app
-       * @enum {string}
-       */
-      kind: "app" | "system" | "interface";
-      /** Message */
-      message: string;
-      /** Row */
-      row: number;
-      /** Slug */
-      slug?: string | null;
-    };
-    /** ImportItem */
-    ImportItem: {
-      /**
-       * Action
-       * @enum {string}
-       */
-      action: "created" | "updated" | "unchanged" | "skipped" | "invalid";
-      /**
-       * Changed Fields
-       * @default []
-       */
-      changed_fields: string[];
-      /**
-       * Kind
-       * @default app
-       * @enum {string}
-       */
-      kind: "app" | "system" | "interface";
-      /** Row */
-      row: number;
-      /** Slug */
-      slug: string;
-    };
-    /** ImportReport */
-    ImportReport: {
-      /** Committed */
-      committed: boolean;
-      /** Dry Run */
-      dry_run: boolean;
-      /** Errors */
-      errors: components["schemas"]["ImportIssue"][];
-      /** Format */
-      format: string;
-      /** Import Run Id */
-      import_run_id: string | null;
-      /** Items */
-      items: components["schemas"]["ImportItem"][];
-      /**
-       * Mode
-       * @enum {string}
-       */
-      mode: "upsert" | "create_only";
-      stats: components["schemas"]["ImportStats"];
-      /** Warnings */
-      warnings: components["schemas"]["ImportIssue"][];
-    };
-    /** ImportRunOut */
-    ImportRunOut: {
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /** Dry Run */
-      dry_run: boolean;
-      /** Errors */
-      errors: {
-        [key: string]: unknown;
-      }[];
-      /** Filename */
-      filename: string | null;
-      /** Format */
-      format: string;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** Mode */
-      mode: string;
-      /** Stats */
-      stats: {
-        [key: string]: unknown;
-      };
-      /** User Id */
-      user_id: string | null;
-    };
-    /** ImportStats */
-    ImportStats: {
-      /**
-       * Created
-       * @default 0
-       */
-      created: number;
-      /**
-       * Invalid
-       * @default 0
-       */
-      invalid: number;
-      /**
-       * Skipped
-       * @default 0
-       */
-      skipped: number;
-      /**
-       * Total
-       * @default 0
-       */
-      total: number;
-      /**
-       * Unchanged
-       * @default 0
-       */
-      unchanged: number;
-      /**
-       * Updated
-       * @default 0
-       */
-      updated: number;
-    };
-    /**
-     * InterfaceFrequency
-     * @enum {string}
-     */
-    InterfaceFrequency: "realtime" | "batch" | "on_demand";
-    /** InterfaceIn */
-    InterfaceIn: {
-      /**
-       * Bidirectional
-       * @default false
-       */
-      bidirectional: boolean;
-      /**
-       * Data Objects
-       * @default []
-       */
-      data_objects: string[];
-      /**
-       * Description
-       * @default
-       */
-      description: string;
-      frequency?: components["schemas"]["InterfaceFrequency"] | null;
-      from: components["schemas"]["EndpointRef"];
-      /** Name */
-      name: string;
-      /** @default active */
-      status: components["schemas"]["InterfaceStatus"];
-      to: components["schemas"]["EndpointRef"];
-      /** @default other */
-      type: components["schemas"]["InterfaceType"];
-    };
-    /** InterfaceOut */
-    InterfaceOut: {
-      /** Bidirectional */
-      bidirectional: boolean;
-      /** Data Objects */
-      data_objects: string[];
-      /** Description */
-      description: string;
-      frequency: components["schemas"]["InterfaceFrequency"] | null;
-      from: components["schemas"]["EndpointOut"];
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** Indexed */
-      indexed: boolean;
-      /** Name */
-      name: string;
-      status: components["schemas"]["InterfaceStatus"];
-      to: components["schemas"]["EndpointOut"];
-      type: components["schemas"]["InterfaceType"];
-      /**
-       * Updated At
-       * Format: date-time
-       */
-      updated_at: string;
-    };
-    /**
-     * InterfaceStatus
-     * @enum {string}
-     */
-    InterfaceStatus: "planned" | "active" | "deprecated";
-    /**
-     * InterfaceSummary
-     * @description An interface as seen from one app: the other side and the direction of the data flow.
-     */
-    InterfaceSummary: {
-      counterpart: components["schemas"]["EndpointOut"];
-      /** Data Objects */
-      data_objects: string[];
-      /**
-       * Direction
-       * @enum {string}
-       */
-      direction: "outgoing" | "incoming" | "both";
-      frequency: components["schemas"]["InterfaceFrequency"] | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** Name */
-      name: string;
-      status: components["schemas"]["InterfaceStatus"];
-      type: components["schemas"]["InterfaceType"];
-    };
-    /**
-     * InterfaceType
-     * @enum {string}
-     */
-    InterfaceType:
-      "rest_api" | "soap" | "file_transfer" | "database" | "messaging" | "sso" | "ui_embedding" | "other";
-    /** Landscape */
-    Landscape: {
-      /** Edges */
-      edges: components["schemas"]["LandscapeEdge"][];
-      /** Nodes */
-      nodes: components["schemas"]["LandscapeNode"][];
-    };
-    /** LandscapeEdge */
-    LandscapeEdge: {
-      /** Bidirectional */
-      bidirectional: boolean;
-      /** Data Objects */
-      data_objects: string[];
-      frequency: components["schemas"]["InterfaceFrequency"] | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** Name */
-      name: string;
-      /** Source */
-      source: string;
-      status: components["schemas"]["InterfaceStatus"];
-      /** Target */
-      target: string;
-      type: components["schemas"]["InterfaceType"];
-    };
-    /** LandscapeNode */
-    LandscapeNode: {
-      /** Degree */
-      degree: number;
-      /**
-       * Domains
-       * @default []
-       */
-      domains: string[];
-      /** Id */
-      id: string;
-      /**
-       * Kind
-       * @enum {string}
-       */
-      kind: "app" | "system";
-      lifecycle_status?: components["schemas"]["LifecycleStatus"] | null;
-      /** Name */
-      name: string;
-      /** Slug */
-      slug?: string | null;
-    };
-    /**
-     * LicenseType
-     * @enum {string}
-     */
-    LicenseType: "oss" | "commercial" | "internal" | "other";
-    /**
-     * LifecycleStatus
-     * @enum {string}
-     */
-    LifecycleStatus: "idea" | "pilot" | "active" | "deprecated" | "retired";
-    /** LinkItem */
-    LinkItem: {
-      /** Label */
-      label: string;
-      /** Url */
-      url: string;
-    };
-    /** LoginRequest */
-    LoginRequest: {
-      /** Email */
-      email: string;
-      /** Password */
-      password: string;
-    };
-    /** LoginResponse */
-    LoginResponse: {
-      /** Access Token */
-      access_token: string;
-      /**
-       * Token Type
-       * @default bearer
-       */
-      token_type: string;
-      user: components["schemas"]["UserOut"];
-    };
-    /** MaintainerIn */
-    MaintainerIn: {
-      /** Email */
-      email?: string | null;
-      /** @default person */
-      kind: components["schemas"]["MaintainerKind"];
-      /** Name */
-      name: string;
-      /** Org Unit */
-      org_unit?: string | null;
-      /** Url */
-      url?: string | null;
-    };
-    /**
-     * MaintainerKind
-     * @enum {string}
-     */
-    MaintainerKind: "person" | "team";
-    /** MaintainerOut */
-    MaintainerOut: {
-      /** Email */
-      email: string | null;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      kind: components["schemas"]["MaintainerKind"];
-      /** Name */
-      name: string;
-      /** Org Unit */
-      org_unit: string | null;
-      /** Url */
-      url: string | null;
-    };
-    /**
-     * MaintainerRef
-     * @description Reference to a maintainer: by id, else matched by email, else by name (created when missing).
-     */
-    MaintainerRef: {
-      /** Email */
-      email?: string | null;
-      /** Id */
-      id?: string | null;
-      /** @default person */
-      kind: components["schemas"]["MaintainerKind"];
-      /** Name */
-      name?: string | null;
-      /** Org Unit */
-      org_unit?: string | null;
-      /** @default maintainer */
-      role: components["schemas"]["MaintainerRole"];
-    };
-    /**
-     * MaintainerRole
-     * @enum {string}
-     */
-    MaintainerRole: "owner" | "maintainer" | "contact";
-    /** MatchedCapability */
-    MatchedCapability: {
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      kind: components["schemas"]["CapabilityKind"];
-      /** Text */
-      text: string;
-    };
-    /** Page[AppListItem] */
-    Page_AppListItem_: {
-      /** Items */
-      items: components["schemas"]["AppListItem"][];
-      /** Page */
-      page: number;
-      /** Size */
-      size: number;
-      /** Total */
-      total: number;
-    };
-    /** Page[SearchLogOut] */
-    Page_SearchLogOut_: {
-      /** Items */
-      items: components["schemas"]["SearchLogOut"][];
-      /** Page */
-      page: number;
-      /** Size */
-      size: number;
-      /** Total */
-      total: number;
-    };
-    /** ParseRequest */
-    ParseRequest: {
-      /** Text */
-      text: string;
-    };
-    /** ParseResponse */
-    ParseResponse: {
-      /** Requirements */
-      requirements: components["schemas"]["ParsedRequirement"][];
-    };
-    /** ParsedRequirement */
-    ParsedRequirement: {
-      /** Idx */
-      idx: number;
-      /** Priority */
-      priority: ("must" | "should" | "could") | null;
-      /** Text */
-      text: string;
-      /** Weight */
-      weight: number;
-    };
-    /** ReindexRequest */
-    ReindexRequest: {
-      /**
-       * Scope
-       * @default stale
-       * @enum {string}
-       */
-      scope: "stale" | "all";
-    };
-    /** RequirementIn */
-    RequirementIn: {
-      /** Priority */
-      priority?: ("must" | "should" | "could") | null;
-      /** Text */
-      text: string;
-    };
-    /** ResultApp */
-    ResultApp: {
-      /**
-       * Domains
-       * @default []
-       */
-      domains: string[];
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      lifecycle_status: components["schemas"]["LifecycleStatus"];
-      /**
-       * Maintainers
-       * @description Names, owners first
-       * @default []
-       */
-      maintainers: string[];
-      /** Name */
-      name: string;
-      /** Short Description */
-      short_description: string;
-      /** Slug */
-      slug: string;
-      /** Tags */
-      tags: string[];
-      /** Tech Stack */
-      tech_stack: string[];
-      /** Vendor */
-      vendor: string | null;
-    };
-    /**
-     * Role
-     * @enum {string}
-     */
-    Role: "viewer" | "editor" | "admin";
-    /** SearchConfigOut */
-    SearchConfigOut: {
-      /** Capability Atomic Warn Len */
-      capability_atomic_warn_len: number;
-      /** Max Requirements */
-      max_requirements: number;
-      /** Model Id */
-      model_id: string;
-      /** Priority Weights */
-      priority_weights: {
-        [key: string]: number;
-      };
-      thresholds: components["schemas"]["ThresholdsOut"];
-    };
-    /** SearchFilters */
-    SearchFilters: {
-      /**
-       * Domains
-       * @description Any of these domains
-       * @default []
-       */
-      domains: string[];
-      /**
-       * License Types
-       * @default []
-       */
-      license_types: components["schemas"]["LicenseType"][];
-      /**
-       * Lifecycle
-       * @description Allowed lifecycle states; default excludes 'retired'.
-       */
-      lifecycle?: components["schemas"]["LifecycleStatus"][] | null;
-      /** Maintainer */
-      maintainer?: string | null;
-      /**
-       * Tags
-       * @default []
-       */
-      tags: string[];
-    };
-    /** SearchLogOut */
-    SearchLogOut: {
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /** Duration Ms */
-      duration_ms: number;
-      /** Embedding Model */
-      embedding_model: string | null;
-      /** Feedback */
-      feedback: {
-        [key: string]: unknown;
-      } | null;
-      /** Filters */
-      filters: {
-        [key: string]: unknown;
-      };
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** No Match */
-      no_match: boolean;
-      /** Query Text */
-      query_text: string;
-      /** Requirements */
-      requirements: {
-        [key: string]: unknown;
-      }[];
-      /** Results */
-      results: {
-        [key: string]: unknown;
-      }[];
-      /** User Id */
-      user_id: string | null;
-    };
-    /** SearchRequest */
-    SearchRequest: {
-      /**
-       * @default {
-       *       "domains": [],
-       *       "license_types": [],
-       *       "tags": []
-       *     }
-       */
-      filters: components["schemas"]["SearchFilters"];
-      /**
-       * Limit
-       * @default 10
-       */
-      limit: number;
-      /** Requirements */
-      requirements?: components["schemas"]["RequirementIn"][] | null;
-      /** Text */
-      text?: string | null;
-    };
-    /** SearchResponse */
-    SearchResponse: {
-      /** Candidates Considered */
-      candidates_considered: number;
-      /** Catalog Gaps */
-      catalog_gaps: number[];
-      /**
-       * Combinations
-       * @default []
-       */
-      combinations: components["schemas"]["Combination"][];
-      /**
-       * @description Interfaces between the result apps, and external systems two or more of them share
-       * @default {
-       *       "edges": [],
-       *       "nodes": []
-       *     }
-       */
-      connections: components["schemas"]["Landscape"];
-      /** Duration Ms */
-      duration_ms: number;
-      /** Requirements */
-      requirements: components["schemas"]["ParsedRequirement"][];
-      /** Results */
-      results: components["schemas"]["SearchResult"][];
-      /** Search Log Id */
-      search_log_id: string | null;
-      /**
-       * Status
-       * @enum {string}
-       */
-      status: "ok" | "no_match";
-      thresholds: components["schemas"]["ThresholdsOut"];
-    };
-    /** SearchResult */
-    SearchResult: {
-      app: components["schemas"]["ResultApp"];
-      /** Coverage */
-      coverage: number;
-      /** Evidence */
-      evidence: components["schemas"]["Evidence"][];
-      /** Final */
-      final: number;
-      /** Flags */
-      flags: string[];
-      /**
-       * Label
-       * @enum {string}
-       */
-      label: "strong" | "partial" | "weak";
-      /**
-       * Recommended
-       * @default true
-       */
-      recommended: boolean;
-      signals: components["schemas"]["Signals"];
-      /** Soft */
-      soft: number;
-    };
-    /** Signals */
-    Signals: {
-      /** Capability Rank */
-      capability_rank: number | null;
-      /** Fts Rank */
-      fts_rank: number | null;
-      /** Rrf */
-      rrf: number;
-      /** Summary Rank */
-      summary_rank: number | null;
-    };
-    /** SimilarApp */
-    SimilarApp: {
-      /** Name */
-      name: string;
-      /** Short Description */
-      short_description: string;
-      /** Similarity */
-      similarity: number;
-      /** Slug */
-      slug: string;
-    };
-    /**
-     * TagCategory
-     * @enum {string}
-     */
-    TagCategory: "general" | "tech" | "domain";
-    /** TagCreate */
-    TagCreate: {
-      /** @default general */
-      category: components["schemas"]["TagCategory"];
-      /** Name */
-      name: string;
-    };
-    /** TagOut */
-    TagOut: {
-      /** App Count */
-      app_count: number;
-      category: components["schemas"]["TagCategory"];
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** Name */
-      name: string;
-    };
-    /** TagUpdate */
-    TagUpdate: {
-      /** Merge Into */
-      merge_into?: string | null;
-      /** Name */
-      name?: string | null;
-    };
-    /** ThresholdsOut */
-    ThresholdsOut: {
-      /** Covered */
-      covered: number;
-      /** Min Top Coverage */
-      min_top_coverage: number;
-      /** Model */
-      model: string;
-      /** Nomatch */
-      nomatch: number;
-      /** Partial */
-      partial: number;
-    };
-    /** UserCreate */
-    UserCreate: {
-      /** Display Name */
-      display_name: string;
-      /** Email */
-      email: string;
-      /** Password */
-      password: string;
-      /** @default viewer */
-      role: components["schemas"]["Role"];
-    };
-    /** UserOut */
-    UserOut: {
-      /** Auth Provider */
-      auth_provider: string;
-      /**
-       * Created At
-       * Format: date-time
-       */
-      created_at: string;
-      /** Display Name */
-      display_name: string;
-      /** Email */
-      email: string;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /** Is Active */
-      is_active: boolean;
-      /** Last Login At */
-      last_login_at: string | null;
-      role: components["schemas"]["Role"];
-    };
-    /** UserUpdate */
-    UserUpdate: {
-      /** Display Name */
-      display_name?: string | null;
-      /** Is Active */
-      is_active?: boolean | null;
-      /** Password */
-      password?: string | null;
-      role?: components["schemas"]["Role"] | null;
-    };
-    /** ValidationError */
-    ValidationError: {
-      /** Context */
-      ctx?: Record<string, never>;
-      /** Input */
-      input?: unknown;
-      /** Location */
-      loc: (string | number)[];
-      /** Message */
-      msg: string;
-      /** Error Type */
-      type: string;
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  reindex_api_admin_embeddings_reindex_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ReindexRequest"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["EmbeddingStatusOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  embeddings_status_api_admin_embeddings_status_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["EmbeddingStatusOut"];
-        };
-      };
-    };
-  };
-  import_runs_api_admin_import_runs_get: {
-    parameters: {
-      query?: {
-        limit?: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["ImportRunOut"][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  search_logs_api_admin_search_logs_get: {
-    parameters: {
-      query?: {
-        only_feedback?: boolean;
-        only_no_match?: boolean;
-        page?: number;
-        size?: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Page_SearchLogOut_"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  list_apps_api_apps_get: {
-    parameters: {
-      query?: {
-        page?: number;
-        size?: number;
-        q?: string | null;
-        tags?: string[];
-        status?: components["schemas"]["LifecycleStatus"][];
-        license_type?: components["schemas"]["LicenseType"][];
-        /** @description Any of these domains */
-        domain?: string[];
-        maintainer?: string | null;
-        sort?: "name" | "updated" | "relevance";
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Page_AppListItem_"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  create_app_api_apps_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["AppIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["AppOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  app_facets_api_apps_facets_get: {
-    parameters: {
-      query?: {
-        q?: string | null;
-        tags?: string[];
-        status?: components["schemas"]["LifecycleStatus"][];
-        license_type?: components["schemas"]["LicenseType"][];
-        /** @description Any of these domains */
-        domain?: string[];
-        maintainer?: string | null;
-        sort?: "name" | "updated" | "relevance";
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["AppFacets"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  get_app_api_apps__slug__get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        slug: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["AppOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  replace_app_api_apps__slug__put: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        slug: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["AppIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["AppOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  delete_app_api_apps__slug__delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        slug: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  get_similar_api_apps__slug__similar_get: {
-    parameters: {
-      query?: {
-        limit?: number;
-      };
-      header?: never;
-      path: {
-        slug: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["SimilarApp"][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  change_password_api_auth_change_password_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ChangePasswordRequest"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  login_api_auth_login_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["LoginRequest"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["LoginResponse"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  logout_api_auth_logout_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  me_api_auth_me_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["UserOut"];
-        };
-      };
-    };
-  };
-  export_api_export_get: {
-    parameters: {
-      query?: {
-        format?: "json" | "csv";
-        /** @description CSV only: which table to export */
-        kind?: "apps" | "interfaces";
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": unknown;
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  list_systems_api_external_systems_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["ExternalSystemOut"][];
-        };
-      };
-    };
-  };
-  create_system_api_external_systems_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ExternalSystemIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["ExternalSystemOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  update_system_api_external_systems__system_id__put: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        system_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ExternalSystemIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["ExternalSystemOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  delete_system_api_external_systems__system_id__delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        system_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  liveness_api_health_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HealthOut"];
-        };
-      };
-    };
-  };
-  readiness_api_health_ready_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HealthOut"];
-        };
-      };
-    };
-  };
-  import_file_api_import_post: {
-    parameters: {
-      query?: {
-        format?: "auto" | "csv" | "json";
-        mode?: "upsert" | "create_only";
-        dry_run?: boolean;
-        skip_invalid?: boolean;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "multipart/form-data": components["schemas"]["Body_import_file_api_import_post"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["ImportReport"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  interfaces_template_api_import_interfaces_template_csv_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "text/plain": string;
-        };
-      };
-    };
-  };
-  schema_api_import_schema_json_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            [key: string]: unknown;
-          };
-        };
-      };
-    };
-  };
-  template_api_import_template_csv_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "text/plain": string;
-        };
-      };
-    };
-  };
-  list_interfaces_api_interfaces_get: {
-    parameters: {
-      query?: {
-        /** @description Slug of an app at either end */
-        app?: string | null;
-        /** @description Name of an external system at either end */
-        system?: string | null;
-        type?: components["schemas"]["InterfaceType"][];
-        status?: components["schemas"]["InterfaceStatus"][];
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["InterfaceOut"][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  create_interface_api_interfaces_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["InterfaceIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["InterfaceOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  get_interface_api_interfaces__interface_id__get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        interface_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["InterfaceOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  update_interface_api_interfaces__interface_id__put: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        interface_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["InterfaceIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["InterfaceOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  delete_interface_api_interfaces__interface_id__delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        interface_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  get_landscape_api_landscape_get: {
-    parameters: {
-      query?: {
-        domain?: string[];
-        /** @description Default: every state except retired */
-        lifecycle?: components["schemas"]["LifecycleStatus"][];
-        type?: components["schemas"]["InterfaceType"][];
-        status?: components["schemas"]["InterfaceStatus"][];
-        include_systems?: boolean;
-        include_unconnected?: boolean;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Landscape"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  list_maintainers_api_maintainers_get: {
-    parameters: {
-      query?: {
-        q?: string | null;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["MaintainerOut"][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  create_maintainer_api_maintainers_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["MaintainerIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["MaintainerOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  delete_maintainer_api_maintainers__maintainer_id__delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        maintainer_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  update_maintainer_api_maintainers__maintainer_id__patch: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        maintainer_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["MaintainerIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["MaintainerOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  enums_api_meta_enums_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            [key: string]: string[];
-          };
-        };
-      };
-    };
-  };
-  search_config_api_meta_search_config_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["SearchConfigOut"];
-        };
-      };
-    };
-  };
-  search_api_search_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["SearchRequest"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["SearchResponse"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  parse_api_search_parse_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ParseRequest"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["ParseResponse"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  feedback_api_search__log_id__feedback_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        log_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["FeedbackIn"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  list_tags_api_tags_get: {
-    parameters: {
-      query?: {
-        category?: components["schemas"]["TagCategory"] | null;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["TagOut"][];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  create_tag_api_tags_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TagCreate"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["TagOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  delete_tag_api_tags__tag_id__delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        tag_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  update_tag_api_tags__tag_id__patch: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        tag_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TagUpdate"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["TagOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  list_users_api_users_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["UserOut"][];
-        };
-      };
-    };
-  };
-  create_user_api_users_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["UserCreate"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["UserOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
-  update_user_api_users__user_id__patch: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        user_id: string;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["UserUpdate"];
-      };
-    };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["UserOut"];
-        };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["HTTPValidationError"];
-        };
-      };
-    };
-  };
+    liveness: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HealthOut"];
+                };
+            };
+        };
+    };
+    readiness: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HealthOut"];
+                };
+            };
+            /** @description Starting up, or not ready. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HealthOut"];
+                };
+            };
+        };
+    };
+    login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResponse"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    current_user: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    change_password: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangePasswordRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_users: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserOut"][];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    create_user: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_user: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_apps: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                q?: string | null;
+                tags?: string[];
+                status?: components["schemas"]["LifecycleStatus"][];
+                license_type?: components["schemas"]["LicenseType"][];
+                /** @description Any of these domains */
+                domain?: string[];
+                maintainer?: string | null;
+                sort?: "name" | "updated" | "relevance";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_AppListItem_"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_app: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AppIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_app_facets: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                tags?: string[];
+                status?: components["schemas"]["LifecycleStatus"][];
+                license_type?: components["schemas"]["LicenseType"][];
+                /** @description Any of these domains */
+                domain?: string[];
+                maintainer?: string | null;
+                sort?: "name" | "updated" | "relevance";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppFacets"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_app: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_app: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AppIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_app: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_similar_apps: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SimilarApp"][];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_interfaces: {
+        parameters: {
+            query?: {
+                /** @description Slug of an app at either end */
+                app?: string | null;
+                /** @description Name of an external system at either end */
+                system?: string | null;
+                type?: components["schemas"]["InterfaceType"][];
+                status?: components["schemas"]["InterfaceStatus"][];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InterfaceOut"][];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_interface: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InterfaceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InterfaceOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_interface: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                interface_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InterfaceOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_interface: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                interface_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InterfaceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InterfaceOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_interface: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                interface_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_external_systems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExternalSystemOut"][];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    create_external_system: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExternalSystemIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExternalSystemOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_external_system: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                system_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExternalSystemIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExternalSystemOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_external_system: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                system_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_landscape: {
+        parameters: {
+            query?: {
+                domain?: string[];
+                /** @description Default: every state except retired */
+                lifecycle?: components["schemas"]["LifecycleStatus"][];
+                type?: components["schemas"]["InterfaceType"][];
+                status?: components["schemas"]["InterfaceStatus"][];
+                include_systems?: boolean;
+                include_unconnected?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Landscape"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_tags: {
+        parameters: {
+            query?: {
+                category?: components["schemas"]["TagCategory"] | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagOut"][];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_tag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TagCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_tag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tag_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_tag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tag_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TagUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_maintainers: {
+        parameters: {
+            query?: {
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaintainerOut"][];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_maintainer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MaintainerIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaintainerOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_maintainer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                maintainer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_maintainer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                maintainer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MaintainerIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaintainerOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Conflicts with existing data; `detail` says what. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    parse_search_text: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ParseRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ParseResponse"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_apps: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SearchRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchResponse"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description The embedding model is still loading or failed to load. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    rate_search: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                log_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedbackIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description No such resource. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_file: {
+        parameters: {
+            query?: {
+                format?: "auto" | "csv" | "json";
+                mode?: "upsert" | "create_only";
+                dry_run?: boolean;
+                skip_invalid?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_import_file"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportReport"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The upload exceeds the configured size limit. */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_apps_template: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A CSV file. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv": string;
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    get_interfaces_template: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A CSV file. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv": string;
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    get_import_schema: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    export_catalog: {
+        parameters: {
+            query?: {
+                format?: "json" | "csv";
+                /** @description CSV only: which table to export */
+                kind?: "apps" | "interfaces";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A JSON document in the import format, or a CSV file of apps or interfaces. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportFile"];
+                    "text/csv": string;
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_embedding_status: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmbeddingStatusOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    reindex_embeddings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReindexRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmbeddingStatusOut"];
+                };
+            };
+            /** @description The body could not be parsed, or the request breaks a rule; `detail` says which. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_search_logs: {
+        parameters: {
+            query?: {
+                only_feedback?: boolean;
+                only_no_match?: boolean;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_SearchLogOut_"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_import_runs: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportRunOut"][];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description The role is too low, or a cookie-authenticated write lacks the X-Requested-With header. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_enums: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string[];
+                    };
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
+    get_search_config: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchConfigOut"];
+                };
+            };
+            /** @description Not signed in, or the session or token has expired. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorOut"];
+                };
+            };
+        };
+    };
 }

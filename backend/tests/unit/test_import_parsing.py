@@ -1,4 +1,5 @@
 import codecs
+import csv
 import json
 
 import pytest
@@ -6,7 +7,7 @@ import pytest
 from appfit.services.importer.aliases import normalize_aliases
 from appfit.services.importer.parse_csv import parse_csv, parse_link, parse_maintainer
 from appfit.services.importer.parse_json import parse_json
-from appfit.services.importer.rows import ImportFormatError
+from appfit.services.importer.rows import ImportFormatError, csv_safe, csv_unescape
 
 
 def test_semicolon_csv_in_cp1252_is_detected() -> None:
@@ -73,6 +74,26 @@ def test_parse_maintainer(cell: str, expected: dict[str, str]) -> None:
 def test_parse_link() -> None:
     assert parse_link("Wiki=https://wiki.x/a") == {"label": "Wiki", "url": "https://wiki.x/a"}
     assert parse_link("https://www.example.com/docs") == {"label": "example.com", "url": "https://www.example.com/docs"}
+    # "=" inside the URL or the label must not move the split.
+    assert parse_link("https://wiki.x/page?id=42") == {"label": "wiki.x", "url": "https://wiki.x/page?id=42"}
+    assert parse_link("a=b=https://x.de/?q=1") == {"label": "a=b", "url": "https://x.de/?q=1"}
+    assert parse_link("Wiki=wiki.x") == {"label": "Wiki", "url": "wiki.x"}
+
+
+def test_row_numbers_are_file_lines_after_multi_line_cells() -> None:
+    rows, _ = parse_csv(b'name,description\nA,"line one\nline two\nline three"\nB,x\n')
+    assert [r.number for r in rows] == [2, 5]
+    iface_rows, _ = parse_csv(b'from,to,name,description\na,b,X,"one\ntwo"\na,b,Y,\n')
+    assert [r.number for r in iface_rows] == [2, 4]
+
+
+@pytest.mark.parametrize(
+    "value", ["=HYPERLINK(1)", "+1", "-x", "@SUM(A1)", "\tx", "'=x", "''-x", "'plain", "plain", ""]
+)
+def test_formula_cells_are_escaped_and_restored(value: str) -> None:
+    escaped = csv_safe(value)
+    assert not escaped.startswith(("=", "+", "-", "@", "\t"))
+    assert csv_unescape(escaped) == value
 
 
 def test_json_accepts_document_and_bare_list() -> None:
@@ -96,3 +117,11 @@ def test_german_aliases() -> None:
     assert data["lifecycle_status"] == "deprecated"
     assert data["license_type"] == "oss"
     assert data["maintainers"][0]["role"] == "contact"
+
+
+def test_carriage_return_line_ends_and_broken_csv() -> None:
+    rows, _ = parse_csv(b"name\rA\rB\r")
+    assert [r.data["name"] for r in rows] == ["A", "B"]
+    too_long = b"name\n" + b"x" * (csv.field_size_limit() + 1) + b"\n"
+    with pytest.raises(ImportFormatError, match="Invalid CSV"):
+        parse_csv(too_long)

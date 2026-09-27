@@ -44,6 +44,11 @@ def _stale_iface_filter(model_id: str):
     return or_(Interface.embedded_at.is_(None), Interface.embedding_model.is_distinct_from(model_id))
 
 
+def _keep_updated_at(row: App | Interface) -> None:
+    """Embedding is not an edit: SET updated_at = updated_at stops onupdate from bumping it."""
+    row.updated_at = type(row).updated_at
+
+
 def embed_stale_apps(db: Session, embedder: Embedder, batch_size: int) -> int:
     apps = db.scalars(
         select(App)
@@ -63,6 +68,7 @@ def embed_stale_apps(db: Session, embedder: Embedder, batch_size: int) -> int:
         app.summary_hash = content_hash(doc)
         app.embedding_model = embedder.model_id
         app.embedded_at = now
+        _keep_updated_at(app)
     return len(apps)
 
 
@@ -109,6 +115,7 @@ def embed_stale_interfaces(db: Session, embedder: Embedder, batch_size: int) -> 
         iface.content_hash = content_hash(embedded_texts(iface))
         iface.embedding_model = embedder.model_id
         iface.embedded_at = now
+        _keep_updated_at(iface)
     return len(ifaces)
 
 
@@ -125,6 +132,6 @@ def embedding_counts(db: Session, model_id: str) -> EmbeddingCounts:
 
 
 def mark_all_stale(db: Session) -> None:
-    db.execute(update(App).values(embedded_at=None))
+    db.execute(update(App).values(embedded_at=None, updated_at=App.updated_at))
     db.execute(update(AppCapability).values(embedded_at=None))
-    db.execute(update(Interface).values(embedded_at=None))
+    db.execute(update(Interface).values(embedded_at=None, updated_at=Interface.updated_at))

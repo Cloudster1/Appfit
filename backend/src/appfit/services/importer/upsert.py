@@ -38,6 +38,12 @@ def _validation_issues(row: RawRow, exc: ValidationError, slug: str | None) -> l
 
 
 def _merge_row_extras(app: Any, row: RawRow, data: dict[str, Any]) -> None:
+    if row.keep_capability_details and app is not None and "capabilities" in data:
+        details = {(c.kind, c.text.lower()): c.details for c in app.capabilities if c.details}
+        data["capabilities"] = [
+            c if c.details else c.model_copy(update={"details": details.get((c.kind, c.text.lower()))})
+            for c in data["capabilities"]
+        ]
     if row.keep_capability_kinds and app is not None and "capabilities" in data:
         kept = [
             CapabilityIn(id=c.id, kind=c.kind, text=c.text, details=c.details)

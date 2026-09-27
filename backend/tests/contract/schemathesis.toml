@@ -1,0 +1,27 @@
+# Settings for the property-based API tests in test_fuzz.py.
+
+[generation]
+# FastAPI ignores unknown query parameters, as most APIs do; do not report that as a failure.
+allow-extra-parameters = false
+# The API rejects NUL characters anywhere with 422 (PostgreSQL cannot store them); test_text_guard.py covers that.
+allow-x00 = false
+
+[[operations]]
+# PUT and DELETE /api/apps/facets are served by /api/apps/{slug} ("facets" is a reserved slug, so they answer 404).
+include-path = "/api/apps/facets"
+checks.unsupported_method.enabled = false
+
+[[operations]]
+# Answers depend on data the generator cannot know: the current password, the file content, ids of other
+# records (maintainers, apps), or cross-field rules the schema only describes in words (either text or
+# requirements; either app or system; an app cannot have an interface to itself).
+include-name = [
+    "POST /api/auth/change-password",
+    "POST /api/import",
+    "POST /api/apps",
+    "PUT /api/apps/{slug}",
+    "POST /api/interfaces",
+    "POST /api/search",
+    "PUT /api/interfaces/{interface_id}",
+]
+checks.positive_data_acceptance.enabled = false

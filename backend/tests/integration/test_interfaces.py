@@ -276,3 +276,46 @@ def test_interfaces_csv_template_imports_cleanly(client: TestClient, auth: Auth)
     template = client.get("/api/import/interfaces-template.csv", headers=ed).content
     report = post_import(client, ed, template, "template.csv")
     assert report["errors"] == [] and report["stats"]["created"] == 2
+
+
+def test_renaming_an_app_refreshes_its_neighbours_keyword_search(client: TestClient, auth: Auth) -> None:
+    _apps(client, auth, "Belegfix", "Legacy CRM")
+    ed = auth(Role.editor)
+    create_iface(client, ed, iface_payload("belegfix", "legacy-crm", "Kundenstamm"))
+    client.put("/api/apps/legacy-crm", json=app_payload("SalesHub"), headers=ed)
+
+    def found(q: str) -> list[str]:
+        return [i["slug"] for i in client.get("/api/apps", params={"q": q}, headers=ed).json()["items"]]
+
+    assert "belegfix" in found("SalesHub")
+    assert "belegfix" not in found("Legacy")
+
+
+def test_an_app_and_a_system_with_the_same_name_are_distinct_import_endpoints(client: TestClient, auth: Auth) -> None:
+    _apps(client, auth, "DATEV", "HR")
+    content = b"from,to,name,type\ndatev,hr,Export,rest_api\nsystem:DATEV,hr,Export,rest_api\n"
+    report = post_import(client, auth(Role.editor), content, "i.csv", dry_run=False)
+    assert report["errors"] == [] and report["stats"]["created"] == 2
+
+
+def test_embedding_and_reindex_keep_updated_at(
+    client: TestClient, auth: Auth, db: Session, run_worker: Callable[[], int]
+) -> None:
+    _apps(client, auth, "Belegfix")
+    ed = auth(Role.editor)
+    iface = create_iface(client, ed, iface_payload("belegfix", "system:SAP", "Export"))
+    # now() is fixed within the test transaction, so backdate the rows to make a bump visible.
+    old = "2020-01-01T00:00:00Z"
+    for table in ("apps", "interfaces"):
+        db.execute(text(f"UPDATE {table} SET updated_at = :old"), {"old": old})
+    db.commit()
+
+    run_worker()
+    resp = client.post("/api/admin/embeddings/reindex", json={"scope": "all"}, headers=auth(Role.admin))
+    assert resp.status_code == HTTP_OK, resp.text
+    run_worker()
+
+    app_after = client.get("/api/apps/belegfix", headers=ed).json()
+    iface_after = client.get(f"/api/interfaces/{iface['id']}", headers=ed).json()
+    assert app_after["embedding_status"] == "indexed" and iface_after["indexed"] is True
+    assert {app_after["updated_at"][:10], iface_after["updated_at"][:10]} == {"2020-01-01"}

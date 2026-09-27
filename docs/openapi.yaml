@@ -1,0 +1,4819 @@
+# Generated from the FastAPI app by `make gen-api`; do not edit by hand.
+openapi: 3.1.0
+info:
+  title: Appfit API
+  description: |
+    Appfit is an application catalog with explainable matching of requirements to apps.
+
+    **Authentication.** `POST /api/auth/login` sets an HttpOnly session cookie and also returns the same token
+    for use as `Authorization: Bearer <token>`.
+    Cookie-authenticated writes (POST, PUT, PATCH, DELETE) must send the `X-Requested-With` header,
+    bearer clients need not.
+
+    **Roles.** `viewer` < `editor` < `admin`; each operation names its minimum role in `x-required-role`.
+
+    **Errors.** Error bodies are `{"detail": "..."}`; request validation errors (422) list the offending fields.
+    Text anywhere in a request (path, query, JSON body) must not contain NUL characters or lone UTF-16 surrogates,
+    which the database cannot store; such requests get 422.
+  version: 0.1.0
+paths:
+  /api/health:
+    get:
+      tags:
+      - health
+      summary: Liveness
+      description: The process is up; does not check dependencies.
+      operationId: liveness
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthOut'
+  /api/health/ready:
+    get:
+      tags:
+      - health
+      summary: Readiness
+      description: 200 once the database answers and the embedding model is loaded, else 503 with the reason.
+      operationId: readiness
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthOut'
+        '503':
+          description: Starting up, or not ready.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthOut'
+  /api/auth/login:
+    post:
+      tags:
+      - auth
+      summary: Login
+      description: Sign in with email and password; sets the session cookie and returns the token for bearer use.
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /api/auth/logout:
+    post:
+      tags:
+      - auth
+      summary: Logout
+      description: Clear the session cookie.
+      operationId: logout
+      responses:
+        '204':
+          description: Successful Response
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+  /api/auth/me:
+    get:
+      tags:
+      - auth
+      summary: Current User
+      description: The signed-in user.
+      operationId: current_user
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/auth/change-password:
+    post:
+      tags:
+      - auth
+      summary: Change Password
+      description: Change the signed-in user's password; the current one must be given.
+      operationId: change_password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/users:
+    get:
+      tags:
+      - users
+      summary: List Users
+      description: All user accounts.
+      operationId: list_users
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserOut'
+                type: array
+                title: Response List Users
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+    post:
+      tags:
+      - users
+      summary: Create User
+      description: Create a local account with a role.
+      operationId: create_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+  /api/users/{user_id}:
+    patch:
+      tags:
+      - users
+      summary: Update User
+      description: Change name, role, active flag or password; admins cannot demote or deactivate themselves.
+      operationId: update_user
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: User Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+  /api/apps:
+    get:
+      tags:
+      - apps
+      summary: List Apps
+      description: Catalog page, filtered by keyword, tags, lifecycle, licence, domain and maintainer.
+      operationId: list_apps
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 1000000
+          minimum: 1
+          default: 1
+          title: Page
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 200
+          minimum: 1
+          default: 25
+          title: Size
+      - name: q
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Q
+      - name: tags
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+          title: Tags
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/LifecycleStatus'
+          default: []
+          title: Status
+      - name: license_type
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseType'
+          default: []
+          title: License Type
+      - name: domain
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          description: Any of these domains
+          default: []
+          title: Domain
+        description: Any of these domains
+      - name: maintainer
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Maintainer
+      - name: sort
+        in: query
+        required: false
+        schema:
+          enum:
+          - name
+          - updated
+          - relevance
+          type: string
+          default: name
+          title: Sort
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_AppListItem_'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+    post:
+      tags:
+      - apps
+      summary: Create App
+      description: Create an app; the slug is derived from the name unless given. Indexing runs in the background.
+      operationId: create_app
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppIn'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/apps/facets:
+    get:
+      tags:
+      - apps
+      summary: Get App Facets
+      description: Counts per lifecycle status, licence type and domain for the same filters as the list.
+      operationId: get_app_facets
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Q
+      - name: tags
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+          title: Tags
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/LifecycleStatus'
+          default: []
+          title: Status
+      - name: license_type
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseType'
+          default: []
+          title: License Type
+      - name: domain
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          description: Any of these domains
+          default: []
+          title: Domain
+        description: Any of these domains
+      - name: maintainer
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Maintainer
+      - name: sort
+        in: query
+        required: false
+        schema:
+          enum:
+          - name
+          - updated
+          - relevance
+          type: string
+          default: name
+          title: Sort
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppFacets'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/apps/{slug}:
+    get:
+      tags:
+      - apps
+      summary: Get App
+      description: One app with capabilities, tags, maintainers and interfaces.
+      operationId: get_app
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Slug
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+    put:
+      tags:
+      - apps
+      summary: Replace App
+      description: Replace all fields of an app; collections given replace the current ones.
+      operationId: replace_app
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Slug
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+    delete:
+      tags:
+      - apps
+      summary: Delete App
+      description: Delete an app with its capabilities and interfaces.
+      operationId: delete_app
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Slug
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+  /api/apps/{slug}/similar:
+    get:
+      tags:
+      - apps
+      summary: List Similar Apps
+      description: Apps whose summaries are closest to this one's.
+      operationId: list_similar_apps
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Slug
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 200
+          minimum: 1
+          default: 5
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SimilarApp'
+                title: Response List Similar Apps
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/interfaces:
+    get:
+      tags:
+      - interfaces
+      summary: List Interfaces
+      description: Interfaces, optionally only those touching one app or external system.
+      operationId: list_interfaces
+      parameters:
+      - name: app
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Slug of an app at either end
+          title: App
+        description: Slug of an app at either end
+      - name: system
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Name of an external system at either end
+          title: System
+        description: Name of an external system at either end
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceType'
+          default: []
+          title: Type
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceStatus'
+          default: []
+          title: Status
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InterfaceOut'
+                title: Response List Interfaces
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+    post:
+      tags:
+      - interfaces
+      summary: Create Interface
+      description: Document an interface; an external system named as an endpoint is created when new.
+      operationId: create_interface
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterfaceIn'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterfaceOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/interfaces/{interface_id}:
+    get:
+      tags:
+      - interfaces
+      summary: Get Interface
+      description: One interface with both endpoints.
+      operationId: get_interface
+      parameters:
+      - name: interface_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Interface Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterfaceOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+    put:
+      tags:
+      - interfaces
+      summary: Update Interface
+      description: Replace all fields of an interface.
+      operationId: update_interface
+      parameters:
+      - name: interface_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Interface Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterfaceIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterfaceOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+    delete:
+      tags:
+      - interfaces
+      summary: Delete Interface
+      description: Delete an interface.
+      operationId: delete_interface
+      parameters:
+      - name: interface_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Interface Id
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/external-systems:
+    get:
+      tags:
+      - interfaces
+      summary: List External Systems
+      description: External systems with the number of interfaces using each.
+      operationId: list_external_systems
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ExternalSystemOut'
+                type: array
+                title: Response List External Systems
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+    post:
+      tags:
+      - interfaces
+      summary: Create External System
+      description: Register an external system (outside the catalog).
+      operationId: create_external_system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalSystemIn'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalSystemOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/external-systems/{system_id}:
+    put:
+      tags:
+      - interfaces
+      summary: Update External System
+      description: Rename or describe an external system; interface texts are re-indexed.
+      operationId: update_external_system
+      parameters:
+      - name: system_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: System Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalSystemIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalSystemOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+    delete:
+      tags:
+      - interfaces
+      summary: Delete External System
+      description: Delete an external system that no interface uses.
+      operationId: delete_external_system
+      parameters:
+      - name: system_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: System Id
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+  /api/landscape:
+    get:
+      tags:
+      - interfaces
+      summary: Get Landscape
+      description: Nodes (apps, external systems) and edges (interfaces) for the landscape graph.
+      operationId: get_landscape
+      parameters:
+      - name: domain
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          default: []
+          title: Domain
+      - name: lifecycle
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/LifecycleStatus'
+          description: 'Default: every state except retired'
+          default: []
+          title: Lifecycle
+        description: 'Default: every state except retired'
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceType'
+          default: []
+          title: Type
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceStatus'
+          default: []
+          title: Status
+      - name: include_systems
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+          title: Include Systems
+      - name: include_unconnected
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+          title: Include Unconnected
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Landscape'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/tags:
+    get:
+      tags:
+      - tags
+      summary: List Tags
+      description: Tags with the number of apps using each.
+      operationId: list_tags
+      parameters:
+      - name: category
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/TagCategory'
+          - type: 'null'
+          title: Category
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagOut'
+                title: Response List Tags
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+    post:
+      tags:
+      - tags
+      summary: Create Tag
+      description: Create a tag, or return the existing one with that name and category.
+      operationId: create_tag
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/tags/{tag_id}:
+    patch:
+      tags:
+      - tags
+      summary: Update Tag
+      description: Rename a tag, or merge it into another tag of any category (apps are re-indexed).
+      operationId: update_tag
+      parameters:
+      - name: tag_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Tag Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TagUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+    delete:
+      tags:
+      - tags
+      summary: Delete Tag
+      description: Remove a tag from all apps and delete it.
+      operationId: delete_tag
+      parameters:
+      - name: tag_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Tag Id
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/maintainers:
+    get:
+      tags:
+      - maintainers
+      summary: List Maintainers
+      description: People and teams, optionally filtered by name or email.
+      operationId: list_maintainers
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Q
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MaintainerOut'
+                title: Response List Maintainers
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+    post:
+      tags:
+      - maintainers
+      summary: Create Maintainer
+      description: Create a person or team.
+      operationId: create_maintainer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaintainerIn'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/maintainers/{maintainer_id}:
+    patch:
+      tags:
+      - maintainers
+      summary: Update Maintainer
+      description: Change a person or team.
+      operationId: update_maintainer
+      parameters:
+      - name: maintainer_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Maintainer Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaintainerIn'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '409':
+          description: Conflicts with existing data; `detail` says what.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+    delete:
+      tags:
+      - maintainers
+      summary: Delete Maintainer
+      description: Delete a person or team and their app assignments.
+      operationId: delete_maintainer
+      parameters:
+      - name: maintainer_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Maintainer Id
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/search/parse:
+    post:
+      tags:
+      - search
+      summary: Parse Search Text
+      description: Split free text into requirements with priorities, as the search would.
+      operationId: parse_search_text
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParseRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParseResponse'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/search:
+    post:
+      tags:
+      - search
+      summary: Search Apps
+      description: Rank apps against requirements with per-requirement evidence, gaps and connections.
+      operationId: search_apps
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '503':
+          description: The embedding model is still loading or failed to load.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/search/{log_id}/feedback:
+    post:
+      tags:
+      - search
+      summary: Rate Search
+      description: Rate a search result list, optionally naming the app that was expected.
+      operationId: rate_search
+      parameters:
+      - name: log_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Log Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedbackIn'
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '404':
+          description: No such resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/import:
+    post:
+      tags:
+      - import
+      summary: Import File
+      description: Import apps, external systems and interfaces from CSV or JSON; a dry run reports without saving.
+      operationId: import_file
+      parameters:
+      - name: format
+        in: query
+        required: false
+        schema:
+          enum:
+          - auto
+          - csv
+          - json
+          type: string
+          default: auto
+          title: Format
+      - name: mode
+        in: query
+        required: false
+        schema:
+          enum:
+          - upsert
+          - create_only
+          type: string
+          default: upsert
+          title: Mode
+      - name: dry_run
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+          title: Dry Run
+      - name: skip_invalid
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+          title: Skip Invalid
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_import_file'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportReport'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '413':
+          description: The upload exceeds the configured size limit.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/import/template.csv:
+    get:
+      tags:
+      - import
+      summary: Get Apps Template
+      description: CSV template for apps with one example row.
+      operationId: get_apps_template
+      responses:
+        '200':
+          description: A CSV file.
+          content:
+            text/csv:
+              schema:
+                type: string
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/import/interfaces-template.csv:
+    get:
+      tags:
+      - import
+      summary: Get Interfaces Template
+      description: CSV template for interfaces with example rows.
+      operationId: get_interfaces_template
+      responses:
+        '200':
+          description: A CSV file.
+          content:
+            text/csv:
+              schema:
+                type: string
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/import/schema.json:
+    get:
+      tags:
+      - import
+      summary: Get Import Schema
+      description: JSON Schema of the JSON import format.
+      operationId: get_import_schema
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Get Import Schema
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/export:
+    get:
+      tags:
+      - import
+      summary: Export Catalog
+      description: The whole catalog as JSON (import format) or as CSV of apps or interfaces.
+      operationId: export_catalog
+      parameters:
+      - name: format
+        in: query
+        required: false
+        schema:
+          enum:
+          - json
+          - csv
+          type: string
+          default: json
+          title: Format
+      - name: kind
+        in: query
+        required: false
+        schema:
+          enum:
+          - apps
+          - interfaces
+          type: string
+          description: 'CSV only: which table to export'
+          default: apps
+          title: Kind
+        description: 'CSV only: which table to export'
+      responses:
+        '200':
+          description: A JSON document in the import format, or a CSV file of apps or interfaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportFile'
+            text/csv:
+              schema:
+                type: string
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: editor
+  /api/admin/embeddings/status:
+    get:
+      tags:
+      - admin
+      summary: Get Embedding Status
+      description: Model state and how many apps, capabilities and interfaces are indexed.
+      operationId: get_embedding_status
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingStatusOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+  /api/admin/embeddings/reindex:
+    post:
+      tags:
+      - admin
+      summary: Reindex Embeddings
+      description: Wake the indexer; scope 'all' marks everything stale first (e.g. after a model change).
+      operationId: reindex_embeddings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReindexRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingStatusOut'
+        '400':
+          description: The body could not be parsed, or the request breaks a rule; `detail` says which.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+  /api/admin/search-logs:
+    get:
+      tags:
+      - admin
+      summary: List Search Logs
+      description: Past searches with results and feedback, newest first.
+      operationId: list_search_logs
+      parameters:
+      - name: only_feedback
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+          title: Only Feedback
+      - name: only_no_match
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+          title: Only No Match
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 1000000
+          minimum: 1
+          default: 1
+          title: Page
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 200
+          minimum: 1
+          default: 25
+          title: Size
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page_SearchLogOut_'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+  /api/admin/import-runs:
+    get:
+      tags:
+      - admin
+      summary: List Import Runs
+      description: Past imports with their reports, newest first.
+      operationId: list_import_runs
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 200
+          minimum: 1
+          default: 25
+          title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImportRunOut'
+                title: Response List Import Runs
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '403':
+          description: The role is too low, or a cookie-authenticated write lacks the X-Requested-With header.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: admin
+  /api/meta/enums:
+    get:
+      tags:
+      - meta
+      summary: List Enums
+      description: Allowed values of every enum in the API.
+      operationId: list_enums
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  items:
+                    type: string
+                  type: array
+                type: object
+                title: Response List Enums
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+  /api/meta/search-config:
+    get:
+      tags:
+      - meta
+      summary: Get Search Config
+      description: Active model, score thresholds and requirement limits for clients.
+      operationId: get_search_config
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchConfigOut'
+        '401':
+          description: Not signed in, or the session or token has expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOut'
+      security:
+      - cookieAuth: []
+      - bearerAuth: []
+      x-required-role: viewer
+components:
+  schemas:
+    AppFacets:
+      properties:
+        lifecycle:
+          items:
+            $ref: '#/components/schemas/FacetValue'
+          type: array
+          title: Lifecycle
+        license_type:
+          items:
+            $ref: '#/components/schemas/FacetValue'
+          type: array
+          title: License Type
+        domain:
+          items:
+            $ref: '#/components/schemas/FacetValue'
+          type: array
+          title: Domain
+      type: object
+      required:
+      - lifecycle
+      - license_type
+      - domain
+      title: AppFacets
+    AppFields:
+      properties:
+        slug:
+          anyOf:
+          - not:
+              enum:
+              - facets
+            type: string
+            maxLength: 120
+            minLength: 1
+            pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          - type: 'null'
+          title: Slug
+        name:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          - type: 'null'
+          title: Name
+        short_description:
+          anyOf:
+          - type: string
+            maxLength: 300
+          - type: 'null'
+          title: Short Description
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        lifecycle_status:
+          anyOf:
+          - $ref: '#/components/schemas/LifecycleStatus'
+          - type: 'null'
+        license:
+          anyOf:
+          - type: string
+            maxLength: 120
+          - type: 'null'
+          title: License
+        license_type:
+          anyOf:
+          - $ref: '#/components/schemas/LicenseType'
+          - type: 'null'
+        vendor:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          - type: 'null'
+          title: Vendor
+        version:
+          anyOf:
+          - type: string
+            maxLength: 120
+          - type: 'null'
+          title: Version
+        homepage_url:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Homepage Url
+        repo_url:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Repo Url
+        docs_url:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Docs Url
+        links:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/LinkItem'
+            type: array
+          - type: 'null'
+          title: Links
+        extra:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Extra
+        tags:
+          anyOf:
+          - items:
+              type: string
+              maxLength: 120
+              minLength: 1
+              pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+            type: array
+          - type: 'null'
+          title: Tags
+        tech_stack:
+          anyOf:
+          - items:
+              type: string
+              maxLength: 120
+              minLength: 1
+              pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+            type: array
+          - type: 'null'
+          title: Tech Stack
+        domains:
+          anyOf:
+          - items:
+              type: string
+              maxLength: 120
+              minLength: 1
+              pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+            type: array
+          - type: 'null'
+          title: Domains
+        maintainers:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/MaintainerRef'
+            type: array
+          - type: 'null'
+          title: Maintainers
+        capabilities:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CapabilityIn'
+            type: array
+          - type: 'null'
+          title: Capabilities
+      type: object
+      title: AppFields
+      description: All editable app fields; `None` means "not given" in partial updates.
+    AppIn:
+      properties:
+        slug:
+          anyOf:
+          - not:
+              enum:
+              - facets
+            type: string
+            maxLength: 120
+            minLength: 1
+            pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          - type: 'null'
+          title: Slug
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+          pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          title: Name
+        short_description:
+          type: string
+          maxLength: 300
+          title: Short Description
+          default: ''
+        description:
+          type: string
+          title: Description
+          default: ''
+        lifecycle_status:
+          $ref: '#/components/schemas/LifecycleStatus'
+          default: active
+        license:
+          anyOf:
+          - type: string
+            maxLength: 120
+          - type: 'null'
+          title: License
+        license_type:
+          anyOf:
+          - $ref: '#/components/schemas/LicenseType'
+          - type: 'null'
+        vendor:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          - type: 'null'
+          title: Vendor
+        version:
+          anyOf:
+          - type: string
+            maxLength: 120
+          - type: 'null'
+          title: Version
+        homepage_url:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Homepage Url
+        repo_url:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Repo Url
+        docs_url:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Docs Url
+        links:
+          items:
+            $ref: '#/components/schemas/LinkItem'
+          type: array
+          title: Links
+          default: []
+        extra:
+          additionalProperties: true
+          type: object
+          title: Extra
+          default: {}
+        tags:
+          items:
+            type: string
+            maxLength: 120
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          type: array
+          title: Tags
+          default: []
+        tech_stack:
+          items:
+            type: string
+            maxLength: 120
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          type: array
+          title: Tech Stack
+          default: []
+        domains:
+          items:
+            type: string
+            maxLength: 120
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          type: array
+          title: Domains
+          default: []
+        maintainers:
+          items:
+            $ref: '#/components/schemas/MaintainerRef'
+          type: array
+          title: Maintainers
+          default: []
+        capabilities:
+          items:
+            $ref: '#/components/schemas/CapabilityIn'
+          type: array
+          title: Capabilities
+          default: []
+      type: object
+      required:
+      - name
+      title: AppIn
+      description: 'Create/replace payload: omitted fields fall back to defaults (full replace semantics).'
+    AppListItem:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        slug:
+          type: string
+          title: Slug
+        name:
+          type: string
+          title: Name
+        short_description:
+          type: string
+          title: Short Description
+        lifecycle_status:
+          $ref: '#/components/schemas/LifecycleStatus'
+        license_type:
+          anyOf:
+          - $ref: '#/components/schemas/LicenseType'
+          - type: 'null'
+        vendor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vendor
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        tech_stack:
+          items:
+            type: string
+          type: array
+          title: Tech Stack
+        domains:
+          items:
+            type: string
+          type: array
+          title: Domains
+        maintainers:
+          items:
+            type: string
+          type: array
+          title: Maintainers
+        capability_count:
+          type: integer
+          title: Capability Count
+        embedding_status:
+          type: string
+          enum:
+          - indexed
+          - pending
+          title: Embedding Status
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - short_description
+      - lifecycle_status
+      - license_type
+      - vendor
+      - tags
+      - tech_stack
+      - domains
+      - maintainers
+      - capability_count
+      - embedding_status
+      - updated_at
+      title: AppListItem
+    AppMaintainerOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        kind:
+          $ref: '#/components/schemas/MaintainerKind'
+        org_unit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Unit
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+        role:
+          $ref: '#/components/schemas/MaintainerRole'
+      type: object
+      required:
+      - id
+      - name
+      - email
+      - kind
+      - org_unit
+      - url
+      - role
+      title: AppMaintainerOut
+    AppOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        slug:
+          type: string
+          title: Slug
+        name:
+          type: string
+          title: Name
+        short_description:
+          type: string
+          title: Short Description
+        description:
+          type: string
+          title: Description
+        lifecycle_status:
+          $ref: '#/components/schemas/LifecycleStatus'
+        license:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: License
+        license_type:
+          anyOf:
+          - $ref: '#/components/schemas/LicenseType'
+          - type: 'null'
+        vendor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vendor
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+        homepage_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Homepage Url
+        repo_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Repo Url
+        docs_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Docs Url
+        links:
+          items:
+            $ref: '#/components/schemas/LinkItem'
+          type: array
+          title: Links
+        extra:
+          additionalProperties: true
+          type: object
+          title: Extra
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        tech_stack:
+          items:
+            type: string
+          type: array
+          title: Tech Stack
+        domains:
+          items:
+            type: string
+          type: array
+          title: Domains
+        maintainers:
+          items:
+            $ref: '#/components/schemas/AppMaintainerOut'
+          type: array
+          title: Maintainers
+        capabilities:
+          items:
+            $ref: '#/components/schemas/CapabilityOut'
+          type: array
+          title: Capabilities
+        embedding_status:
+          type: string
+          enum:
+          - indexed
+          - pending
+          title: Embedding Status
+        interfaces:
+          items:
+            $ref: '#/components/schemas/InterfaceSummary'
+          type: array
+          title: Interfaces
+          default: []
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - short_description
+      - description
+      - lifecycle_status
+      - license
+      - license_type
+      - vendor
+      - version
+      - homepage_url
+      - repo_url
+      - docs_url
+      - links
+      - extra
+      - tags
+      - tech_stack
+      - domains
+      - maintainers
+      - capabilities
+      - embedding_status
+      - created_at
+      - updated_at
+      title: AppOut
+    Body_import_file:
+      properties:
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+      type: object
+      required:
+      - file
+      title: Body_import_file
+    CapabilityIn:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+        kind:
+          $ref: '#/components/schemas/CapabilityKind'
+          default: capability
+        text:
+          type: string
+          maxLength: 500
+          minLength: 1
+          pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          title: Text
+        details:
+          anyOf:
+          - type: string
+            maxLength: 4000
+          - type: 'null'
+          title: Details
+      type: object
+      required:
+      - text
+      title: CapabilityIn
+    CapabilityKind:
+      type: string
+      enum:
+      - capability
+      - requirement
+      - feature
+      title: CapabilityKind
+    CapabilityOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        kind:
+          $ref: '#/components/schemas/CapabilityKind'
+        text:
+          type: string
+          title: Text
+        details:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Details
+        position:
+          type: integer
+          title: Position
+        indexed:
+          type: boolean
+          title: Indexed
+          default: false
+      type: object
+      required:
+      - id
+      - kind
+      - text
+      - details
+      - position
+      title: CapabilityOut
+    ChangePasswordRequest:
+      properties:
+        current_password:
+          type: string
+          title: Current Password
+        new_password:
+          type: string
+          maxLength: 256
+          minLength: 10
+          title: New Password
+      type: object
+      required:
+      - current_password
+      - new_password
+      title: ChangePasswordRequest
+    Combination:
+      properties:
+        apps:
+          items:
+            type: string
+          type: array
+          title: Apps
+          description: Slugs of the two apps
+        covered:
+          items:
+            type: integer
+          type: array
+          title: Covered
+          description: Requirement indexes covered by at least one of them
+        interface_id:
+          type: string
+          format: uuid
+          title: Interface Id
+        interface_name:
+          type: string
+          title: Interface Name
+        interface_status:
+          $ref: '#/components/schemas/InterfaceStatus'
+      type: object
+      required:
+      - apps
+      - covered
+      - interface_id
+      - interface_name
+      - interface_status
+      title: Combination
+      description: Two connected result apps that together cover more requirements than either alone.
+    EmbeddingStatusOut:
+      properties:
+        model_id:
+          type: string
+          title: Model Id
+        model_loaded:
+          type: boolean
+          title: Model Loaded
+        model_error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model Error
+        worker_running:
+          type: boolean
+          title: Worker Running
+        worker_last_error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Worker Last Error
+        apps_total:
+          type: integer
+          title: Apps Total
+        apps_indexed:
+          type: integer
+          title: Apps Indexed
+        capabilities_total:
+          type: integer
+          title: Capabilities Total
+        capabilities_indexed:
+          type: integer
+          title: Capabilities Indexed
+        interfaces_total:
+          type: integer
+          title: Interfaces Total
+        interfaces_indexed:
+          type: integer
+          title: Interfaces Indexed
+        pending:
+          type: integer
+          title: Pending
+      type: object
+      required:
+      - model_id
+      - model_loaded
+      - model_error
+      - worker_running
+      - worker_last_error
+      - apps_total
+      - apps_indexed
+      - capabilities_total
+      - capabilities_indexed
+      - interfaces_total
+      - interfaces_indexed
+      - pending
+      title: EmbeddingStatusOut
+    EndpointOut:
+      properties:
+        kind:
+          type: string
+          enum:
+          - app
+          - system
+          title: Kind
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Slug
+        lifecycle_status:
+          anyOf:
+          - $ref: '#/components/schemas/LifecycleStatus'
+          - type: 'null'
+      type: object
+      required:
+      - kind
+      - id
+      - name
+      title: EndpointOut
+    EndpointRef:
+      properties:
+        app:
+          anyOf:
+          - type: string
+            maxLength: 120
+            minLength: 1
+            pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          - type: 'null'
+          title: App
+        system:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          - type: 'null'
+          title: System
+      type: object
+      title: EndpointRef
+      description: 'One end of an interface: exactly one of `app` (a catalog app''s slug) or `system` (an external system''s
+        name).'
+    ErrorOut:
+      description: Body of every error response except request validation errors (422).
+      properties:
+        detail:
+          title: Detail
+          type: string
+      required:
+      - detail
+      title: ErrorOut
+      type: object
+    Evidence:
+      properties:
+        req_idx:
+          type: integer
+          title: Req Idx
+        status:
+          type: string
+          enum:
+          - covered
+          - partial
+          - gap
+          title: Status
+        score:
+          type: number
+          title: Score
+        similarity:
+          type: number
+          title: Similarity
+        via:
+          type: string
+          enum:
+          - capability
+          - interface
+          - summary
+          - none
+          title: Via
+        capability:
+          anyOf:
+          - $ref: '#/components/schemas/MatchedCapability'
+          - type: 'null'
+        interface:
+          anyOf:
+          - $ref: '#/components/schemas/InterfaceSummary'
+          - type: 'null'
+        keyword_hits:
+          items:
+            type: string
+          type: array
+          title: Keyword Hits
+          default: []
+      type: object
+      required:
+      - req_idx
+      - status
+      - score
+      - similarity
+      - via
+      title: Evidence
+    ExternalSystemIn:
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+          pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          title: Name
+        description:
+          type: string
+          maxLength: 4000
+          title: Description
+          default: ''
+        vendor:
+          anyOf:
+          - type: string
+            maxLength: 200
+          - type: 'null'
+          title: Vendor
+        url:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Url
+      type: object
+      required:
+      - name
+      title: ExternalSystemIn
+    ExternalSystemOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        vendor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vendor
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+        interface_count:
+          type: integer
+          title: Interface Count
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - vendor
+      - url
+      - interface_count
+      title: ExternalSystemOut
+    FacetValue:
+      properties:
+        value:
+          type: string
+          title: Value
+        count:
+          type: integer
+          title: Count
+      type: object
+      required:
+      - value
+      - count
+      title: FacetValue
+    FeedbackIn:
+      properties:
+        rating:
+          type: string
+          enum:
+          - up
+          - down
+          title: Rating
+        expected_app_slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Expected App Slug
+        comment:
+          anyOf:
+          - type: string
+            maxLength: 20000
+          - type: 'null'
+          title: Comment
+      type: object
+      required:
+      - rating
+      title: FeedbackIn
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HealthOut:
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+          - starting
+          - error
+          title: Status
+        database:
+          type: boolean
+          title: Database
+          default: true
+        model_loaded:
+          type: boolean
+          title: Model Loaded
+          default: false
+        detail:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Detail
+      type: object
+      required:
+      - status
+      title: HealthOut
+    ImportFile:
+      properties:
+        version:
+          type: integer
+          const: 1
+          title: Version
+          default: 1
+        apps:
+          items:
+            $ref: '#/components/schemas/AppFields'
+          type: array
+          title: Apps
+        external_systems:
+          items:
+            $ref: '#/components/schemas/ExternalSystemIn'
+          type: array
+          title: External Systems
+          default: []
+        interfaces:
+          items:
+            $ref: '#/components/schemas/InterfaceIn'
+          type: array
+          title: Interfaces
+          default: []
+      type: object
+      required:
+      - apps
+      title: ImportFile
+      description: |-
+        JSON import/export document; export produces exactly this shape so files round-trip.
+
+        Interfaces are applied after the apps, so they may refer to apps defined in the same file.
+    ImportIssue:
+      properties:
+        row:
+          type: integer
+          title: Row
+        kind:
+          type: string
+          enum:
+          - app
+          - system
+          - interface
+          title: Kind
+          default: app
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Field
+        message:
+          type: string
+          title: Message
+        slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Slug
+      type: object
+      required:
+      - row
+      - message
+      title: ImportIssue
+    ImportItem:
+      properties:
+        row:
+          type: integer
+          title: Row
+        kind:
+          type: string
+          enum:
+          - app
+          - system
+          - interface
+          title: Kind
+          default: app
+        slug:
+          type: string
+          title: Slug
+        action:
+          type: string
+          enum:
+          - created
+          - updated
+          - unchanged
+          - skipped
+          - invalid
+          title: Action
+        changed_fields:
+          items:
+            type: string
+          type: array
+          title: Changed Fields
+          default: []
+      type: object
+      required:
+      - row
+      - slug
+      - action
+      title: ImportItem
+    ImportReport:
+      properties:
+        import_run_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Import Run Id
+        format:
+          type: string
+          title: Format
+        mode:
+          type: string
+          enum:
+          - upsert
+          - create_only
+          title: Mode
+        dry_run:
+          type: boolean
+          title: Dry Run
+        committed:
+          type: boolean
+          title: Committed
+        stats:
+          $ref: '#/components/schemas/ImportStats'
+        items:
+          items:
+            $ref: '#/components/schemas/ImportItem'
+          type: array
+          title: Items
+        errors:
+          items:
+            $ref: '#/components/schemas/ImportIssue'
+          type: array
+          title: Errors
+        warnings:
+          items:
+            $ref: '#/components/schemas/ImportIssue'
+          type: array
+          title: Warnings
+      type: object
+      required:
+      - import_run_id
+      - format
+      - mode
+      - dry_run
+      - committed
+      - stats
+      - items
+      - errors
+      - warnings
+      title: ImportReport
+    ImportRunOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        user_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: User Id
+        filename:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Filename
+        format:
+          type: string
+          title: Format
+        mode:
+          type: string
+          title: Mode
+        dry_run:
+          type: boolean
+          title: Dry Run
+        stats:
+          additionalProperties: true
+          type: object
+          title: Stats
+        errors:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Errors
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - id
+      - user_id
+      - filename
+      - format
+      - mode
+      - dry_run
+      - stats
+      - errors
+      - created_at
+      title: ImportRunOut
+    ImportStats:
+      properties:
+        total:
+          type: integer
+          title: Total
+          default: 0
+        created:
+          type: integer
+          title: Created
+          default: 0
+        updated:
+          type: integer
+          title: Updated
+          default: 0
+        unchanged:
+          type: integer
+          title: Unchanged
+          default: 0
+        skipped:
+          type: integer
+          title: Skipped
+          default: 0
+        invalid:
+          type: integer
+          title: Invalid
+          default: 0
+      type: object
+      title: ImportStats
+    InterfaceFrequency:
+      type: string
+      enum:
+      - realtime
+      - batch
+      - on_demand
+      title: InterfaceFrequency
+    InterfaceIn:
+      properties:
+        from:
+          $ref: '#/components/schemas/EndpointRef'
+        to:
+          $ref: '#/components/schemas/EndpointRef'
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+          pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          title: Name
+        type:
+          $ref: '#/components/schemas/InterfaceType'
+          default: other
+        data_objects:
+          items:
+            type: string
+            maxLength: 120
+          type: array
+          maxItems: 30
+          title: Data Objects
+          default: []
+        frequency:
+          anyOf:
+          - $ref: '#/components/schemas/InterfaceFrequency'
+          - type: 'null'
+        status:
+          $ref: '#/components/schemas/InterfaceStatus'
+          default: active
+        bidirectional:
+          type: boolean
+          title: Bidirectional
+          default: false
+        description:
+          type: string
+          maxLength: 4000
+          title: Description
+          default: ''
+      type: object
+      required:
+      - from
+      - to
+      - name
+      title: InterfaceIn
+    InterfaceOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        from:
+          $ref: '#/components/schemas/EndpointOut'
+        to:
+          $ref: '#/components/schemas/EndpointOut'
+        name:
+          type: string
+          title: Name
+        type:
+          $ref: '#/components/schemas/InterfaceType'
+        data_objects:
+          items:
+            type: string
+          type: array
+          title: Data Objects
+        frequency:
+          anyOf:
+          - $ref: '#/components/schemas/InterfaceFrequency'
+          - type: 'null'
+        status:
+          $ref: '#/components/schemas/InterfaceStatus'
+        bidirectional:
+          type: boolean
+          title: Bidirectional
+        description:
+          type: string
+          title: Description
+        indexed:
+          type: boolean
+          title: Indexed
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - from
+      - to
+      - name
+      - type
+      - data_objects
+      - frequency
+      - status
+      - bidirectional
+      - description
+      - indexed
+      - updated_at
+      title: InterfaceOut
+    InterfaceStatus:
+      type: string
+      enum:
+      - planned
+      - active
+      - deprecated
+      title: InterfaceStatus
+    InterfaceSummary:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        direction:
+          type: string
+          enum:
+          - outgoing
+          - incoming
+          - both
+          title: Direction
+        counterpart:
+          $ref: '#/components/schemas/EndpointOut'
+        type:
+          $ref: '#/components/schemas/InterfaceType'
+        data_objects:
+          items:
+            type: string
+          type: array
+          title: Data Objects
+        frequency:
+          anyOf:
+          - $ref: '#/components/schemas/InterfaceFrequency'
+          - type: 'null'
+        status:
+          $ref: '#/components/schemas/InterfaceStatus'
+      type: object
+      required:
+      - id
+      - name
+      - direction
+      - counterpart
+      - type
+      - data_objects
+      - frequency
+      - status
+      title: InterfaceSummary
+      description: 'An interface as seen from one app: the other side and the direction of the data flow.'
+    InterfaceType:
+      type: string
+      enum:
+      - rest_api
+      - soap
+      - file_transfer
+      - database
+      - messaging
+      - sso
+      - ui_embedding
+      - other
+      title: InterfaceType
+    Landscape:
+      properties:
+        nodes:
+          items:
+            $ref: '#/components/schemas/LandscapeNode'
+          type: array
+          title: Nodes
+        edges:
+          items:
+            $ref: '#/components/schemas/LandscapeEdge'
+          type: array
+          title: Edges
+      type: object
+      required:
+      - nodes
+      - edges
+      title: Landscape
+    LandscapeEdge:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        source:
+          type: string
+          title: Source
+        target:
+          type: string
+          title: Target
+        name:
+          type: string
+          title: Name
+        type:
+          $ref: '#/components/schemas/InterfaceType'
+        status:
+          $ref: '#/components/schemas/InterfaceStatus'
+        bidirectional:
+          type: boolean
+          title: Bidirectional
+        data_objects:
+          items:
+            type: string
+          type: array
+          title: Data Objects
+        frequency:
+          anyOf:
+          - $ref: '#/components/schemas/InterfaceFrequency'
+          - type: 'null'
+      type: object
+      required:
+      - id
+      - source
+      - target
+      - name
+      - type
+      - status
+      - bidirectional
+      - data_objects
+      - frequency
+      title: LandscapeEdge
+    LandscapeNode:
+      properties:
+        id:
+          type: string
+          title: Id
+        kind:
+          type: string
+          enum:
+          - app
+          - system
+          title: Kind
+        name:
+          type: string
+          title: Name
+        slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Slug
+        lifecycle_status:
+          anyOf:
+          - $ref: '#/components/schemas/LifecycleStatus'
+          - type: 'null'
+        domains:
+          items:
+            type: string
+          type: array
+          title: Domains
+          default: []
+        degree:
+          type: integer
+          title: Degree
+      type: object
+      required:
+      - id
+      - kind
+      - name
+      - degree
+      title: LandscapeNode
+    LicenseType:
+      type: string
+      enum:
+      - oss
+      - commercial
+      - internal
+      - other
+      title: LicenseType
+    LifecycleStatus:
+      type: string
+      enum:
+      - idea
+      - pilot
+      - active
+      - deprecated
+      - retired
+      title: LifecycleStatus
+    LinkItem:
+      properties:
+        label:
+          type: string
+          maxLength: 120
+          title: Label
+        url:
+          type: string
+          maxLength: 1000
+          pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          title: Url
+      type: object
+      required:
+      - label
+      - url
+      title: LinkItem
+    LoginRequest:
+      properties:
+        email:
+          type: string
+          title: Email
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+      - email
+      - password
+      title: LoginRequest
+    LoginResponse:
+      properties:
+        user:
+          $ref: '#/components/schemas/UserOut'
+        access_token:
+          type: string
+          title: Access Token
+        token_type:
+          type: string
+          title: Token Type
+          default: bearer
+      type: object
+      required:
+      - user
+      - access_token
+      title: LoginResponse
+    MaintainerIn:
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          minLength: 1
+          pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          title: Name
+        email:
+          anyOf:
+          - type: string
+            maxLength: 320
+            pattern: ^[ \t\n\r\f\v]*[^@ \t\n\r\f\v]+@[^@ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Email
+        kind:
+          $ref: '#/components/schemas/MaintainerKind'
+          default: person
+        org_unit:
+          anyOf:
+          - type: string
+            maxLength: 120
+          - type: 'null'
+          title: Org Unit
+        url:
+          anyOf:
+          - type: string
+            maxLength: 1000
+            pattern: ^[ \t\n\r\f\v]*[Hh][Tt][Tt][Pp][Ss]?://[^ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Url
+      type: object
+      required:
+      - name
+      title: MaintainerIn
+    MaintainerKind:
+      type: string
+      enum:
+      - person
+      - team
+      title: MaintainerKind
+    MaintainerOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Email
+        kind:
+          $ref: '#/components/schemas/MaintainerKind'
+        org_unit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Unit
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+      type: object
+      required:
+      - id
+      - name
+      - email
+      - kind
+      - org_unit
+      - url
+      title: MaintainerOut
+    MaintainerRef:
+      properties:
+        id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Id
+        name:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          - type: 'null'
+          title: Name
+        email:
+          anyOf:
+          - type: string
+            maxLength: 320
+            pattern: ^[ \t\n\r\f\v]*[^@ \t\n\r\f\v]+@[^@ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          - type: 'null'
+          title: Email
+        kind:
+          $ref: '#/components/schemas/MaintainerKind'
+          default: person
+        org_unit:
+          anyOf:
+          - type: string
+            maxLength: 120
+          - type: 'null'
+          title: Org Unit
+        role:
+          $ref: '#/components/schemas/MaintainerRole'
+          default: maintainer
+      type: object
+      title: MaintainerRef
+      description: 'Reference to a maintainer: by id, else matched by email, else by name (created when missing).'
+    MaintainerRole:
+      type: string
+      enum:
+      - owner
+      - maintainer
+      - contact
+      title: MaintainerRole
+    MatchedCapability:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        kind:
+          $ref: '#/components/schemas/CapabilityKind'
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - id
+      - kind
+      - text
+      title: MatchedCapability
+    Page_AppListItem_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppListItem'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        size:
+          type: integer
+          title: Size
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - size
+      title: Page[AppListItem]
+    Page_SearchLogOut_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SearchLogOut'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        size:
+          type: integer
+          title: Size
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - size
+      title: Page[SearchLogOut]
+    ParseRequest:
+      properties:
+        text:
+          type: string
+          maxLength: 20000
+          title: Text
+      type: object
+      required:
+      - text
+      title: ParseRequest
+    ParseResponse:
+      properties:
+        requirements:
+          items:
+            $ref: '#/components/schemas/ParsedRequirement'
+          type: array
+          title: Requirements
+      type: object
+      required:
+      - requirements
+      title: ParseResponse
+    ParsedRequirement:
+      properties:
+        idx:
+          type: integer
+          title: Idx
+        text:
+          type: string
+          title: Text
+        priority:
+          anyOf:
+          - type: string
+            enum:
+            - must
+            - should
+            - could
+          - type: 'null'
+          title: Priority
+        weight:
+          type: number
+          title: Weight
+      type: object
+      required:
+      - idx
+      - text
+      - priority
+      - weight
+      title: ParsedRequirement
+    ReindexRequest:
+      properties:
+        scope:
+          type: string
+          enum:
+          - stale
+          - all
+          title: Scope
+          default: stale
+      type: object
+      title: ReindexRequest
+    RequirementIn:
+      properties:
+        text:
+          type: string
+          maxLength: 20000
+          minLength: 1
+          pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          title: Text
+        priority:
+          anyOf:
+          - type: string
+            enum:
+            - must
+            - should
+            - could
+          - type: 'null'
+          title: Priority
+      type: object
+      required:
+      - text
+      title: RequirementIn
+    ResultApp:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        slug:
+          type: string
+          title: Slug
+        name:
+          type: string
+          title: Name
+        short_description:
+          type: string
+          title: Short Description
+        lifecycle_status:
+          $ref: '#/components/schemas/LifecycleStatus'
+        vendor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vendor
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        tech_stack:
+          items:
+            type: string
+          type: array
+          title: Tech Stack
+        domains:
+          items:
+            type: string
+          type: array
+          title: Domains
+          default: []
+        maintainers:
+          items:
+            type: string
+          type: array
+          title: Maintainers
+          description: Names, owners first
+          default: []
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - short_description
+      - lifecycle_status
+      - vendor
+      - tags
+      - tech_stack
+      title: ResultApp
+    Role:
+      type: string
+      enum:
+      - viewer
+      - editor
+      - admin
+      title: Role
+    SearchConfigOut:
+      properties:
+        model_id:
+          type: string
+          title: Model Id
+        thresholds:
+          $ref: '#/components/schemas/ThresholdsOut'
+        priority_weights:
+          additionalProperties:
+            type: number
+          type: object
+          title: Priority Weights
+        max_requirements:
+          type: integer
+          title: Max Requirements
+        capability_atomic_warn_len:
+          type: integer
+          title: Capability Atomic Warn Len
+      type: object
+      required:
+      - model_id
+      - thresholds
+      - priority_weights
+      - max_requirements
+      - capability_atomic_warn_len
+      title: SearchConfigOut
+    SearchFilters:
+      properties:
+        lifecycle:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/LifecycleStatus'
+            type: array
+          - type: 'null'
+          title: Lifecycle
+          description: Allowed lifecycle states; default excludes 'retired'.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          default: []
+        license_types:
+          items:
+            $ref: '#/components/schemas/LicenseType'
+          type: array
+          title: License Types
+          default: []
+        domains:
+          items:
+            type: string
+          type: array
+          title: Domains
+          description: Any of these domains
+          default: []
+        maintainer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Maintainer
+      type: object
+      title: SearchFilters
+    SearchLogOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        user_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: User Id
+        query_text:
+          type: string
+          title: Query Text
+        requirements:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Requirements
+        filters:
+          additionalProperties: true
+          type: object
+          title: Filters
+        results:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Results
+        no_match:
+          type: boolean
+          title: No Match
+        embedding_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Embedding Model
+        duration_ms:
+          type: integer
+          title: Duration Ms
+        feedback:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Feedback
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - id
+      - user_id
+      - query_text
+      - requirements
+      - filters
+      - results
+      - no_match
+      - embedding_model
+      - duration_ms
+      - feedback
+      - created_at
+      title: SearchLogOut
+    SearchRequest:
+      properties:
+        text:
+          anyOf:
+          - type: string
+            maxLength: 20000
+          - type: 'null'
+          title: Text
+        requirements:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/RequirementIn'
+            type: array
+            maxItems: 30
+          - type: 'null'
+          title: Requirements
+        filters:
+          $ref: '#/components/schemas/SearchFilters'
+          default:
+            tags: []
+            license_types: []
+            domains: []
+        limit:
+          type: integer
+          maximum: 50.0
+          minimum: 1.0
+          title: Limit
+          default: 10
+      type: object
+      title: SearchRequest
+      description: Give `text` (split into requirements) or a `requirements` list with at least one non-blank item.
+    SearchResponse:
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+          - no_match
+          title: Status
+        requirements:
+          items:
+            $ref: '#/components/schemas/ParsedRequirement'
+          type: array
+          title: Requirements
+        results:
+          items:
+            $ref: '#/components/schemas/SearchResult'
+          type: array
+          title: Results
+        catalog_gaps:
+          items:
+            type: integer
+          type: array
+          title: Catalog Gaps
+        connections:
+          $ref: '#/components/schemas/Landscape'
+          description: Interfaces between the result apps, and external systems two or more of them share
+          default:
+            nodes: []
+            edges: []
+        combinations:
+          items:
+            $ref: '#/components/schemas/Combination'
+          type: array
+          title: Combinations
+          default: []
+        thresholds:
+          $ref: '#/components/schemas/ThresholdsOut'
+        candidates_considered:
+          type: integer
+          title: Candidates Considered
+        duration_ms:
+          type: integer
+          title: Duration Ms
+        search_log_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Search Log Id
+      type: object
+      required:
+      - status
+      - requirements
+      - results
+      - catalog_gaps
+      - thresholds
+      - candidates_considered
+      - duration_ms
+      - search_log_id
+      title: SearchResponse
+    SearchResult:
+      properties:
+        app:
+          $ref: '#/components/schemas/ResultApp'
+        final:
+          type: number
+          title: Final
+        coverage:
+          type: number
+          title: Coverage
+        soft:
+          type: number
+          title: Soft
+        label:
+          type: string
+          enum:
+          - strong
+          - partial
+          - weak
+          title: Label
+        flags:
+          items:
+            type: string
+          type: array
+          title: Flags
+        signals:
+          $ref: '#/components/schemas/Signals'
+        evidence:
+          items:
+            $ref: '#/components/schemas/Evidence'
+          type: array
+          title: Evidence
+        recommended:
+          type: boolean
+          title: Recommended
+          default: true
+      type: object
+      required:
+      - app
+      - final
+      - coverage
+      - soft
+      - label
+      - flags
+      - signals
+      - evidence
+      title: SearchResult
+    Signals:
+      properties:
+        rrf:
+          type: number
+          title: Rrf
+        summary_rank:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Summary Rank
+        capability_rank:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Capability Rank
+        fts_rank:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Fts Rank
+      type: object
+      required:
+      - rrf
+      - summary_rank
+      - capability_rank
+      - fts_rank
+      title: Signals
+    SimilarApp:
+      properties:
+        slug:
+          type: string
+          title: Slug
+        name:
+          type: string
+          title: Name
+        short_description:
+          type: string
+          title: Short Description
+        similarity:
+          type: number
+          title: Similarity
+      type: object
+      required:
+      - slug
+      - name
+      - short_description
+      - similarity
+      title: SimilarApp
+    TagCategory:
+      type: string
+      enum:
+      - general
+      - tech
+      - domain
+      title: TagCategory
+    TagCreate:
+      properties:
+        name:
+          type: string
+          maxLength: 120
+          minLength: 1
+          pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          title: Name
+        category:
+          $ref: '#/components/schemas/TagCategory'
+          default: general
+      type: object
+      required:
+      - name
+      title: TagCreate
+    TagOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        category:
+          $ref: '#/components/schemas/TagCategory'
+        app_count:
+          type: integer
+          title: App Count
+      type: object
+      required:
+      - id
+      - name
+      - category
+      - app_count
+      title: TagOut
+    TagUpdate:
+      properties:
+        name:
+          anyOf:
+          - type: string
+            maxLength: 120
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          - type: 'null'
+          title: Name
+        merge_into:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Merge Into
+      type: object
+      title: TagUpdate
+    ThresholdsOut:
+      properties:
+        model:
+          type: string
+          title: Model
+        covered:
+          type: number
+          title: Covered
+        partial:
+          type: number
+          title: Partial
+        nomatch:
+          type: number
+          title: Nomatch
+        min_top_coverage:
+          type: number
+          title: Min Top Coverage
+      type: object
+      required:
+      - model
+      - covered
+      - partial
+      - nomatch
+      - min_top_coverage
+      title: ThresholdsOut
+    UserCreate:
+      properties:
+        email:
+          type: string
+          maxLength: 320
+          pattern: ^[ \t\n\r\f\v]*[^@ \t\n\r\f\v]+@[^@ \t\n\r\f\v]+[ \t\n\r\f\v]*$
+          title: Email
+        display_name:
+          type: string
+          maxLength: 200
+          minLength: 1
+          pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          title: Display Name
+        role:
+          $ref: '#/components/schemas/Role'
+          default: viewer
+        password:
+          type: string
+          maxLength: 256
+          minLength: 10
+          title: Password
+      type: object
+      required:
+      - email
+      - display_name
+      - password
+      title: UserCreate
+    UserOut:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        email:
+          type: string
+          title: Email
+        display_name:
+          type: string
+          title: Display Name
+        role:
+          $ref: '#/components/schemas/Role'
+        auth_provider:
+          type: string
+          title: Auth Provider
+        is_active:
+          type: boolean
+          title: Is Active
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        last_login_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Login At
+      type: object
+      required:
+      - id
+      - email
+      - display_name
+      - role
+      - auth_provider
+      - is_active
+      - created_at
+      - last_login_at
+      title: UserOut
+    UserUpdate:
+      properties:
+        display_name:
+          anyOf:
+          - type: string
+            maxLength: 200
+            minLength: 1
+            pattern: '[^\u0009\u000a\u000b\u000c\u000d\u001c\u001d\u001e\u001f\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]'
+          - type: 'null'
+          title: Display Name
+        role:
+          anyOf:
+          - $ref: '#/components/schemas/Role'
+          - type: 'null'
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        password:
+          anyOf:
+          - type: string
+            maxLength: 256
+            minLength: 10
+          - type: 'null'
+          title: Password
+      type: object
+      title: UserUpdate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: appfit_session
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+- name: auth
+  description: Sign in and out, the current user and password changes.
+- name: apps
+  description: 'The application catalog: apps with capabilities, tags and maintainers.'
+- name: interfaces
+  description: Interfaces between apps and external systems, and the landscape graph.
+- name: search
+  description: Explainable matching of requirements against the catalog.
+- name: import
+  description: CSV and JSON import, export and templates.
+- name: tags
+  description: Tags, tech stack and domains shared by apps.
+- name: maintainers
+  description: People and teams that own or maintain apps.
+- name: users
+  description: User accounts and roles (admin only).
+- name: admin
+  description: Embedding index status, reindexing and logs (admin only).
+- name: meta
+  description: Enum values and search settings for clients.
+- name: health
+  description: Liveness and readiness probes.

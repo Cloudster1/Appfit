@@ -12,8 +12,8 @@ from sqlalchemy.orm import Session
 
 from appfit.models import ExternalSystem, Interface
 from appfit.schemas.import_ import ImportIssue, ImportItem, ImportMode, ImportStats
-from appfit.schemas.interface import ExternalSystemIn, InterfaceIn
-from appfit.services.importer.rows import RawRow, split_multi
+from appfit.schemas.interface import EndpointRef, ExternalSystemIn, InterfaceIn
+from appfit.services.importer.rows import RawRow, csv_safe, csv_unescape, numbered_records, split_multi
 from appfit.services.interfaces import (
     create_interface,
     find_interface,
@@ -141,6 +141,10 @@ def endpoint_label(ref: dict[str, Any] | Any) -> str:
     return "?"
 
 
+def _endpoint_key(ref: EndpointRef) -> tuple[str, str]:
+    return ("app", ref.app) if ref.app else ("system", (ref.system or "").lower())
+
+
 def interface_label(data: dict[str, Any]) -> str:
     return f"{endpoint_label(data.get('from'))} -> {endpoint_label(data.get('to'))}: {data.get('name') or '?'}"
 
@@ -152,8 +156,8 @@ def is_interface_csv(headers: list[str]) -> bool:
 def parse_interface_rows(reader: csv.DictReader[str], headers: list[str]) -> tuple[list[RawRow], list[str]]:
     warnings = [f"Unknown column ignored: {h!r}" for h in headers if h and h not in INTERFACE_CSV_COLUMNS]
     rows: list[RawRow] = []
-    for line_no, rec in enumerate(reader, start=2):
-        cell = {k: (v or "").strip() for k, v in rec.items() if k and isinstance(v, str)}
+    for line_no, rec in numbered_records(reader):
+        cell = {k: csv_unescape((v or "").strip()) for k, v in rec.items() if k and isinstance(v, str)}
         if not any(cell.values()):
             continue
         data: dict[str, Any] = {}
@@ -209,19 +213,18 @@ def interfaces_csv(db: Session, join: Any) -> str:
     writer = csv.writer(buf)
     writer.writerow(INTERFACE_CSV_COLUMNS)
     for d in (interface_to_import_dict(i) for i in all_interfaces(db)):
-        writer.writerow(
-            [
-                _cell(d["from"]),
-                _cell(d["to"]),
-                d["name"],
-                d["type"],
-                join(d["data_objects"]),
-                d["frequency"] or "",
-                d["status"],
-                "true" if d["bidirectional"] else "false",
-                d["description"],
-            ]
-        )
+        cells = [
+            _cell(d["from"]),
+            _cell(d["to"]),
+            d["name"],
+            d["type"],
+            join(d["data_objects"]),
+            d["frequency"] or "",
+            d["status"],
+            "true" if d["bidirectional"] else "false",
+            d["description"],
+        ]
+        writer.writerow([csv_safe(c) for c in cells])
     return buf.getvalue()
 
 
@@ -304,7 +307,7 @@ def validate_systems(rows: list[RawRow], errors: list[ImportIssue]) -> list[Vali
 
 def validate_interfaces(rows: list[RawRow], errors: list[ImportIssue]) -> list[ValidRow]:
     valid: list[ValidRow] = []
-    seen: dict[tuple[str, str, str], int] = {}
+    seen: dict[tuple[str, ...], int] = {}
     for row in rows:
         data = normalize_interface(dict(row.data))
         label = interface_label(data)
@@ -313,11 +316,8 @@ def validate_interfaces(rows: list[RawRow], errors: list[ImportIssue]) -> list[V
         except ValidationError as exc:
             errors.extend(_issues(row, exc, label))
             continue
-        key = (
-            endpoint_label(fields.source.model_dump()).lower(),
-            endpoint_label(fields.target.model_dump()).lower(),
-            fields.name.lower(),
-        )
+        # An app and an external system may share a name, so the kind is part of the key.
+        key = (*_endpoint_key(fields.source), *_endpoint_key(fields.target), fields.name.lower())
         if key in seen:
             errors.append(
                 ImportIssue(row=row.number, kind="interface", slug=label, message=f"duplicate, see row {seen[key]}")

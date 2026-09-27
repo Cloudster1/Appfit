@@ -37,7 +37,8 @@ class SearchConfigOut(BaseModel):
 
 
 @router.get("/enums")
-def enums(_: User = Depends(require_viewer)) -> dict[str, list[str]]:
+def list_enums(_: User = Depends(require_viewer)) -> dict[str, list[str]]:
+    """Allowed values of every enum in the API."""
     return {
         "lifecycle_status": [e.value for e in LifecycleStatus],
         "license_type": [e.value for e in LicenseType],
@@ -53,11 +54,12 @@ def enums(_: User = Depends(require_viewer)) -> dict[str, list[str]]:
 
 
 @router.get("/search-config", response_model=SearchConfigOut)
-def search_config(
+def get_search_config(
     request: Request,
     model_id: str = Depends(active_model_id),
     _: User = Depends(require_viewer),
 ) -> SearchConfigOut:
+    """Active model, score thresholds and requirement limits for clients."""
     settings = request.app.state.settings
     embedder = request.app.state.embedder
     model_name = embedder.model_name if embedder is not None else expected_model_name(settings)

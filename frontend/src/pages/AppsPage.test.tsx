@@ -219,6 +219,37 @@ describe("AppsPage matching", () => {
     });
   });
 
+  it("keeps the newest match when an older response arrives last", async () => {
+    const named = (name: string) => ({
+      ...sampleResponse,
+      results: [{ ...sampleResponse.results[0]!, app: { ...sampleResponse.results[0]!.app, name } }],
+    });
+    let release = () => {};
+    const slow = new Promise<void>((resolve) => (release = resolve));
+    let calls = 0;
+    server.use(
+      http.post("*/api/search", async () => {
+        calls += 1;
+        if (calls === 2) {
+          await slow;
+          return HttpResponse.json(named("Stale"));
+        }
+        return HttpResponse.json(calls === 1 ? sampleResponse : named("Fresh"));
+      }),
+    );
+    renderWithProviders(<AppsPage />, { withAuth: true });
+    await matchRequirements();
+    const domain = await screen.findByRole("group", { name: "Domain" });
+    fireEvent.click(within(domain).getByRole("checkbox", { name: /finance/ }));
+    fireEvent.click(within(domain).getByRole("checkbox", { name: /hr/ }));
+    expect(await screen.findByText("Fresh")).toBeInTheDocument();
+    release();
+    await waitFor(() => expect(calls).toBe(3));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    expect(screen.queryByText("Stale")).not.toBeInTheDocument();
+    expect(screen.getByText("Fresh")).toBeInTheDocument();
+  });
+
   it("sends the structured requirement list after switching modes", async () => {
     renderWithProviders(<AppsPage />, { withAuth: true });
     await matchRequirements("anything\nelse");

@@ -5,10 +5,13 @@ from contextlib import asynccontextmanager
 from http import HTTPStatus
 
 from fastapi import FastAPI, Request, Response
+from fastapi.exception_handlers import http_exception_handler
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session, sessionmaker
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from appfit import __version__
+from appfit.api.openapi import allowed_methods, api_routes, install_openapi, operation_id
 from appfit.api.routers import (
     admin,
     apps,
@@ -22,6 +25,7 @@ from appfit.api.routers import (
     tags,
     users,
 )
+from appfit.api.text_guard import reject_unstorable_text
 from appfit.bootstrap import bootstrap_admin
 from appfit.config import EMBEDDING_DIM, Settings, get_settings
 from appfit.db.engine import make_engine, make_session_factory
@@ -102,6 +106,7 @@ def create_app(
         openapi_url=f"{API_PREFIX}/openapi.json",
         redoc_url=None,
         swagger_ui_oauth2_redirect_url=f"{API_PREFIX}/docs/oauth2-redirect",
+        generate_unique_id_function=operation_id,
     )
     app.state.settings = settings
     app.state.session_factory = session_factory or make_session_factory(make_engine(settings.database_url))
@@ -123,10 +128,23 @@ def create_app(
             return JSONResponse({"detail": "Missing X-Requested-With header"}, status_code=HTTPStatus.FORBIDDEN)
         return await call_next(request)
 
+    app.middleware("http")(reject_unstorable_text)
+
     @app.exception_handler(ServiceError)
     async def service_error_handler(_: Request, exc: ServiceError) -> JSONResponse:
         return JSONResponse({"detail": exc.message}, status_code=int(exc.status_code))
 
-    for module in (health, auth, users, apps, interfaces, tags, maintainers, search, imports, admin, meta):
+    modules = (health, auth, users, apps, interfaces, tags, maintainers, search, imports, admin, meta)
+    for module in modules:
         app.include_router(module.router, prefix=API_PREFIX)
+    routes = api_routes(API_PREFIX, (m.router for m in modules))
+    install_openapi(app, settings, routes)
+
+    @app.exception_handler(StarletteHTTPException)
+    async def http_error_handler(request: Request, exc: StarletteHTTPException) -> Response:
+        if exc.status_code != HTTPStatus.METHOD_NOT_ALLOWED:
+            return await http_exception_handler(request, exc)
+        allowed = ", ".join(allowed_methods(routes, request.url.path))
+        return JSONResponse({"detail": exc.detail}, status_code=exc.status_code, headers={"Allow": allowed})
+
     return app

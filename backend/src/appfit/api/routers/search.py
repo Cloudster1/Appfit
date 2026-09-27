@@ -16,30 +16,33 @@ router = APIRouter(prefix="/search", tags=["search"])
 
 
 @router.post("/parse", response_model=ParseResponse)
-def parse(body: ParseRequest, _: User = Depends(require_viewer)) -> ParseResponse:
+def parse_search_text(body: ParseRequest, _: User = Depends(require_viewer)) -> ParseResponse:
+    """Split free text into requirements with priorities, as the search would."""
     return ParseResponse(requirements=parse_requirements(body.text))
 
 
 @router.post("", response_model=SearchResponse)
-def search(
+def search_apps(
     body: SearchRequest,
     request: Request,
     db: Session = Depends(get_db),
     embedder: Embedder = Depends(get_embedder),
     user: User = Depends(require_viewer),
 ) -> SearchResponse:
+    """Rank apps against requirements with per-requirement evidence, gaps and connections."""
     result = run_search(db, embedder, request.app.state.settings, body, user.id)
     db.commit()
     return result
 
 
 @router.post("/{log_id}/feedback", status_code=status.HTTP_204_NO_CONTENT)
-def feedback(
+def rate_search(
     log_id: uuid.UUID,
     body: FeedbackIn,
     db: Session = Depends(get_db),
     user: User = Depends(require_viewer),
 ) -> None:
+    """Rate a search result list, optionally naming the app that was expected."""
     log = db.get(SearchLog, log_id)
     if log is None:
         raise NotFoundError("Search not found")

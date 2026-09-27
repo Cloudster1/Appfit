@@ -98,19 +98,17 @@ def test_create_only_and_unknown_new_app_without_name(client: TestClient, auth: 
 
 def test_export_round_trip(client: TestClient, auth: Auth) -> None:
     ed = auth(Role.editor)
-    create_app(
-        client,
-        ed,
-        app_payload(
-            "Round Trip",
-            ["Cap one", "Cap two"],
-            tags=["t1"],
-            tech_stack=["go"],
-            extra={"cost_center": "4711"},
-            links=[{"label": "Docs", "url": "https://docs.corp/rt"}],
-            maintainers=[{"name": "Ann", "email": "ann@corp.local", "role": "owner"}],
-        ),
+    payload = app_payload(
+        "Round Trip",
+        tags=["t1"],
+        tech_stack=["go"],
+        description='=HYPERLINK("http://evil","x")',
+        extra={"cost_center": "4711"},
+        links=[{"label": "Docs", "url": "https://docs.corp/rt"}, {"label": "Page", "url": "https://wiki.corp/p?id=42"}],
+        maintainers=[{"name": "Ann", "email": "ann@corp.local", "role": "owner"}],
     )
+    payload["capabilities"] = [{"text": "Cap one", "details": "Only via VPN"}, {"text": "Cap two"}]
+    create_app(client, ed, payload)
     exported = client.get("/api/export", params={"format": "json"}, headers=ed).json()
     assert exported["version"] == 1 and exported["apps"][0]["slug"] == "round-trip"
     report = post_import(client, ed, json.dumps(exported).encode(), "e.json", dry_run=True).json()
@@ -119,8 +117,13 @@ def test_export_round_trip(client: TestClient, auth: Auth) -> None:
     csv_resp = client.get("/api/export", params={"format": "csv"}, headers=ed)
     assert csv_resp.headers["content-type"].startswith("text/csv")
     assert "extra.cost_center" in csv_resp.text.splitlines()[0]
-    report = post_import(client, ed, csv_resp.content, "e.csv", dry_run=True).json()
+    assert '\'=HYPERLINK(""http://evil""' in csv_resp.text  # escaped against CSV injection
+    # CSV has no details column; importing it back must keep the details and change nothing.
+    report = post_import(client, ed, csv_resp.content, "e.csv", dry_run=False).json()
     assert report["stats"]["unchanged"] == 1, report
+    app = client.get("/api/apps/round-trip", headers=ed).json()
+    assert [c["details"] for c in app["capabilities"]] == ["Only via VPN", None]
+    assert app["description"].startswith("=HYPERLINK")
 
 
 def test_template_and_schema(client: TestClient, auth: Auth) -> None:
@@ -137,4 +140,4 @@ def test_format_errors_and_limits(client: TestClient, auth: Auth, app) -> None: 
     ed = auth(Role.editor)
     assert post_import(client, ed, b"{broken", "x.json").status_code == 400
     app.state.settings.import_max_bytes = 10
-    assert post_import(client, ed, CSV, "a.csv").status_code == 400
+    assert post_import(client, ed, CSV, "a.csv").status_code == 413

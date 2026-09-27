@@ -21,6 +21,7 @@ from appfit.services.importer.parse_csv import (
     LIST_COLUMNS,
     SCALAR_COLUMNS,
 )
+from appfit.services.importer.rows import csv_safe
 
 _TAG_FIELD = {TagCategory.general: "tags", TagCategory.tech: "tech_stack", TagCategory.domain: "domains"}
 
@@ -104,7 +105,7 @@ def export_csv(db: Session) -> str:
         for k in extra_keys:
             v = d["extra"].get(k)
             row[EXTRA_PREFIX + k] = "" if v is None else str(v)
-        writer.writerow([row.get(c, "") for c in header])
+        writer.writerow([csv_safe(row.get(c, "")) for c in header])
     return buf.getvalue()
 
 

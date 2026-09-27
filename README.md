@@ -26,7 +26,18 @@ What happens on startup:
 Useful commands:
 - `make help` lists all commands.
 - `make dev` starts hot reload: API on :8000, UI on :5173, Postgres on :5432.
-- API docs are at `/api/docs`.
+- API docs are at `/api/docs` (Swagger UI). The spec is committed as [`docs/openapi.yaml`](docs/openapi.yaml).
+
+## API
+
+The REST API is described by an OpenAPI 3.1 spec, [`docs/openapi.yaml`](docs/openapi.yaml). It is generated from the code (`make gen-api`), and a test fails when the committed file is stale. The running API serves the same document at `/api/openapi.json`.
+- Auth: `POST /api/auth/login` sets a session cookie and returns the token for `Authorization: Bearer` use. Cookie-authenticated writes must send `X-Requested-With`.
+- Each operation lists its minimum role (`x-required-role`: viewer, editor or admin) and every error it can return. Errors are `{"detail": "..."}`, validation errors (422) list the fields.
+- The frontend's typed client (`frontend/src/api/schema.d.ts`) is generated from the spec.
+
+Every endpoint is tested against the spec in `backend/tests/contract/`:
+- `test_tour.py` walks through all operations with realistic data and validates each response against the spec. It fails when a new operation is not covered.
+- `test_fuzz.py` uses [Schemathesis](https://schemathesis.readthedocs.io) to send generated requests to every operation. It checks for server errors, undocumented status codes and content types, response bodies that break the schema, and missing auth checks. For a deeper run: `FUZZ_EXAMPLES=500 make test-backend`.
 
 ## Interfaces and the integration landscape
 
@@ -120,17 +131,18 @@ make test-model      # opt-in tests with the real bge-m3 model
 make e2e             # Playwright smoke tests against a running, seeded stack
                      # (E2E_ADMIN_PASSWORD=...)
 make lint            # ruff, mypy, eslint, tsc
-make gen-api         # regenerate frontend/openapi.json and src/api/schema.d.ts after API changes
+make gen-api         # regenerate docs/openapi.yaml and src/api/schema.d.ts after API changes
 ```
 
 Layout:
 - `backend/src/appfit/`
-  - `api/routers`: HTTP layer
+  - `api/routers`: HTTP layer; `api/openapi.py` adds auth, roles and error responses to the spec
   - `services`: catalog, interfaces, importer, search, embedding sync
   - `ml`: embedders
   - `models`, `schemas`
   - `config.py`: every tunable constant and setting
 - `backend/alembic/`: migrations
+- `docs/openapi.yaml`: the API spec (generated)
 - `frontend/src/`
   - `pages`, `components/{portal,search,graph,interfaces,apps,import}`
   - `api`: generated types and query hooks

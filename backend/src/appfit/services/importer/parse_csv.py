@@ -6,7 +6,8 @@ from typing import Any
 from appfit.config import CSV_SNIFF_BYTES
 from appfit.models import CapabilityKind
 from appfit.services.importer.interfaces import is_interface_csv, parse_interface_rows
-from appfit.services.importer.rows import ImportFormatError, RawRow, split_multi
+from appfit.services.importer.rows import ImportFormatError, RawRow, csv_unescape, numbered_records, split_multi
+from appfit.text import NUL
 
 SCALAR_COLUMNS = (
     "slug",
@@ -29,14 +30,19 @@ EXTRA_PREFIX = "extra."
 
 _MAINTAINER_RE = re.compile(r"^(?:(?P<role>[^:<]+):)?\s*(?P<name>[^<]*?)\s*(?:<(?P<email>[^>]+)>)?\s*$")
 _TEAM_PREFIXES = ("team ", "team-")
+_URL_START_RE = re.compile(r"^https?://", re.IGNORECASE)
+_LABELLED_LINK_RE = re.compile(r"^(?P<label>.*?)=(?P<url>https?://.*)$", re.IGNORECASE)
 
 
 def decode(content: bytes) -> str:
     for encoding in ("utf-8-sig", "cp1252"):
         try:
-            return content.decode(encoding)
+            text = content.decode(encoding)
         except UnicodeDecodeError:
             continue
+        if NUL in text:
+            raise ImportFormatError("File contains NUL characters; is it a text file?")
+        return text
     raise ImportFormatError("File is neither UTF-8 nor Windows-1252 encoded")
 
 
@@ -57,11 +63,15 @@ def parse_maintainer(cell: str) -> dict[str, Any]:
 
 
 def parse_link(cell: str) -> dict[str, str]:
-    label, sep, url = cell.partition("=")
-    if not sep:
-        url = cell.strip()
-        label = re.sub(r"^https?://(www\.)?", "", url).split("/")[0] or url
-    return {"label": label.strip(), "url": url.strip()}
+    """Either "Label=URL" or a bare URL; URLs and labels may themselves contain "="."""
+    cell = cell.strip()
+    if not _URL_START_RE.match(cell):
+        labelled = _LABELLED_LINK_RE.match(cell)
+        label, sep, url = (labelled.group("label"), "=", labelled.group("url")) if labelled else cell.partition("=")
+        if sep:
+            return {"label": label.strip(), "url": url.strip()}
+    label = re.sub(r"^https?://(www\.)?", "", cell).split("/")[0] or cell
+    return {"label": label, "url": cell}
 
 
 def _sniff_dialect(text: str) -> type[csv.Dialect] | csv.Dialect:
@@ -78,7 +88,15 @@ def parse_csv(content: bytes) -> tuple[list[RawRow], list[str]]:
     text = decode(content)
     if not text.strip():
         raise ImportFormatError("File is empty")
-    reader = csv.DictReader(io.StringIO(text), dialect=_sniff_dialect(text))
+    # newline="" lets the csv module handle \r, \n and \r\n line ends itself, as its docs require.
+    reader = csv.DictReader(io.StringIO(text, newline=""), dialect=_sniff_dialect(text))
+    try:
+        return _parse_rows(reader)
+    except csv.Error as exc:
+        raise ImportFormatError(f"Invalid CSV near line {reader.line_num}: {exc}") from None
+
+
+def _parse_rows(reader: csv.DictReader[str]) -> tuple[list[RawRow], list[str]]:
     headers = [h.strip().lower() for h in (reader.fieldnames or [])]
     reader.fieldnames = headers
     if is_interface_csv(headers):
@@ -95,10 +113,10 @@ def parse_csv(content: bytes) -> tuple[list[RawRow], list[str]]:
     extra_cols = [h for h in headers if h.startswith(EXTRA_PREFIX) and len(h) > len(EXTRA_PREFIX)]
 
     rows: list[RawRow] = []
-    for line_no, rec in enumerate(reader, start=2):
+    for line_no, rec in numbered_records(reader):
         if not any((v or "").strip() for v in rec.values() if isinstance(v, str)):
             continue
-        cell = {k: (v or "").strip() if isinstance(v, str) else "" for k, v in rec.items() if k}
+        cell = {k: csv_unescape((v or "").strip()) if isinstance(v, str) else "" for k, v in rec.items() if k}
         data: dict[str, Any] = {}
         for col in SCALAR_COLUMNS:
             if col in headers:
@@ -116,7 +134,7 @@ def parse_csv(content: bytes) -> tuple[list[RawRow], list[str]]:
                 for col in present_cap_cols
                 for text_ in split_multi(cell[col])
             ]
-        row = RawRow(number=line_no, data=data)
+        row = RawRow(number=line_no, data=data, keep_capability_details=bool(present_cap_cols))
         if present_cap_cols:
             row.keep_capability_kinds = [
                 k.value for k in CapabilityKind if k.value not in {CAPABILITY_COLUMNS[c] for c in present_cap_cols}

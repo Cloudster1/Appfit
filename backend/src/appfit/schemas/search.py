@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field, model_validator
 from appfit.config import MAX_REQUIREMENTS, MAX_SEARCH_LIMIT, MAX_SEARCH_TEXT_LEN, SEARCH_DEFAULT_LIMIT
 from appfit.models import CapabilityKind, InterfaceStatus, LicenseType, LifecycleStatus
 from appfit.schemas.interface import InterfaceSummary, Landscape
+from appfit.schemas.types import NOT_BLANK_PATTERN
 
 Priority = Literal["must", "should", "could"]
 ReqStatus = Literal["covered", "partial", "gap"]
@@ -13,7 +14,7 @@ AppLabel = Literal["strong", "partial", "weak"]
 
 
 class RequirementIn(BaseModel):
-    text: str = Field(min_length=1, max_length=MAX_SEARCH_TEXT_LEN)
+    text: str = Field(min_length=1, max_length=MAX_SEARCH_TEXT_LEN, pattern=NOT_BLANK_PATTERN)
     priority: Priority | None = None
 
 
@@ -43,6 +44,8 @@ class SearchFilters(BaseModel):
 
 
 class SearchRequest(BaseModel):
+    """Give `text` (split into requirements) or a `requirements` list with at least one non-blank item."""
+
     text: str | None = Field(default=None, max_length=MAX_SEARCH_TEXT_LEN)
     requirements: list[RequirementIn] | None = Field(default=None, max_length=MAX_REQUIREMENTS)
     filters: SearchFilters = SearchFilters()

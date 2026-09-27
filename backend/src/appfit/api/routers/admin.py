@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from appfit.api.deps import active_model_id
 from appfit.auth.deps import require_admin
-from appfit.config import DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE
+from appfit.config import DEFAULT_PAGE_SIZE, MAX_PAGE, MAX_PAGE_SIZE
 from appfit.db.engine import get_db
 from appfit.models import ImportRun, SearchLog, User
 from appfit.schemas.admin import EmbeddingStatusOut, ImportRunOut, ReindexRequest, SearchLogOut
@@ -36,23 +36,25 @@ def _status(request: Request, db: Session, model_id: str) -> EmbeddingStatusOut:
 
 
 @router.get("/embeddings/status", response_model=EmbeddingStatusOut)
-def embeddings_status(
+def get_embedding_status(
     request: Request,
     db: Session = Depends(get_db),
     model_id: str = Depends(active_model_id),
     _: User = Depends(require_admin),
 ) -> EmbeddingStatusOut:
+    """Model state and how many apps, capabilities and interfaces are indexed."""
     return _status(request, db, model_id)
 
 
 @router.post("/embeddings/reindex", response_model=EmbeddingStatusOut)
-def reindex(
+def reindex_embeddings(
     body: ReindexRequest,
     request: Request,
     db: Session = Depends(get_db),
     model_id: str = Depends(active_model_id),
     _: User = Depends(require_admin),
 ) -> EmbeddingStatusOut:
+    """Wake the indexer; scope 'all' marks everything stale first (e.g. after a model change)."""
     if body.scope == "all":
         mark_all_stale(db)
     db.execute(text("SELECT pg_notify(:ch, '')"), {"ch": EMBED_CHANNEL})
@@ -61,14 +63,15 @@ def reindex(
 
 
 @router.get("/search-logs", response_model=Page[SearchLogOut])
-def search_logs(
+def list_search_logs(
     only_feedback: bool = False,
     only_no_match: bool = False,
-    page: int = Query(default=1, ge=1),
+    page: int = Query(default=1, ge=1, le=MAX_PAGE),
     size: int = Query(default=DEFAULT_PAGE_SIZE, ge=1, le=MAX_PAGE_SIZE),
     db: Session = Depends(get_db),
     _: User = Depends(require_admin),
 ) -> Page[SearchLogOut]:
+    """Past searches with results and feedback, newest first."""
     stmt = select(SearchLog)
     if only_feedback:
         stmt = stmt.where(SearchLog.feedback.is_not(None))
@@ -80,9 +83,10 @@ def search_logs(
 
 
 @router.get("/import-runs", response_model=list[ImportRunOut])
-def import_runs(
+def list_import_runs(
     limit: int = Query(default=DEFAULT_PAGE_SIZE, ge=1, le=MAX_PAGE_SIZE),
     db: Session = Depends(get_db),
     _: User = Depends(require_admin),
 ) -> list[ImportRun]:
+    """Past imports with their reports, newest first."""
     return list(db.scalars(select(ImportRun).order_by(ImportRun.created_at.desc()).limit(limit)).all())

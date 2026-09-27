@@ -141,7 +141,8 @@ export function useDeleteApp() {
   return useMutation({
     mutationFn: async (slug: string) =>
       unwrap(await api.DELETE("/api/apps/{slug}", { params: { path: { slug } } })),
-    onSuccess: () => qc.invalidateQueries({ queryKey: keys.apps }),
+    // The app's interfaces are deleted with it.
+    onSuccess: () => invalidateInterfaceViews(qc),
   });
 }
 
@@ -218,7 +219,8 @@ export function useImport() {
     },
     onSuccess: (report) => {
       if (report.committed) {
-        qc.invalidateQueries({ queryKey: keys.apps });
+        // Imports can also bring interfaces and external systems.
+        invalidateInterfaceViews(qc);
         qc.invalidateQueries({ queryKey: keys.tags });
       }
     },

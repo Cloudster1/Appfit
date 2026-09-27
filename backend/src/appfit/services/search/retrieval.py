@@ -79,8 +79,12 @@ def summary_ranking(
     return [r.id for r in sorted(rows, key=lambda r: r.dist)]
 
 
-def _interface_hits(db: Session, vec: np.ndarray, model_id: str, limit: int) -> list[tuple[uuid.UUID, float]]:
-    """(app id, similarity) for the closest interface sides; each side's vector speaks for its app."""
+def _interface_hits(
+    db: Session, vec: np.ndarray, conds: list[ColumnElement[bool]], model_id: str, limit: int
+) -> list[tuple[uuid.UUID, float]]:
+    """(app id, similarity) for the closest interface sides of apps passing the filters.
+
+    Each side's vector speaks for the app at that end."""
     hits: list[tuple[uuid.UUID, float]] = []
     for side in ("from", "to"):
         column = getattr(Interface, f"{side}_embedding")
@@ -88,7 +92,9 @@ def _interface_hits(db: Session, vec: np.ndarray, model_id: str, limit: int) -> 
         dist = column.cosine_distance(vec).label("dist")
         rows = db.execute(
             select(app_col.label("app_id"), dist)
+            .join(App, App.id == app_col)
             .where(
+                *conds,
                 column.is_not(None),
                 Interface.embedding_model == model_id,
                 Interface.status != InterfaceStatus.deprecated,
@@ -110,14 +116,13 @@ def capability_ranking(
 ) -> list[uuid.UUID]:
     """Apps ranked by sum over requirements of weight * best capability or interface similarity among the hits.
 
-    An interface hit counts for the catalog apps at both of its ends, if they pass the filters."""
+    An interface hit counts for the catalog app at the matching end."""
     best: dict[uuid.UUID, dict[int, float]] = defaultdict(dict)
 
     def credit(app_id: uuid.UUID, i: int, sim: float) -> None:
         if sim > best[app_id].get(i, -1.0):
             best[app_id][i] = sim
 
-    via_interface: dict[uuid.UUID, dict[int, float]] = defaultdict(dict)
     for i, vec in enumerate(req_vecs):
         dist = AppCapability.embedding.cosine_distance(vec).label("dist")
         rows = db.execute(
@@ -129,15 +134,8 @@ def capability_ranking(
         ).all()
         for row in rows:
             credit(row.app_id, i, 1.0 - float(row.dist))
-        for app_id, sim in _interface_hits(db, vec, model_id, limit_per_req):
-            if sim > via_interface[app_id].get(i, -1.0):
-                via_interface[app_id][i] = sim
-    if via_interface:
-        allowed = set(db.scalars(select(App.id).where(App.id.in_(list(via_interface)), *conds)))
-        for app_id, per_req in via_interface.items():
-            if app_id in allowed:
-                for i, sim in per_req.items():
-                    credit(app_id, i, sim)
+        for app_id, sim in _interface_hits(db, vec, conds, model_id, limit_per_req):
+            credit(app_id, i, sim)
     scored = {app_id: sum(weights[i] * s for i, s in per_req.items()) for app_id, per_req in best.items()}
     return sorted(scored, key=lambda a: -scored[a])
 

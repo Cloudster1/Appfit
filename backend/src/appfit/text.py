@@ -1,7 +1,9 @@
 import hashlib
 import re
 import unicodedata
+from collections.abc import Iterator
 from functools import lru_cache
+from typing import Any
 
 import snowballstemmer
 
@@ -73,3 +75,31 @@ def stem_map(text: str) -> dict[str, set[str]]:
         for s in stems(tok):
             out.setdefault(s, set()).add(tok)
     return out
+
+
+NUL = "\x00"
+Loc = list[str | int]
+
+
+def storable(text: str) -> bool:
+    """PostgreSQL text holds neither NUL characters nor lone surrogates (not encodable as UTF-8)."""
+    if NUL in text:
+        return False
+    try:
+        text.encode("utf-8")
+    except UnicodeEncodeError:
+        return False
+    return True
+
+
+def iter_strings(value: Any, loc: Loc) -> Iterator[tuple[Loc, str]]:
+    """Every string in a decoded JSON value, dict keys included, with its location."""
+    if isinstance(value, str):
+        yield loc, value
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            yield [*loc, key], key
+            yield from iter_strings(item, [*loc, key])
+    elif isinstance(value, list):
+        for i, item in enumerate(value):
+            yield from iter_strings(item, [*loc, i])

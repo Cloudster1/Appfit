@@ -1,9 +1,11 @@
 import uuid
+from http import HTTPStatus
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from appfit.api.openapi import errors
 from appfit.auth.deps import require_admin
 from appfit.auth.security import hash_password
 from appfit.db.engine import get_db
@@ -15,11 +17,13 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 @router.get("", response_model=list[UserOut])
 def list_users(db: Session = Depends(get_db), _: User = Depends(require_admin)) -> list[User]:
+    """All user accounts."""
     return list(db.scalars(select(User).order_by(func.lower(User.email))).all())
 
 
-@router.post("", response_model=UserOut, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=UserOut, status_code=status.HTTP_201_CREATED, responses=errors(HTTPStatus.CONFLICT))
 def create_user(body: UserCreate, db: Session = Depends(get_db), _: User = Depends(require_admin)) -> User:
+    """Create a local account with a role."""
     if db.scalar(select(User.id).where(func.lower(User.email) == body.email)) is not None:
         raise HTTPException(status.HTTP_409_CONFLICT, "A user with this email already exists")
     user = User(
@@ -41,6 +45,7 @@ def update_user(
     db: Session = Depends(get_db),
     admin: User = Depends(require_admin),
 ) -> User:
+    """Change name, role, active flag or password; admins cannot demote or deactivate themselves."""
     user = db.get(User, user_id)
     if user is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "User not found")

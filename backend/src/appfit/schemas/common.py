@@ -26,5 +26,7 @@ class PageParams(BaseModel):
         return (self.page - 1) * self.size
 
 
-class Message(BaseModel):
+class ErrorOut(BaseModel):
+    """Body of every error response except request validation errors (422)."""
+
     detail: str

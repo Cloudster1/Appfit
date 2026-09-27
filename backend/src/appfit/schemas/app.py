@@ -21,12 +21,12 @@ from appfit.models import (
 )
 from appfit.schemas.common import ORMModel
 from appfit.schemas.interface import InterfaceSummary
-from appfit.schemas.types import Email, Slug, Url
+from appfit.schemas.types import NOT_BLANK_PATTERN, AppSlug, Email, Url
 from appfit.text import normalize_ws
 
-Name = Annotated[str, Field(min_length=1, max_length=NAME_MAX_LEN)]
+Name = Annotated[str, Field(min_length=1, max_length=NAME_MAX_LEN, pattern=NOT_BLANK_PATTERN)]
 ShortText = Annotated[str, Field(max_length=SHORT_TEXT_MAX_LEN)]
-TagName = Annotated[str, Field(min_length=1, max_length=SHORT_TEXT_MAX_LEN)]
+TagName = Annotated[str, Field(min_length=1, max_length=SHORT_TEXT_MAX_LEN, pattern=NOT_BLANK_PATTERN)]
 EmbeddingStatus = Literal["indexed", "pending"]
 
 
@@ -38,7 +38,7 @@ class LinkItem(BaseModel):
 class CapabilityIn(BaseModel):
     id: uuid.UUID | None = None
     kind: CapabilityKind = CapabilityKind.capability
-    text: str = Field(min_length=1, max_length=CAPABILITY_TEXT_MAX_LEN)
+    text: str = Field(min_length=1, max_length=CAPABILITY_TEXT_MAX_LEN, pattern=NOT_BLANK_PATTERN)
     details: str | None = Field(default=None, max_length=CAPABILITY_DETAILS_MAX_LEN)
 
     @field_validator("text")
@@ -78,7 +78,7 @@ def _clean_tags(values: list[str]) -> list[str]:
 class AppFields(BaseModel):
     """All editable app fields; `None` means "not given" in partial updates."""
 
-    slug: Slug | None = None
+    slug: AppSlug | None = None
     name: Name | None = None
     short_description: str | None = Field(default=None, max_length=SHORT_DESCRIPTION_MAX_LEN)
     description: str | None = None

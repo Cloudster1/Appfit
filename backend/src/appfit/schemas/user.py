@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 from appfit.config import NAME_MAX_LEN, PASSWORD_MAX_LEN, PASSWORD_MIN_LEN
 from appfit.models import Role
 from appfit.schemas.common import ORMModel
-from appfit.schemas.types import Email
+from appfit.schemas.types import NOT_BLANK_PATTERN, Email
 
 Password = Annotated[str, Field(min_length=PASSWORD_MIN_LEN, max_length=PASSWORD_MAX_LEN)]
 
@@ -25,13 +25,13 @@ class UserOut(ORMModel):
 
 class UserCreate(BaseModel):
     email: Email
-    display_name: str = Field(min_length=1, max_length=NAME_MAX_LEN)
+    display_name: str = Field(min_length=1, max_length=NAME_MAX_LEN, pattern=NOT_BLANK_PATTERN)
     role: Role = Role.viewer
     password: Password
 
 
 class UserUpdate(BaseModel):
-    display_name: str | None = Field(default=None, min_length=1, max_length=NAME_MAX_LEN)
+    display_name: str | None = Field(default=None, min_length=1, max_length=NAME_MAX_LEN, pattern=NOT_BLANK_PATTERN)
     role: Role | None = None
     is_active: bool | None = None
     password: Password | None = None

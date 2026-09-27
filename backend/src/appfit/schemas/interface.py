@@ -11,16 +11,16 @@ from appfit.config import (
     SHORT_TEXT_MAX_LEN,
 )
 from appfit.models import InterfaceFrequency, InterfaceStatus, InterfaceType, LifecycleStatus
-from appfit.schemas.types import Slug, Url
+from appfit.schemas.types import NOT_BLANK_PATTERN, Slug, Url
 from appfit.text import normalize_ws
 
-SystemName = Annotated[str, Field(min_length=1, max_length=NAME_MAX_LEN)]
+SystemName = Annotated[str, Field(min_length=1, max_length=NAME_MAX_LEN, pattern=NOT_BLANK_PATTERN)]
 EndpointKind = Literal["app", "system"]
 Direction = Literal["outgoing", "incoming", "both"]
 
 
 class EndpointRef(BaseModel):
-    """One end of an interface: a catalog app by slug or an external system by name."""
+    """One end of an interface: exactly one of `app` (a catalog app's slug) or `system` (an external system's name)."""
 
     app: Slug | None = None
     system: SystemName | None = None
@@ -42,7 +42,7 @@ class InterfaceIn(BaseModel):
 
     source: EndpointRef = Field(alias="from")
     target: EndpointRef = Field(alias="to")
-    name: str = Field(min_length=1, max_length=NAME_MAX_LEN)
+    name: str = Field(min_length=1, max_length=NAME_MAX_LEN, pattern=NOT_BLANK_PATTERN)
     interface_type: InterfaceType = Field(default=InterfaceType.other, alias="type")
     data_objects: list[Annotated[str, Field(max_length=SHORT_TEXT_MAX_LEN)]] = Field(
         default=[], max_length=INTERFACE_MAX_DATA_OBJECTS

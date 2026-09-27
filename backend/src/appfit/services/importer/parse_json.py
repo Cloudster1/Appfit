@@ -5,6 +5,7 @@ from appfit.config import IMPORT_FORMAT_VERSION
 from appfit.schemas.import_ import RowKind
 from appfit.services.importer.parse_csv import decode
 from appfit.services.importer.rows import ImportFormatError, RawRow
+from appfit.text import iter_strings, storable
 
 
 def _section(doc: dict[str, Any], key: str, kind: RowKind) -> list[RawRow]:
@@ -27,6 +28,10 @@ def parse_json(content: bytes) -> tuple[list[RawRow], list[str]]:
         doc: Any = json.loads(decode(content))
     except json.JSONDecodeError as exc:
         raise ImportFormatError(f"Invalid JSON: {exc.msg} (line {exc.lineno})") from None
+    for loc, text in iter_strings(doc, []):
+        if not storable(text):
+            where = "/".join(str(part) for part in loc)
+            raise ImportFormatError(f"Text at {where or 'top level'} contains NUL characters or lone surrogates")
     if isinstance(doc, dict):
         version = doc.get("version", IMPORT_FORMAT_VERSION)
         if version != IMPORT_FORMAT_VERSION:

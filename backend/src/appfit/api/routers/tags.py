@@ -1,9 +1,11 @@
 import uuid
+from http import HTTPStatus
 
 from fastapi import APIRouter, Depends, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from appfit.api.openapi import errors
 from appfit.auth.deps import require_editor, require_viewer
 from appfit.db.engine import get_db
 from appfit.models import App, Tag, TagCategory, User, app_tags
@@ -29,6 +31,7 @@ def list_tags(
     db: Session = Depends(get_db),
     _: User = Depends(require_viewer),
 ) -> list[TagOut]:
+    """Tags with the number of apps using each."""
     count = func.count(app_tags.c.app_id).label("app_count")
     stmt = (
         select(Tag, count)
@@ -43,12 +46,13 @@ def list_tags(
 
 @router.post("", response_model=TagOut, status_code=status.HTTP_201_CREATED)
 def create_tag(body: TagCreate, db: Session = Depends(get_db), _: User = Depends(require_editor)) -> TagOut:
+    """Create a tag, or return the existing one with that name and category."""
     tag = get_or_create_tag(db, body.name.strip().lower(), body.category)
     db.commit()
     return _tag_out(db, tag)
 
 
-@router.patch("/{tag_id}", response_model=TagOut)
+@router.patch("/{tag_id}", response_model=TagOut, responses=errors(HTTPStatus.CONFLICT))
 def update_tag(
     tag_id: uuid.UUID, body: TagUpdate, db: Session = Depends(get_db), _: User = Depends(require_editor)
 ) -> TagOut:
@@ -83,6 +87,7 @@ def update_tag(
 
 @router.delete("/{tag_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_tag(tag_id: uuid.UUID, db: Session = Depends(get_db), _: User = Depends(require_editor)) -> None:
+    """Remove a tag from all apps and delete it."""
     tag = db.get(Tag, tag_id)
     if tag is None:
         raise NotFoundError("Tag not found")

@@ -7,11 +7,12 @@ from slugify import slugify
 from sqlalchemy import Select, func, or_, select, text
 from sqlalchemy.orm import Session, object_session
 
-from appfit.config import SLUG_MAX_LEN
+from appfit.config import RESERVED_SLUGS, SLUG_MAX_LEN
 from appfit.models import (
     App,
     AppCapability,
     AppMaintainer,
+    Interface,
     LicenseType,
     LifecycleStatus,
     Maintainer,
@@ -128,7 +129,7 @@ def unique_slug(db: Session, base: str, exclude_id: uuid.UUID | None = None) -> 
         stmt = select(App.id).where(App.slug == candidate)
         if exclude_id is not None:
             stmt = stmt.where(App.id != exclude_id)
-        if db.scalar(stmt) is None:
+        if candidate not in RESERVED_SLUGS and db.scalar(stmt) is None:
             return candidate
         candidate, n = f"{root}-{n}", n + 1
 
@@ -300,6 +301,15 @@ def apply_app_data(db: Session, app: App, data: dict[str, Any], user_id: uuid.UU
     return result
 
 
+def _neighbour_ids(interfaces: Sequence[Interface], app_id: uuid.UUID) -> set[uuid.UUID]:
+    return {
+        other
+        for iface in interfaces
+        for other in (iface.from_app_id, iface.to_app_id)
+        if other is not None and other != app_id
+    }
+
+
 def sync_derived(db: Session, app: App) -> None:
     """Refresh FTS vector and summary staleness after a write, and wake the embedding worker."""
     db.flush()
@@ -309,11 +319,13 @@ def sync_derived(db: Session, app: App) -> None:
         app.summary_embedding = None
         app.embedded_at = None
         db.flush()
-    # Interface texts contain the app name, so a rename makes them stale.
-    for iface in touching_interfaces(db, app.id):
+    # Interface texts and the neighbours' search texts contain the app name, so a rename makes them stale.
+    interfaces = touching_interfaces(db, app.id)
+    for iface in interfaces:
         refresh_interface_hash(iface)
     db.flush()
-    refresh_search_tsv(db, app.id)
+    for app_id in (app.id, *_neighbour_ids(interfaces, app.id)):
+        refresh_search_tsv(db, app_id)
     notify_embedder(db)
 
 
@@ -340,12 +352,7 @@ def update_app(db: Session, app: App, data: dict[str, Any], user_id: uuid.UUID |
 
 def delete_app(db: Session, app: App) -> None:
     """Delete the app; its interfaces go with it, so its neighbours' search texts are rebuilt."""
-    neighbours = {
-        other
-        for iface in touching_interfaces(db, app.id)
-        for other in (iface.from_app_id, iface.to_app_id)
-        if other is not None and other != app.id
-    }
+    neighbours = _neighbour_ids(touching_interfaces(db, app.id), app.id)
     db.delete(app)
     db.flush()
     for app_id in neighbours:

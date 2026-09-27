@@ -1,9 +1,13 @@
+import uuid
 from collections.abc import Callable
 
 import pytest
 from fastapi.testclient import TestClient
+from sqlalchemy.orm import Session
 
+from appfit.ml.fake_embedder import FakeEmbedder
 from appfit.models import Role
+from appfit.services.search.retrieval import FilterSpec, capability_ranking, filter_conditions
 
 from .helpers import HTTP_NO_CONTENT, HTTP_OK, SAMPLE_CATALOG, app_payload, create_app, create_iface, iface_payload
 
@@ -174,3 +178,19 @@ def test_interface_evidence_connections_and_combinations(
     assert res["combinations"][0]["apps"] == ["belegfix", "finanzbuch"]
     assert res["combinations"][0]["covered"] == [0, 1]
     assert res["combinations"][0]["interface_name"] == "Buchungsstapel"
+
+
+def test_interface_hits_are_limited_to_apps_passing_the_filters(
+    client: TestClient, auth: Auth, run_worker: Callable[[], int], db: Session, embedder: FakeEmbedder
+) -> None:
+    ed = auth(Role.editor)
+    create_app(client, ed, app_payload("Alpha", domains=["other"]))
+    beta = create_app(client, ed, app_payload("Beta", domains=["finance"]))
+    create_iface(client, ed, iface_payload("alpha", "system:SAP", "Rechnungen an SAP buchen"))
+    create_iface(client, ed, iface_payload("beta", "system:SAP", "Rechnungen buchen"))
+    run_worker()
+
+    # Alpha's interface is the closest overall, but only Beta passes the domain filter.
+    vecs = embedder.embed_queries(["Rechnungen an SAP buchen - Integration mit SAP"])
+    conds = filter_conditions(FilterSpec(domains=["finance"]))
+    assert capability_ranking(db, vecs, [1.0], conds, embedder.model_id, 1) == [uuid.UUID(beta["id"])]

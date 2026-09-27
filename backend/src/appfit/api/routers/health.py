@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from fastapi import APIRouter, Depends, Request, Response, status
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -10,11 +12,17 @@ router = APIRouter(prefix="/health", tags=["health"])
 
 @router.get("", response_model=HealthOut)
 def liveness() -> HealthOut:
+    """The process is up; does not check dependencies."""
     return HealthOut(status="ok")
 
 
-@router.get("/ready", response_model=HealthOut)
+@router.get(
+    "/ready",
+    response_model=HealthOut,
+    responses={HTTPStatus.SERVICE_UNAVAILABLE: {"model": HealthOut, "description": "Starting up, or not ready."}},
+)
 def readiness(request: Request, response: Response, db: Session = Depends(get_db)) -> HealthOut:
+    """200 once the database answers and the embedding model is loaded, else 503 with the reason."""
     try:
         db.execute(text("SELECT 1"))
         db_ok = True

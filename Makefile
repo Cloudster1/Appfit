@@ -78,9 +78,11 @@ format: ## Auto-format backend and frontend
 	cd backend && $(VENV_BIN)/ruff check --fix src tests alembic && $(VENV_BIN)/ruff format src tests alembic
 	$(call PNPM,format)
 
-gen-api: ## Regenerate frontend/openapi.json and the typed API client
-	cd backend && $(VENV_BIN)/python -m appfit.openapi_dump ../frontend/openapi.json
-	$(call PNPM,gen:api)
+gen-api: ## Regenerate docs/openapi.yaml and the typed frontend API client from it
+	cd backend && $(VENV_BIN)/python -m appfit.openapi_dump ../docs/openapi.yaml
+	docker run --rm -v "$(CURDIR)/frontend":/app -v "$(CURDIR)/docs":/docs:ro -v appfit-fe-nm:/app/node_modules \
+		-v appfit-corepack:/root/.cache/node/corepack -w /app node:22-alpine \
+		sh -c 'corepack enable >/dev/null 2>&1 && pnpm gen:api'
 
 build: ## Production frontend build
 	$(call PNPM,build)

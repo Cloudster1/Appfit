@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 import { useDebouncedValue, useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { IconAdjustments, IconAlertTriangle, IconArrowLeft, IconPlus } from "@tabler/icons-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
 import {
@@ -128,9 +128,13 @@ export function AppsPage() {
     setParams(next, { replace: true });
   };
 
+  // Responses can arrive out of order; only the latest request may set the result.
+  const latestSearch = useRef(0);
   const execute = async (body: SearchRequest) => {
+    const seq = ++latestSearch.current;
     try {
       const res = await search.mutateAsync(body);
+      if (seq !== latestSearch.current) return;
       setResult(res);
       setLastRequest(body);
       setRequirements(res.requirements.map((r) => ({ text: r.text, priority: r.priority ?? null })));
@@ -162,6 +166,7 @@ export function AppsPage() {
   };
 
   const backToCatalog = () => {
+    latestSearch.current++;
     setResult(null);
     setLastRequest(null);
     setOpenAppId(null);
