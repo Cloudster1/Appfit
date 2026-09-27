@@ -2,13 +2,14 @@ import json
 import logging
 import sys
 import threading
+import time
 from pathlib import Path
 from typing import Annotated
 
 import typer
 from sqlalchemy import func, select
 
-from appfit.config import get_settings
+from appfit.config import DB_WAIT_INTERVAL_SECONDS, DB_WAIT_TIMEOUT_SECONDS, get_settings
 from appfit.db.engine import make_engine, make_session_factory
 from appfit.models import Role, User
 
@@ -105,6 +106,29 @@ def reembed(
         settings.embed_worker_poll_seconds,
     )
     typer.echo(f"Embedded {worker.run_once()} rows with {worker.embedder.model_id}")
+
+
+@app.command("wait-for-db")
+def wait_for_db(timeout: float = DB_WAIT_TIMEOUT_SECONDS) -> None:
+    """Wait until the database accepts connections; for container startup."""
+    from sqlalchemy import text
+    from sqlalchemy.exc import OperationalError
+
+    engine = make_engine(get_settings().database_url)
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            with engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
+            return
+        except OperationalError as exc:
+            if time.monotonic() > deadline:
+                typer.echo(f"Database not reachable after {timeout:.0f}s: {exc.orig}", err=True)
+                raise typer.Exit(1) from None
+            typer.echo("Waiting for the database ...", err=True)
+            time.sleep(DB_WAIT_INTERVAL_SECONDS)
+        finally:
+            engine.dispose()
 
 
 @app.command()

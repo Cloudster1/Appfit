@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "appfit.component" (dict "root" . "name" "config") }}
+  labels:
+    {{- include "appfit.labels" . | nindent 4 }}
+data:
+  EMBEDDING_BACKEND: {{ .Values.config.embeddingBackend | quote }}
+  EMBEDDING_MODEL: {{ .Values.config.embeddingModel | quote }}
+  {{- with .Values.config.embeddingModelRevision }}
+  EMBEDDING_MODEL_REVISION: {{ . | quote }}
+  {{- end }}
+  EMBEDDING_DEVICE: {{ .Values.config.embeddingDevice | quote }}
+  HF_HUB_OFFLINE: {{ ternary "1" "0" .Values.config.hfHubOffline | quote }}
+  JWT_EXPIRE_MINUTES: {{ .Values.config.jwtExpireMinutes | quote }}
+  COOKIE_SECURE: {{ include "appfit.cookieSecure" . | quote }}
+  SEARCH_LOG_ENABLED: {{ .Values.config.searchLogEnabled | quote }}
+  LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  BOOTSTRAP_ADMIN_EMAIL: {{ .Values.auth.bootstrapAdmin.email | quote }}
+  EMBED_WORKER_ENABLED: {{ not .Values.worker.enabled | quote }}
+  {{- range $key, $value := .Values.config.extra }}
+  {{ $key }}: {{ $value | toString | quote }}
+  {{- end }}

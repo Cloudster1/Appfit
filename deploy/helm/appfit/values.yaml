@@ -1,0 +1,190 @@
+# Default values for appfit. Every key is described in values.schema.json and README.md.
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Pull secrets for private registries, e.g. [{name: regcred}].
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+backend:
+  image:
+    repository: appfit-backend
+    # Defaults to the chart's appVersion.
+    tag: ""
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  # Empty: Recreate while the model cache is a ReadWriteOnce volume (two pods cannot always mount it),
+  # else RollingUpdate. Set a full strategy object to override.
+  strategy: {}
+  # bge-m3 on CPU needs about 2.5 GB of memory once loaded.
+  resources:
+    requests:
+      cpu: 500m
+      memory: 3Gi
+    limits:
+      memory: 4Gi
+  service:
+    type: ClusterIP
+    port: 8000
+  # Readiness waits for the embedding model; the first start downloads about 2.2 GB.
+  startupProbe:
+    periodSeconds: 5
+    failureThreshold: 60
+  livenessProbe:
+    periodSeconds: 20
+    failureThreshold: 3
+  readinessProbe:
+    periodSeconds: 10
+    failureThreshold: 3
+  # Extra environment variables, e.g. [{name: MATCH_CANDIDATES, value: "60"}].
+  extraEnv: []
+  extraEnvFrom: []
+  podAnnotations: {}
+  podLabels: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# Runs the embedding worker in its own Deployment instead of inside each API pod.
+worker:
+  enabled: false
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 500m
+      memory: 3Gi
+    limits:
+      memory: 4Gi
+  extraEnv: []
+  podAnnotations: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+frontend:
+  image:
+    repository: appfit-frontend
+    tag: ""
+    pullPolicy: IfNotPresent
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+  service:
+    type: ClusterIP
+    port: 80
+  podAnnotations: {}
+  podLabels: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# Application settings (non-secret); see backend/src/appfit/config.py.
+config:
+  embeddingBackend: sentence_transformers
+  embeddingModel: BAAI/bge-m3
+  embeddingModelRevision: ""
+  embeddingDevice: cpu
+  # Set to true once the model is in the cache (`appfit download-model`) to forbid hub access.
+  hfHubOffline: false
+  jwtExpireMinutes: 480
+  # Empty: true when the ingress has TLS. Secure cookies are only sent over HTTPS.
+  cookieSecure: ""
+  searchLogEnabled: true
+  logLevel: INFO
+  # Any other setting as environment variables, e.g. {MATCH_T_COVERED: "0.7"}.
+  extra: {}
+
+auth:
+  # Secret with the keys JWT_SECRET and BOOTSTRAP_ADMIN_PASSWORD; replaces the generated one.
+  existingSecret: ""
+  # Generated (and kept across upgrades) when empty.
+  jwtSecret: ""
+  bootstrapAdmin:
+    # Created on first start while there are no users.
+    email: admin@example.com
+    # Generated when empty; read it with the command printed after install.
+    password: ""
+
+modelCache:
+  persistence:
+    enabled: true
+    # ReadWriteMany lets several pods on different nodes share the cache (and enables rolling updates).
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+    storageClass: ""
+    existingClaim: ""
+
+# Built-in PostgreSQL 17 with pgvector. Disable to use externalDatabase.
+postgresql:
+  enabled: true
+  image:
+    repository: pgvector/pgvector
+    tag: pg17
+    pullPolicy: IfNotPresent
+  auth:
+    database: appfit
+    username: appfit
+    # Generated (and kept across upgrades) when empty.
+    password: ""
+    # Secret with the key POSTGRES_PASSWORD; replaces the generated one.
+    existingSecret: ""
+  persistence:
+    size: 10Gi
+    storageClass: ""
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      memory: 2Gi
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# Used when postgresql.enabled is false. The database needs the pgvector extension available.
+externalDatabase:
+  # SQLAlchemy URL, e.g. postgresql+psycopg://appfit:secret@db.example.com:5432/appfit
+  url: ""
+  # Or a Secret holding the URL.
+  existingSecret: ""
+  existingSecretKey: DATABASE_URL
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # nginx.ingress.kubernetes.io/proxy-body-size: 12m
+  hosts:
+    - host: appfit.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: appfit-tls
+  #    hosts: [appfit.example.com]
+
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: [ALL]
+
+tests:
+  image:
+    repository: curlimages/curl
+    tag: "8.16.0"

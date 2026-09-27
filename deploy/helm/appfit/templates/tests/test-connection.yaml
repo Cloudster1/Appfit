@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "appfit.component" (dict "root" . "name" "test") }}
+  labels:
+    {{- include "appfit.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  securityContext:
+    {{- toYaml (merge (deepCopy .Values.podSecurityContext) (dict "runAsUser" 100)) | nindent 4 }}
+  containers:
+    - name: smoke
+      image: {{ printf "%s:%s" .Values.tests.image.repository .Values.tests.image.tag | quote }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+      env:
+        - name: BASE
+          value: {{ printf "http://%s:%v" (include "appfit.component" (dict "root" . "name" "frontend")) .Values.frontend.service.port | quote }}
+      # Through the frontend: the UI loads, the API is ready (database and model) and asks for a login.
+      command:
+        - sh
+        - -ec
+        - |
+          curl -fsS "$BASE/" | grep -q '<div id="root">'
+          curl -fsS "$BASE/api/health/ready"
+          test "$(curl -s -o /dev/null -w '%{http_code}' "$BASE/api/apps")" = 401
+          echo "appfit is up"

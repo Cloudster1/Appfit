@@ -132,6 +132,7 @@ make e2e             # Playwright smoke tests against a running, seeded stack
                      # (E2E_ADMIN_PASSWORD=...)
 make lint            # ruff, mypy, eslint, tsc
 make gen-api         # regenerate docs/openapi.yaml and src/api/schema.d.ts after API changes
+make helm-lint       # lint the Helm chart and validate its manifests (helm, kubeconform)
 ```
 
 Layout:
@@ -143,10 +144,26 @@ Layout:
   - `config.py`: every tunable constant and setting
 - `backend/alembic/`: migrations
 - `docs/openapi.yaml`: the API spec (generated)
+- `deploy/helm/appfit`: the Helm chart
 - `frontend/src/`
   - `pages`, `components/{portal,search,graph,interfaces,apps,import}`
   - `api`: generated types and query hooks
   - `config.ts`: UI constants
+
+## Kubernetes
+
+A Helm chart is in [`deploy/helm/appfit`](deploy/helm/appfit/README.md).
+- It deploys the API, the UI and optionally PostgreSQL with pgvector and a separate embedding worker.
+- Secrets are generated, and the model is cached on a volume.
+- The ingress is optional.
+
+```bash
+helm install appfit deploy/helm/appfit -n appfit --create-namespace \
+  --set backend.image.repository=registry.example.com/appfit/backend \
+  --set frontend.image.repository=registry.example.com/appfit/frontend
+```
+
+`make helm-lint` checks the chart. `make helm-kind` installs it into a local kind cluster and runs `helm test`.
 
 ## Operations
 

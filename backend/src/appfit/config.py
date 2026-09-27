@@ -5,6 +5,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # Fixed by the vector(N) columns in migration 0003. Changing it needs a new migration.
 EMBEDDING_DIM = 1024
+# pg_advisory_xact_lock key: replicas starting together run migrations one after another.
+MIGRATION_LOCK_KEY = 0x417070666974  # "Appfit" in hex
+# `appfit wait-for-db`: how long to wait for the database at startup, and how often to try.
+DB_WAIT_TIMEOUT_SECONDS = 180
+DB_WAIT_INTERVAL_SECONDS = 2
 HNSW_M = 16
 HNSW_EF_CONSTRUCTION = 64
 HNSW_EF_SEARCH = 100

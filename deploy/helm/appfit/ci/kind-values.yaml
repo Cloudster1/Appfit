@@ -1,0 +1,15 @@
+# Local smoke test in kind (see deploy/helm/README.md): images loaded into the cluster, no model download.
+backend:
+  resources:
+    requests: {cpu: 100m, memory: 256Mi}
+    limits: {memory: 1Gi}
+postgresql:
+  persistence:
+    size: 1Gi
+  resources:
+    requests: {cpu: 100m, memory: 128Mi}
+modelCache:
+  persistence:
+    size: 1Gi
+config:
+  embeddingBackend: fake

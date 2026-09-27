@@ -11,7 +11,7 @@ PNPM = docker run --rm -v "$(CURDIR)/frontend":/app -v appfit-fe-nm:/app/node_mo
 	-v appfit-corepack:/root/.cache/node/corepack -w /app node:22-alpine sh -c 'corepack enable >/dev/null 2>&1 && pnpm $(1)'
 
 .PHONY: help setup up down dev db migrate seed test test-backend test-frontend test-model test-db eval eval-sweep \
-	lint format gen-api build logs e2e selfcheck
+	lint format gen-api build logs e2e selfcheck helm-lint helm-kind
 
 help:
 	@grep -E '^[a-z-]+:.*?## ' $(MAKEFILE_LIST) | awk -F':.*?## ' '{printf "  %-14s %s\n", $$1, $$2}'
@@ -91,3 +91,16 @@ e2e: ## Playwright smoke tests against the running stack (make up && make seed f
 	docker run --rm --network host -v "$(CURDIR)/frontend":/app -v appfit-fe-nm:/app/node_modules -w /app \
 		-e E2E_BASE_URL=$${E2E_BASE_URL:-http://localhost:8080} -e E2E_ADMIN_EMAIL -e E2E_ADMIN_PASSWORD \
 		mcr.microsoft.com/playwright:v1.63.0-noble sh -c 'npx playwright test'
+
+HELM_CHART = deploy/helm/appfit
+
+helm-lint: ## Lint the Helm chart and validate its manifests for every example values file (needs helm, kubeconform)
+	helm lint $(HELM_CHART)
+	@for values in "" $(wildcard $(HELM_CHART)/ci/*-values.yaml); do \
+		echo "== $${values:-default values}"; \
+		helm lint $(HELM_CHART) $${values:+-f $$values} --quiet \
+		&& helm template appfit $(HELM_CHART) $${values:+-f $$values} | kubeconform -strict -summary - || exit 1; \
+	done
+
+helm-kind: ## Install the chart into a local kind cluster and run helm test (needs kind, kubectl, helm)
+	deploy/helm/kind-smoke.sh

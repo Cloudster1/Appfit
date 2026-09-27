@@ -1,0 +1,41 @@
+# Several API pods behind a TLS ingress, a separate embedding worker and a shared model cache.
+backend:
+  replicaCount: 2
+  image:
+    repository: registry.example.com/appfit/backend
+    tag: "0.1.0"
+frontend:
+  replicaCount: 2
+  image:
+    repository: registry.example.com/appfit/frontend
+    tag: "0.1.0"
+imagePullSecrets:
+  - name: regcred
+worker:
+  enabled: true
+modelCache:
+  persistence:
+    accessModes: [ReadWriteMany]
+    storageClass: nfs
+auth:
+  existingSecret: appfit-auth
+postgresql:
+  auth:
+    existingSecret: appfit-postgresql
+config:
+  hfHubOffline: true
+  extra:
+    MATCH_CANDIDATES: 60
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 12m
+  hosts:
+    - host: appfit.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: appfit-tls
+      hosts: [appfit.example.com]

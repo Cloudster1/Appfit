@@ -1,0 +1,5 @@
+# Managed PostgreSQL (with pgvector) instead of the built-in one.
+postgresql:
+  enabled: false
+externalDatabase:
+  url: postgresql+psycopg://appfit:secret@db.example.com:5432/appfit

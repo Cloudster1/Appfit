@@ -42,7 +42,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - "${APPFIT_HTTP_PORT:-8080}:80"
+      - "${APPFIT_HTTP_PORT:-8080}:8080"
     depends_on:
       - backend
     restart: unless-stopped

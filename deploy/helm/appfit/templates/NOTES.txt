@@ -1,0 +1,30 @@
+Appfit {{ .Chart.AppVersion }} is starting in namespace {{ .Release.Namespace }}.
+
+The API is ready once the embedding model is loaded; the first start downloads about 2.2 GB:
+  kubectl -n {{ .Release.Namespace }} rollout status deployment/{{ include "appfit.component" (dict "root" . "name" "backend") }} --timeout=20m
+
+Open the UI:
+{{- if .Values.ingress.enabled }}
+{{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}/
+{{- end }}
+{{- else }}
+  kubectl -n {{ .Release.Namespace }} port-forward service/{{ include "appfit.component" (dict "root" . "name" "frontend") }} 8080:{{ .Values.frontend.service.port }}
+  then http://localhost:8080/
+{{- end }}
+
+Sign in as {{ .Values.auth.bootstrapAdmin.email }} (created while there are no users) with the password from:
+  kubectl -n {{ .Release.Namespace }} get secret {{ include "appfit.appSecretName" . }} -o jsonpath='{.data.BOOTSTRAP_ADMIN_PASSWORD}' | base64 -d; echo
+Change it after the first login.
+
+Check the deployment:
+  helm test {{ .Release.Name }} -n {{ .Release.Namespace }}
+{{- if and (include "appfit.modelCacheIsRWO" .) (or (gt (int .Values.backend.replicaCount) 1) .Values.worker.enabled) }}
+
+WARNING: the model cache is a ReadWriteOnce volume but several pods mount it. On a multi-node cluster
+they must run on the same node; otherwise use modelCache.persistence.accessModes=[ReadWriteMany].
+{{- end }}
+{{- if eq (include "appfit.cookieSecure" .) "false" }}
+
+Note: session cookies are not marked Secure (no TLS ingress). Set config.cookieSecure=true behind HTTPS.
+{{- end }}

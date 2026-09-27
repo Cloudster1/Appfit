@@ -1,10 +1,10 @@
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import Connection, engine_from_config, pool, text
 
 import appfit.models  # noqa: F401  (registers all tables on Base.metadata)
-from appfit.config import get_settings
+from appfit.config import MIGRATION_LOCK_KEY, get_settings
 from appfit.db.base import Base
 
 config = context.config
@@ -29,12 +29,19 @@ def run_migrations_offline() -> None:
         context.run_migrations()
 
 
+def _migrate(conn: Connection) -> None:
+    context.configure(connection=conn, target_metadata=target_metadata)
+    with context.begin_transaction():
+        if conn.dialect.name == "postgresql":
+            # Held until commit, so a second replica waits and then finds the schema at head.
+            conn.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": MIGRATION_LOCK_KEY})
+        context.run_migrations()
+
+
 def run_migrations_online() -> None:
     connection = config.attributes.get("connection")
     if connection is not None:
-        context.configure(connection=connection, target_metadata=target_metadata)
-        with context.begin_transaction():
-            context.run_migrations()
+        _migrate(connection)
         return
 
     connectable = engine_from_config(
@@ -43,9 +50,7 @@ def run_migrations_online() -> None:
         poolclass=pool.NullPool,
     )
     with connectable.connect() as conn:
-        context.configure(connection=conn, target_metadata=target_metadata)
-        with context.begin_transaction():
-            context.run_migrations()
+        _migrate(conn)
 
 
 if context.is_offline_mode():

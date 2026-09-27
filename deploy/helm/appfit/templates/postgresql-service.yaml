@@ -1,0 +1,17 @@
+{{- if .Values.postgresql.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "appfit.postgresql.host" . }}
+  labels:
+    {{- include "appfit.componentLabels" (dict "root" . "component" "postgresql") | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+      protocol: TCP
+  selector:
+    {{- include "appfit.componentSelectorLabels" (dict "root" . "component" "postgresql") | nindent 4 }}
+{{- end }}
