@@ -11,7 +11,7 @@ FROM dev AS build
 RUN pnpm build
 
 # Runs as a non-root user on port 8080 (Kubernetes restricted pod security).
-FROM nginxinc/nginx-unprivileged:1.29-alpine AS prod
+FROM nginxinc/nginx-unprivileged:1.31-alpine AS prod
 ENV APPFIT_BACKEND_URL=http://backend:8000
 COPY nginx.conf /etc/nginx/templates/default.conf.template
 COPY --from=build /app/dist /usr/share/nginx/html
