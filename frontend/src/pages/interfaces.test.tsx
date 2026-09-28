@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import type { AppOut, InterfaceOut, Landscape, SearchResponse } from "../api/hooks";
+import { layoutPositions } from "../components/graph/layout";
 import { renderWithProviders, sampleResponse } from "../test/utils";
 import { AppDetailPage } from "./AppDetailPage";
 import { AppsPage } from "./AppsPage";
@@ -157,7 +158,11 @@ const server = setupServer(
   ),
 );
 
-beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
+beforeAll(async () => {
+  server.listen({ onUnhandledRequest: "error" });
+  // Load the large ELK layout bundle up front: a cold import can outlast waitFor's timeout on CI.
+  await layoutPositions(landscape);
+});
 beforeEach(() => {
   landscapeUrls = [];
   savedBodies = [];
